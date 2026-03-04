@@ -1,0 +1,341 @@
+{
+  "topics": [
+    {
+      "id": "logica",
+      "label": "Lógica de Programação",
+      "icon": "🧠",
+      "color": "#f78166",
+      "accent": "#da3633",
+      "subtopics": [
+        {
+          "id": "variaveis",
+          "title": "Variáveis",
+          "icon": "📦",
+          "desc": "Espaço nomeado na memória que armazena um valor que PODE ser alterado durante a execução.",
+          "pros": ["Flexíveis — podem ser reatribuídas", "Permitem acumular estado (ex: contadores)", "Suportam múltiplos tipos em linguagens dinâmicas"],
+          "cons": ["Podem gerar bugs por reatribuição acidental", "Difíceis de rastrear em escopos grandes", "Em threads paralelas podem causar race conditions"],
+          "when": "Use quando o valor precisa mudar ao longo do tempo: contadores, acumuladores, estado de UI.",
+          "examples": {
+            "javascript": "let contador = 0;\ncontador = contador + 1;\nlet nome = 'Alice';\nnome = 'Bob'; // OK",
+            "python": "contador = 0\ncontador += 1\nnome = 'Alice'\nnome = 'Bob'  # OK",
+            "java": "int contador = 0;\ncontador = contador + 1;\nString nome = \"Alice\";\nnome = \"Bob\"; // OK",
+            "php": "$contador = 0;\n$contador++;\n$nome = 'Alice';\n$nome = 'Bob'; // OK",
+            "c": "int contador = 0;\ncontador++;\nchar nome[20] = \"Alice\";\nstrcpy(nome, \"Bob\");"
+          }
+        },
+        {
+          "id": "constantes",
+          "title": "Constantes",
+          "icon": "🔒",
+          "desc": "Identificador cujo valor é definido uma vez e NÃO pode ser alterado após a atribuição inicial.",
+          "pros": ["Evitam alteração acidental de valores críticos", "Melhoram legibilidade (PI, MAX_SIZE)", "Compiladores otimizam constantes com mais facilidade"],
+          "cons": ["Menos flexíveis por definição", "Em JS, const para objetos não congela as propriedades internas", "Requerem valor definido na declaração"],
+          "when": "Use para valores que nunca mudam: PI, tamanhos máximos, chaves de API, configurações fixas.",
+          "examples": {
+            "javascript": "const PI = 3.14159;\nconst MAX_TENTATIVAS = 3;\nconst CONFIG = { host: 'localhost' };\nCONFIG.host = 'prod'; // Permitido! (propriedade)\n// CONFIG = {}; // ERRO — reatribuição proibida",
+            "python": "# Python usa convenção de MAIÚSCULAS\nPI = 3.14159\nMAX_TENTATIVAS = 3\n# Ou com typing:\nfrom typing import Final\nPI: Final = 3.14159",
+            "java": "static final double PI = 3.14159;\nstatic final int MAX_TENTATIVAS = 3;",
+            "php": "define('PI', 3.14159);\nconst MAX_TENTATIVAS = 3;\necho PI; // 3.14159",
+            "c": "#define PI 3.14159\nconst int MAX_TENTATIVAS = 3;"
+          }
+        },
+        {
+          "id": "arrays",
+          "title": "Arrays",
+          "icon": "📋",
+          "desc": "Coleção de elementos do mesmo tipo armazenados em posições contíguas de memória, acessados por índice numérico (começa em 0).",
+          "pros": ["Acesso O(1) por índice — extremamente rápido", "Simples e suportado nativamente em todas as linguagens", "Ótimo uso de cache da CPU (memória contígua)"],
+          "cons": ["Tamanho fixo em linguagens estáticas", "Inserção/remoção no meio é O(n)", "Índice fora do limite causa erros críticos"],
+          "when": "Use quando precisa de acesso rápido por posição, lista ordenada de tamanho conhecido, iteração sequencial.",
+          "examples": {
+            "javascript": "// Arrays dinâmicos em JS\nconst frutas = ['maçã', 'banana', 'laranja'];\nconsole.log(frutas[0]); // 'maçã'\nfrutas.push('uva');      // Adiciona no fim\nfrutas.pop();            // Remove do fim\nfrutas.splice(1, 1);     // Remove índice 1\n\n// Métodos funcionais\nconst maiusculas = frutas.map(f => f.toUpperCase());\nconst comA = frutas.filter(f => f.startsWith('a'));\nconst total = [1,2,3].reduce((acc, n) => acc + n, 0);",
+            "python": "frutas = ['maçã', 'banana', 'laranja']\nprint(frutas[0])   # 'maçã'\nfrutas.append('uva')\nfrutas.remove('banana')\n\n# List comprehension\nmaiusculas = [f.upper() for f in frutas]\ncomA = [f for f in frutas if f.startswith('a')]",
+            "java": "// Array estático\nString[] frutas = {\"maçã\", \"banana\", \"laranja\"};\nSystem.out.println(frutas[0]);\n\n// ArrayList dinâmico\nimport java.util.ArrayList;\nArrayList<String> lista = new ArrayList<>();\nlista.add(\"maçã\");\nlista.remove(0);",
+            "php": "$frutas = ['maçã', 'banana', 'laranja'];\necho $frutas[0]; // maçã\narray_push($frutas, 'uva');\narray_splice($frutas, 1, 1);\n\n// Funções úteis\n$maiusculas = array_map('strtoupper', $frutas);\n$filtrado = array_filter($frutas, fn($f) => $f[0] === 'a');",
+            "c": "int numeros[5] = {10, 20, 30, 40, 50};\nprintf(\"%d\", numeros[0]); // 10\n// Percorrer\nfor (int i = 0; i < 5; i++) {\n    printf(\"%d \", numeros[i]);\n}"
+          }
+        },
+        {
+          "id": "structs",
+          "title": "Structs / Objetos",
+          "icon": "🏗️",
+          "desc": "Estrutura de dados que agrupa campos de tipos diferentes sob um único nome. Base para orientação a objetos e modelagem do domínio.",
+          "pros": ["Agrupa dados relacionados em uma unidade coesa", "Melhora legibilidade: pessoa.nome vs nome_da_pessoa", "Base para OOP: classes são structs com comportamento"],
+          "cons": ["Mais verboso para criar e manipular", "Serialização (JSON, binário) exige cuidado", "Herança mal usada gera acoplamento excessivo"],
+          "when": "Use para modelar entidades do mundo real: Usuário, Produto, Pedido, Endereço.",
+          "examples": {
+            "javascript": "// Objeto literal\nconst pessoa = {\n  nome: 'Alice',\n  idade: 30,\n  saudar() { return `Olá, sou ${this.nome}`; }\n};\n\n// Classe (ES6+)\nclass Produto {\n  constructor(nome, preco) {\n    this.nome = nome;\n    this.preco = preco;\n  }\n  comDesconto(pct) {\n    return this.preco * (1 - pct / 100);\n  }\n}\nconst p = new Produto('Notebook', 3000);\nconsole.log(p.comDesconto(10)); // 2700",
+            "python": "# dataclass (Python 3.7+)\nfrom dataclasses import dataclass\n\n@dataclass\nclass Produto:\n    nome: str\n    preco: float\n\n    def com_desconto(self, pct: float) -> float:\n        return self.preco * (1 - pct / 100)\n\np = Produto('Notebook', 3000)\nprint(p.com_desconto(10)) # 2700.0",
+            "java": "public class Produto {\n    private String nome;\n    private double preco;\n\n    public Produto(String nome, double preco) {\n        this.nome = nome;\n        this.preco = preco;\n    }\n\n    public double comDesconto(double pct) {\n        return preco * (1 - pct / 100);\n    }\n}\n\nProduto p = new Produto(\"Notebook\", 3000);\nSystem.out.println(p.comDesconto(10)); // 2700.0",
+            "php": "class Produto {\n    public function __construct(\n        public string $nome,\n        public float $preco\n    ) {}\n\n    public function comDesconto(float $pct): float {\n        return $this->preco * (1 - $pct / 100);\n    }\n}\n\n$p = new Produto('Notebook', 3000);\necho $p->comDesconto(10); // 2700",
+            "c": "struct Produto {\n    char nome[50];\n    float preco;\n};\n\nstruct Produto p;\nstrcpy(p.nome, \"Notebook\");\np.preco = 3000.0f;\nprintf(\"%s: %.2f\", p.nome, p.preco);"
+          }
+        },
+        {
+          "id": "listas",
+          "title": "Listas Encadeadas",
+          "icon": "🔗",
+          "desc": "Estrutura onde cada elemento (nó) contém um valor e um ponteiro para o próximo nó. Não usa memória contígua — cresce/encolhe dinamicamente.",
+          "pros": ["Inserção/remoção O(1) no início ou com ponteiro", "Crescimento dinâmico sem realocação de memória", "Base para pilhas, filas e outras estruturas"],
+          "cons": ["Acesso por índice é O(n) — sem acesso direto", "Maior uso de memória (ponteiros extras)", "Cache-unfriendly — nós espalhados na memória"],
+          "when": "Use quando há muitas inserções/remoções no início ou meio; quando o tamanho é imprevisível; para implementar filas ou pilhas.",
+          "examples": {
+            "javascript": "class No {\n  constructor(valor) {\n    this.valor = valor;\n    this.proximo = null;\n  }\n}\n\nclass ListaEncadeada {\n  constructor() { this.cabeca = null; }\n\n  inserirInicio(valor) {\n    const no = new No(valor);\n    no.proximo = this.cabeca;\n    this.cabeca = no;\n  }\n\n  imprimir() {\n    let atual = this.cabeca;\n    const resultado = [];\n    while (atual) {\n      resultado.push(atual.valor);\n      atual = atual.proximo;\n    }\n    console.log(resultado.join(' → '));\n  }\n}\n\nconst lista = new ListaEncadeada();\nlista.inserirInicio(3);\nlista.inserirInicio(2);\nlista.inserirInicio(1);\nlista.imprimir(); // 1 → 2 → 3",
+            "python": "class No:\n    def __init__(self, valor):\n        self.valor = valor\n        self.proximo = None\n\nclass ListaEncadeada:\n    def __init__(self):\n        self.cabeca = None\n\n    def inserir_inicio(self, valor):\n        no = No(valor)\n        no.proximo = self.cabeca\n        self.cabeca = no\n\n    def imprimir(self):\n        atual = self.cabeca\n        while atual:\n            print(atual.valor, end=' → ')\n            atual = atual.proximo\n\nlista = ListaEncadeada()\nlista.inserir_inicio(3)\nlista.inserir_inicio(1)\nlista.imprimir() # 1 → 3",
+            "java": "class No<T> {\n    T valor;\n    No<T> proximo;\n    No(T valor) { this.valor = valor; }\n}\n\nclass Lista<T> {\n    No<T> cabeca;\n\n    void inserirInicio(T valor) {\n        No<T> no = new No<>(valor);\n        no.proximo = cabeca;\n        cabeca = no;\n    }\n}",
+            "php": "class No {\n    public mixed $valor;\n    public ?No $proximo = null;\n    public function __construct(mixed $v) { $this->valor = $v; }\n}\n\nclass Lista {\n    private ?No $cabeca = null;\n\n    public function inserirInicio(mixed $v): void {\n        $no = new No($v);\n        $no->proximo = $this->cabeca;\n        $this->cabeca = $no;\n    }\n}",
+            "c": "struct No {\n    int valor;\n    struct No* proximo;\n};\n\nvoid inserirInicio(struct No** cabeca, int valor) {\n    struct No* novo = malloc(sizeof(struct No));\n    novo->valor = valor;\n    novo->proximo = *cabeca;\n    *cabeca = novo;\n}"
+          }
+        },
+        {
+          "id": "arvores",
+          "title": "Árvores (BST)",
+          "icon": "🌳",
+          "desc": "Estrutura hierárquica com nó raiz, filhos e folhas. BST (Binary Search Tree): nós à esquerda < raiz < nós à direita. Busca em O(log n).",
+          "pros": ["Busca, inserção e remoção O(log n) em árvore balanceada", "Estrutura natural para hierarquias (arquivos, DOM, categorias)", "Base para algoritmos de busca eficientes"],
+          "cons": ["Pode degenerar em lista (O(n)) se não balanceada", "Implementação mais complexa que arrays/listas", "Balanceamento automático (AVL, Red-Black) é complexo"],
+          "when": "Use para buscas frequentes em dados ordenados, representar hierarquias, implementar dicionários e conjuntos.",
+          "examples": {
+            "javascript": "class NoArvore {\n  constructor(valor) {\n    this.valor = valor;\n    this.esq = null;\n    this.dir = null;\n  }\n}\n\nclass BST {\n  constructor() { this.raiz = null; }\n\n  inserir(valor) {\n    const inserirRec = (no, v) => {\n      if (!no) return new NoArvore(v);\n      if (v < no.valor) no.esq = inserirRec(no.esq, v);\n      else if (v > no.valor) no.dir = inserirRec(no.dir, v);\n      return no;\n    };\n    this.raiz = inserirRec(this.raiz, valor);\n  }\n\n  buscar(valor) {\n    const buscarRec = (no, v) => {\n      if (!no || no.valor === v) return no;\n      return v < no.valor\n        ? buscarRec(no.esq, v)\n        : buscarRec(no.dir, v);\n    };\n    return buscarRec(this.raiz, valor);\n  }\n}\n\nconst arvore = new BST();\n[5, 3, 7, 1, 4].forEach(v => arvore.inserir(v));\nconsole.log(arvore.buscar(4)); // NoArvore { valor: 4, ... }",
+            "python": "class No:\n    def __init__(self, valor):\n        self.valor = valor\n        self.esq = self.dir = None\n\nclass BST:\n    def __init__(self): self.raiz = None\n\n    def inserir(self, valor):\n        def _ins(no, v):\n            if not no: return No(v)\n            if v < no.valor: no.esq = _ins(no.esq, v)\n            elif v > no.valor: no.dir = _ins(no.dir, v)\n            return no\n        self.raiz = _ins(self.raiz, valor)\n\n    def buscar(self, valor):\n        def _bus(no, v):\n            if not no or no.valor == v: return no\n            return _bus(no.esq, v) if v < no.valor else _bus(no.dir, v)\n        return _bus(self.raiz, valor)",
+            "java": "class No {\n    int valor;\n    No esq, dir;\n    No(int v) { valor = v; }\n}\n\nclass BST {\n    No raiz;\n\n    No inserir(No no, int v) {\n        if (no == null) return new No(v);\n        if (v < no.valor) no.esq = inserir(no.esq, v);\n        else if (v > no.valor) no.dir = inserir(no.dir, v);\n        return no;\n    }\n}",
+            "php": "class No {\n    public int $valor;\n    public ?No $esq = null, $dir = null;\n    public function __construct(int $v) { $this->valor = $v; }\n}\n\nfunction inserir(?No $no, int $v): No {\n    if (!$no) return new No($v);\n    if ($v < $no->valor) $no->esq = inserir($no->esq, $v);\n    elseif ($v > $no->valor) $no->dir = inserir($no->dir, $v);\n    return $no;\n}",
+            "c": "struct No {\n    int valor;\n    struct No *esq, *dir;\n};\n\nstruct No* inserir(struct No* raiz, int v) {\n    if (!raiz) {\n        struct No* n = malloc(sizeof(*n));\n        n->valor = v; n->esq = n->dir = NULL;\n        return n;\n    }\n    if (v < raiz->valor) raiz->esq = inserir(raiz->esq, v);\n    else if (v > raiz->valor) raiz->dir = inserir(raiz->dir, v);\n    return raiz;\n}"
+          }
+        },
+        {
+          "id": "mapa",
+          "title": "Mapa / Dicionário (Hash Map)",
+          "icon": "🗺️",
+          "desc": "Estrutura chave→valor onde a chave é transformada em hash para acesso O(1). Também chamado de Hash Table, Dictionary ou Object.",
+          "pros": ["Acesso, inserção e remoção médio O(1)", "Chaves de qualquer tipo hashable", "Elimina necessidade de buscas lineares"],
+          "cons": ["Pior caso O(n) com muitas colisões de hash", "Não garante ordem de inserção (depende da implementação)", "Maior uso de memória que arrays"],
+          "when": "Use para cache, contagem de frequências, índices invertidos, lookup rápido por chave.",
+          "examples": {
+            "javascript": "// Map nativo (qualquer tipo como chave)\nconst mapa = new Map();\nmapa.set('usuario', { nome: 'Alice', id: 1 });\nmapa.set(42, 'resposta');\nconsole.log(mapa.get('usuario')); // { nome: 'Alice', id: 1 }\nconsole.log(mapa.has(42)); // true\nmapa.delete(42);\n\n// Object (chaves string/symbol)\nconst cache = {};\ncache['req_123'] = { data: '...', ts: Date.now() };\n\n// Contagem de frequência\nconst texto = 'banana';\nconst freq = {};\nfor (const c of texto) freq[c] = (freq[c] || 0) + 1;\nconsole.log(freq); // { b:1, a:3, n:2 }",
+            "python": "# dict nativo\nmapa = {}\nmapa['usuario'] = {'nome': 'Alice', 'id': 1}\nprint(mapa.get('usuario'))  # {'nome': 'Alice', 'id': 1}\n\n# Contagem com Counter\nfrom collections import Counter\nfreq = Counter('banana')\nprint(freq)  # Counter({'a': 3, 'n': 2, 'b': 1})\n\n# defaultdict\nfrom collections import defaultdict\ngrupos = defaultdict(list)\ngrupos['frutas'].append('maçã')\ngrupos['frutas'].append('banana')",
+            "java": "import java.util.HashMap;\nimport java.util.Map;\n\nMap<String, Integer> freq = new HashMap<>();\nString texto = \"banana\";\nfor (char c : texto.toCharArray()) {\n    freq.merge(String.valueOf(c), 1, Integer::sum);\n}\nSystem.out.println(freq); // {b=1, a=3, n=2}\n\n// LinkedHashMap mantém ordem de inserção\nMap<String, String> cache = new LinkedHashMap<>();",
+            "php": "$mapa = [];\n$mapa['usuario'] = ['nome' => 'Alice', 'id' => 1];\necho $mapa['usuario']['nome']; // Alice\n\n// Contagem de frequência\n$texto = 'banana';\n$freq = array_count_values(str_split($texto));\nprint_r($freq); // Array ( [b]=>1 [a]=>3 [n]=>2 )\n\n// isset para verificar existência\nif (isset($mapa['usuario'])) { /* existe */ }",
+            "c": "#include <stdlib.h>\n// C não tem hash map nativo.\n// Implementação simples com array de listas:\n#define TAMANHO 100\n\ntypedef struct Par { char* chave; int valor; struct Par* prox; } Par;\nPar* tabela[TAMANHO] = {NULL};\n\nunsigned int hash(const char* chave) {\n    unsigned int h = 0;\n    while (*chave) h = h * 31 + *chave++;\n    return h % TAMANHO;\n}"
+          }
+        }
+      ]
+    },
+    {
+      "id": "javascript",
+      "label": "JavaScript",
+      "icon": "⚡",
+      "color": "#f0db4f",
+      "accent": "#d29922",
+      "subtopics": [
+        {
+          "id": "js_intro",
+          "title": "O que é JavaScript?",
+          "icon": "📖",
+          "desc": "Linguagem de programação interpretada, orientada a eventos, single-threaded com event loop. Roda nativamente no browser e, via Node.js, no servidor.",
+          "pros": ["Única linguagem que roda nativamente no browser", "Assíncrono nativo (Promises, async/await)", "Ecossistema imenso (npm)", "Full-stack: browser + Node.js + mobile (React Native)"],
+          "cons": ["Coerção de tipos implícita gera bugs sutis (==)", "Single-threaded — CPU-bound trava a UI", "Escopo histórico confuso (var, hoisting)", "Sem tipagem estática nativa (use TypeScript)"],
+          "when": "Front-end web, scripts de automação, APIs REST (Node.js), apps mobile (React Native), serverless.",
+          "examples": {
+            "javascript": "// Tipos e coerção\nconsole.log(1 + '2');   // '12' (string)\nconsole.log(1 - '2');   // -1  (número)\nconsole.log([] == ![]);  // true (!)\n\n// Sempre use === (igualdade estrita)\nconsole.log(1 === '1'); // false\nconsole.log(1 == '1');  // true (perigoso!)\n\n// Nullish coalescing e optional chaining\nconst user = null;\nconsole.log(user?.nome ?? 'Anônimo'); // 'Anônimo'"
+          }
+        },
+        {
+          "id": "js_closures",
+          "title": "Closures & Escopo",
+          "icon": "🔐",
+          "desc": "Uma closure é uma função que 'lembra' o ambiente léxico onde foi criada, mesmo após esse ambiente não estar mais na pilha de chamadas.",
+          "pros": ["Encapsulamento de estado sem classes", "Base dos módulos e do padrão Module Pattern", "Permitem factory functions e currying"],
+          "cons": ["Podem causar memory leaks se não forem liberadas", "Dificulta debugging se o estado interno for opaco"],
+          "when": "Callbacks, event listeners, factory functions, memoização, módulos.",
+          "examples": {
+            "javascript": "// Closure clássica: contador encapsulado\nfunction criarContador() {\n  let contagem = 0; // variável privada!\n  return {\n    incrementar: () => ++contagem,\n    resetar: () => { contagem = 0; },\n    obter: () => contagem\n  };\n}\n\nconst c = criarContador();\nc.incrementar(); // 1\nc.incrementar(); // 2\nconsole.log(c.obter()); // 2\n// contagem não é acessível de fora!\n\n// Closure em loop (bug clássico de entrevista)\nfor (let i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 100);\n}\n// Com let: 0, 1, 2 ✓\n// Com var: 3, 3, 3 ✗ (mesmo escopo)"
+          }
+        },
+        {
+          "id": "js_async",
+          "title": "Assincronismo (Event Loop)",
+          "icon": "🔄",
+          "desc": "JS é single-threaded mas lida com I/O assíncrono via Event Loop: operações lentas são delegadas ao browser/Node.js, e os callbacks entram na fila quando completos.",
+          "pros": ["Não bloqueia a UI durante I/O", "async/await torna código assíncrono legível como síncrono", "Promise.all paraleliza múltiplas operações"],
+          "cons": ["Callback hell (sem Promises)", "Erros em Promises não capturados causam falhas silenciosas", "Não serve para CPU-bound (use Web Workers)"],
+          "when": "Toda operação de I/O: fetch, leitura de arquivo, timers, banco de dados.",
+          "examples": {
+            "javascript": "// Callback (antiga forma)\nfetch('/api/dados')\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));\n\n// async/await (forma moderna)\nasync function carregarDados() {\n  try {\n    const res = await fetch('/api/dados');\n    const data = await res.json();\n    return data;\n  } catch (err) {\n    console.error('Erro:', err);\n  }\n}\n\n// Paralelismo\nasync function carregarTudo() {\n  const [usuarios, produtos] = await Promise.all([\n    fetch('/api/usuarios').then(r => r.json()),\n    fetch('/api/produtos').then(r => r.json())\n  ]);\n  return { usuarios, produtos };\n}"
+          }
+        },
+        {
+          "id": "js_dom",
+          "title": "Manipulação do DOM",
+          "icon": "🌐",
+          "desc": "O DOM (Document Object Model) é a representação em árvore do HTML. JavaScript pode criar, modificar, remover e ouvir eventos em qualquer elemento.",
+          "pros": ["Controle total da interface sem recarregar a página", "API padronizada (W3C) funciona em todos os browsers", "Base para todos os frameworks modernos (React, Vue)"],
+          "cons": ["Operações no DOM são lentas — minimizar reflows", "innerHTML com dados do usuário abre XSS", "API verbosa comparada a jQuery"],
+          "when": "Toda interação dinâmica de UI: formulários, listas dinâmicas, modais, validações.",
+          "examples": {
+            "javascript": "// Seleção\nconst btn = document.querySelector('#meu-btn');\nconst itens = document.querySelectorAll('.item');\n\n// Criação e inserção\nconst li = document.createElement('li');\nli.textContent = 'Novo item'; // SEGURO: sem XSS\n// li.innerHTML = user_input;  // PERIGOSO!\ndocument.querySelector('ul').appendChild(li);\n\n// Eventos\nbtn.addEventListener('click', (e) => {\n  e.preventDefault();\n  btn.disabled = true;\n  btn.textContent = 'Carregando...';\n});\n\n// Delegação de eventos (eficiente para listas dinâmicas)\ndocument.querySelector('#lista').addEventListener('click', (e) => {\n  if (e.target.matches('.item')) {\n    console.log('Item clicado:', e.target.textContent);\n  }\n});"
+          }
+        }
+      ]
+    },
+    {
+      "id": "html",
+      "label": "HTML",
+      "icon": "📄",
+      "color": "#e44d26",
+      "accent": "#f16529",
+      "subtopics": [
+        {
+          "id": "html_semantico",
+          "title": "HTML Semântico",
+          "icon": "🏷️",
+          "desc": "Usar elementos HTML pelo seu SIGNIFICADO, não pela aparência. `<article>`, `<nav>`, `<header>`, `<main>` comunicam estrutura para browsers, leitores de tela e SEO.",
+          "pros": ["Melhora acessibilidade (ARIA implícito)", "SEO: motores de busca entendem a estrutura", "Manutenção: código autodocumentado"],
+          "cons": ["Curva de aprendizado para escolher o elemento certo", "Browsers legados precisam de polyfills (IE)"],
+          "when": "SEMPRE. HTML sem semântica é anti-pattern moderno.",
+          "examples": {
+            "javascript": "<!-- ❌ Sem semântica -->\n<div class='cabecalho'>\n  <div class='nav'><a href='/'>Home</a></div>\n</div>\n<div class='conteudo'>\n  <div class='artigo'>...</div>\n</div>\n\n<!-- ✅ Semântico -->\n<header>\n  <nav aria-label='Navegação principal'>\n    <a href='/'>Home</a>\n  </nav>\n</header>\n<main>\n  <article>\n    <h1>Título do artigo</h1>\n    <p>Conteúdo...</p>\n    <footer><time datetime='2024-01-15'>15 jan 2024</time></footer>\n  </article>\n  <aside>Conteúdo relacionado</aside>\n</main>\n<footer>Rodapé do site</footer>"
+          }
+        },
+        {
+          "id": "html_forms",
+          "title": "Formulários e Validação",
+          "icon": "📝",
+          "desc": "Formulários HTML têm validação nativa embutida: required, type=email, min, max, pattern. Reduz necessidade de JavaScript e melhora acessibilidade.",
+          "pros": ["Validação nativa sem JS (type, required, pattern)", "Acessível por padrão (label + input associados)", "Suporte a diferentes tipos de input (date, color, range)"],
+          "cons": ["Customização visual limitada sem CSS avançado", "Comportamento inconsistente entre browsers em alguns tipos"],
+          "when": "Login, cadastro, busca, qualquer coleta de dados do usuário.",
+          "examples": {
+            "javascript": "<form id='form-cadastro' novalidate>\n  <label for='email'>E-mail</label>\n  <input\n    id='email'\n    type='email'\n    name='email'\n    required\n    autocomplete='email'\n    placeholder='seu@email.com'\n  />\n\n  <label for='senha'>Senha</label>\n  <input\n    id='senha'\n    type='password'\n    name='senha'\n    required\n    minlength='8'\n    pattern='^(?=.*[A-Z])(?=.*[0-9]).+$'\n    title='Mínimo 8 chars, 1 maiúscula e 1 número'\n  />\n\n  <button type='submit'>Cadastrar</button>\n</form>\n\n<script>\n  document.getElementById('form-cadastro')\n    .addEventListener('submit', async (e) => {\n      e.preventDefault();\n      if (!e.target.checkValidity()) {\n        e.target.reportValidity();\n        return;\n      }\n      const dados = new FormData(e.target);\n      // Enviar via fetch...\n    });\n</script>"
+          }
+        },
+        {
+          "id": "html_meta",
+          "title": "Meta Tags & SEO",
+          "icon": "🔍",
+          "desc": "Meta tags controlam como a página é indexada por buscadores e como aparece em redes sociais (Open Graph). Crítico para SEO e compartilhamento.",
+          "pros": ["Controle total da apresentação nos buscadores", "Open Graph para preview rico em redes sociais", "Viewport meta essencial para responsividade"],
+          "cons": ["Não substituem conteúdo de qualidade para SEO", "Exigem manutenção quando o conteúdo muda"],
+          "when": "Todas as páginas públicas. Obrigatório em projetos profissionais.",
+          "examples": {
+            "javascript": "<!DOCTYPE html>\n<html lang='pt-BR'>\n<head>\n  <meta charset='UTF-8'>\n  <meta name='viewport' content='width=device-width, initial-scale=1.0'>\n  <meta name='description' content='Manual técnico de JS, HTML, CSS e jQuery'>\n  <meta name='robots' content='index, follow'>\n\n  <!-- Open Graph (Facebook, LinkedIn) -->\n  <meta property='og:title' content='Manual Técnico Front-end'>\n  <meta property='og:description' content='Guia completo para entrevistas'>\n  <meta property='og:image' content='https://site.com/thumbnail.png'>\n  <meta property='og:type' content='website'>\n\n  <!-- Twitter Card -->\n  <meta name='twitter:card' content='summary_large_image'>\n\n  <title>Manual Técnico Front-end</title>\n</head>"
+          }
+        }
+      ]
+    },
+    {
+      "id": "css",
+      "label": "CSS",
+      "icon": "🎨",
+      "color": "#264de4",
+      "accent": "#2965f1",
+      "subtopics": [
+        {
+          "id": "css_especificidade",
+          "title": "Especificidade & Cascade",
+          "icon": "⚖️",
+          "desc": "O CSS aplica regras com base em especificidade: ID (0,1,0,0) > classe (0,0,1,0) > tag (0,0,0,1). Em empate, vence a regra mais abaixo no arquivo.",
+          "pros": ["Sistema previsível quando bem entendido", "Permite temas e overrides organizados", "!important como válvula de escape (usar com moderação)"],
+          "cons": ["Guerras de especificidade em projetos grandes", "!important excessivo cria dívida técnica", "Herança implícita pode causar surpresas"],
+          "when": "Fundamental para qualquer projeto CSS. Entender especificidade evita 80% dos bugs de estilo.",
+          "examples": {
+            "javascript": "/* Especificidade: tag=1, classe=10, id=100 */\n\np { color: blue; }          /* 0,0,0,1 */\n.texto { color: red; }      /* 0,0,1,0 — VENCE */\n#titulo { color: green; }   /* 0,1,0,0 — VENCE */\n\n/* BEM (Block Element Modifier) evita guerras */\n.card { }           /* bloco */\n.card__titulo { }   /* elemento */\n.card--destaque { } /* modificador */\n\n/* CSS moderno: :is() e :where() */\n:is(h1, h2, h3) { margin-top: 1rem; }\n:where(.card, .modal) p { color: gray; } /* especificidade zero! */"
+          }
+        },
+        {
+          "id": "css_flexbox",
+          "title": "Flexbox",
+          "icon": "📐",
+          "desc": "Modelo de layout unidimensional (uma linha OU uma coluna). Ideal para alinhar itens, distribuir espaço e criar layouts responsivos simples.",
+          "pros": ["Alinhamento vertical e horizontal trivial", "flex-wrap cria layouts responsivos sem media queries", "Ordem visual independente do DOM (order)"],
+          "cons": ["Unidimensional — para 2D use Grid", "Confusão entre eixo principal e cruzado para iniciantes"],
+          "when": "Navbar, cards em linha, centralização, distribuição de espaço entre itens.",
+          "examples": {
+            "javascript": ".container {\n  display: flex;\n  flex-direction: row;       /* row | column */\n  justify-content: space-between; /* eixo principal */\n  align-items: center;       /* eixo cruzado */\n  gap: 16px;\n  flex-wrap: wrap;           /* quebra em telas pequenas */\n}\n\n.item {\n  flex: 1;                   /* cresce igualmente */\n  min-width: 200px;\n}\n\n.item-especial {\n  flex: 2;                   /* ocupa o dobro do espaço */\n}\n\n/* Centralizar qualquer coisa */\n.centralizado {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  min-height: 100vh;\n}"
+          }
+        },
+        {
+          "id": "css_grid",
+          "title": "CSS Grid",
+          "icon": "🔲",
+          "desc": "Modelo de layout bidimensional (linhas E colunas simultâneas). Ideal para layouts complexos de página, galerias e dashboards.",
+          "pros": ["Layout 2D completo em CSS puro", "grid-template-areas cria layouts autodocumentados", "Responsividade com auto-fit e minmax sem JS"],
+          "cons": ["Curva de aprendizado maior que Flexbox", "Suporte a subgrid ainda limitado em browsers antigos"],
+          "when": "Layout principal da página, galerias de imagens, dashboards, qualquer layout em grade.",
+          "examples": {
+            "javascript": "/* Layout clássico de página */\n.pagina {\n  display: grid;\n  grid-template-areas:\n    'header  header '\n    'sidebar main   '\n    'footer  footer ';\n  grid-template-columns: 250px 1fr;\n  grid-template-rows: auto 1fr auto;\n  min-height: 100vh;\n}\n\n.header  { grid-area: header; }\n.sidebar { grid-area: sidebar; }\n.main    { grid-area: main; }\n.footer  { grid-area: footer; }\n\n/* Galeria responsiva sem media queries! */\n.galeria {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));\n  gap: 16px;\n}"
+          }
+        },
+        {
+          "id": "css_variaveis",
+          "title": "CSS Variables & Design Tokens",
+          "icon": "🎛️",
+          "desc": "Variáveis CSS (custom properties) permitem centralizar valores reutilizáveis e criar temas dinâmicos via JavaScript ou media queries.",
+          "pros": ["Tema claro/escuro sem JavaScript", "Cascata: variáveis podem ser sobrescritas em escopos", "JavaScript pode ler e escrever variáveis CSS"],
+          "cons": ["Não suportadas no IE11", "Sem tipagem — erro de digitação falha silenciosamente"],
+          "when": "Qualquer projeto com design system, temas ou valores reutilizáveis.",
+          "examples": {
+            "javascript": ":root {\n  --cor-primaria: #1f6feb;\n  --cor-fundo: #0d1117;\n  --cor-texto: #e6edf3;\n  --espaco-md: 16px;\n  --raio-borda: 8px;\n  --sombra: 0 4px 12px rgba(0,0,0,0.3);\n}\n\n/* Tema escuro automático */\n@media (prefers-color-scheme: dark) {\n  :root {\n    --cor-fundo: #0d1117;\n    --cor-texto: #e6edf3;\n  }\n}\n\n.botao {\n  background: var(--cor-primaria);\n  padding: var(--espaco-md);\n  border-radius: var(--raio-borda);\n  box-shadow: var(--sombra);\n}\n\n// JavaScript lendo/escrevendo\ndocument.documentElement.style\n  .setProperty('--cor-primaria', '#ff6b6b');"
+          }
+        }
+      ]
+    },
+    {
+      "id": "jquery",
+      "label": "jQuery",
+      "icon": "⚡",
+      "color": "#0769AD",
+      "accent": "#78cff5",
+      "subtopics": [
+        {
+          "id": "jq_intro",
+          "title": "O que é jQuery?",
+          "icon": "📖",
+          "desc": "Biblioteca JavaScript criada em 2006 por John Resig. Abstrai diferenças entre browsers, simplifica manipulação de DOM, eventos, AJAX e animações com uma API concisa.",
+          "pros": ["API curta e expressiva: $('seletor').acao()", "Compatibilidade cross-browser automática", "Plugin ecosystem enorme", "Ainda presente em 77% dos sites (2024)"],
+          "cons": ["Adiciona ~30kb ao bundle (minificado + gzip: ~30kb)", "JS moderno (ES6+) cobre a maioria dos casos", "Frameworks como React/Vue tornam jQuery redundante", "Abstração excessiva esconde o que o browser realmente faz"],
+          "when": "Projetos legados, integração com plugins jQuery (Datepicker, DataTables), prototipagem rápida.",
+          "examples": {
+            "javascript": "// jQuery vs Vanilla JS moderno\n\n// Seleção\n$('#botao')               // jQuery\ndocument.querySelector('#botao') // Vanilla\n\n// Evento\n$('#btn').click(fn);      // jQuery\nbtn.addEventListener('click', fn); // Vanilla\n\n// AJAX\n$.get('/api/dados', fn);  // jQuery\nfetch('/api/dados').then(r => r.json()).then(fn); // Vanilla\n\n// Classe\n$('#el').addClass('ativo');   // jQuery\nel.classList.add('ativo');     // Vanilla"
+          }
+        },
+        {
+          "id": "jq_dom",
+          "title": "Manipulação de DOM com jQuery",
+          "icon": "🔧",
+          "desc": "jQuery torna manipulação de DOM e CSS trivial com encadeamento de métodos (method chaining) e seleção CSS.",
+          "pros": ["Encadeamento fluente: $().find().filter().css()", "$(document).ready() garante DOM carregado", "Métodos .html(), .text(), .val() unificam leitura e escrita"],
+          "cons": [".html() com input de usuário abre XSS", "Performance menor que manipulação direta do DOM", "$(this) dentro de arrow functions não funciona"],
+          "when": "Manipulação complexa de listas, tabelas dinâmicas, widgets legados.",
+          "examples": {
+            "javascript": "$(document).ready(function() {\n\n  // Leitura e escrita\n  const nome = $('#campo-nome').val();    // lê\n  $('#campo-nome').val('Alice');          // escreve\n  $('#titulo').text('Novo Título');       // seguro\n  // $('#div').html(userInput); // PERIGOSO!\n\n  // Encadeamento\n  $('li.item')\n    .addClass('ativo')\n    .css({ color: '#58a6ff', fontWeight: 'bold' })\n    .filter(':first')\n    .prepend('<span>★ </span>');\n\n  // Inserção dinâmica\n  const linha = $('<tr>')\n    .append($('<td>').text('Alice'))\n    .append($('<td>').text('30'));\n  $('tbody').append(linha);\n\n  // Remoção com confirmação\n  $('.btn-remover').on('click', function() {\n    $(this).closest('tr').fadeOut(300, function() {\n      $(this).remove();\n    });\n  });\n});"
+          }
+        },
+        {
+          "id": "jq_ajax",
+          "title": "AJAX com jQuery",
+          "icon": "🌐",
+          "desc": "$.ajax(), $.get() e $.post() simplificam chamadas HTTP assíncronas, com callbacks de sucesso, erro e complete integrados.",
+          "pros": ["API simples para GET/POST/PUT/DELETE", "Serialização automática de objetos para JSON", "Suporte a cancelamento de requisições (jqXHR.abort())"],
+          "cons": ["Baseado em callbacks (sem Promises nativas em versões antigas)", "$.ajax() retorna jqXHR, não Promise padrão", "fetch() é mais moderno e nativo"],
+          "when": "Projetos que já usam jQuery. Para projetos novos, prefira fetch().",
+          "examples": {
+            "javascript": "// GET simplificado\n$.get('/api/usuarios', function(data) {\n  data.forEach(u => {\n    $('tbody').append(\n      `<tr><td>${u.nome}</td><td>${u.email}</td></tr>`\n    );\n  });\n});\n\n// POST com $.ajax completo\n$.ajax({\n  url: '/api/usuarios',\n  method: 'POST',\n  contentType: 'application/json',\n  data: JSON.stringify({ nome: 'Alice', email: 'alice@ex.com' }),\n  success: function(resposta) {\n    console.log('Criado:', resposta);\n  },\n  error: function(xhr, status, erro) {\n    console.error(`Erro ${xhr.status}:`, erro);\n  },\n  complete: function() {\n    $('#spinner').hide(); // sempre executa\n  }\n});\n\n// Formulário via AJAX\n$('#meu-form').on('submit', function(e) {\n  e.preventDefault();\n  $.post(\n    $(this).attr('action'),\n    $(this).serialize(), // serializa campos do form\n    function(res) { alert('Enviado!'); }\n  );\n});"
+          }
+        },
+        {
+          "id": "jq_animacoes",
+          "title": "Animações e Efeitos",
+          "icon": "✨",
+          "desc": "jQuery tem animações embutidas: hide/show, fadeIn/fadeOut, slideUp/slideDown e animate() para propriedades CSS numéricas.",
+          "pros": ["Animações cross-browser sem CSS keyframes", "Fila de animações automática", ".stop() para cancelar animações em andamento"],
+          "cons": ["Performance inferior a CSS transitions/animations", "Anima via JavaScript — consome CPU, não GPU", "animate() não suporta propriedades de cor sem plugin"],
+          "when": "Compatibilidade com browsers antigos ou integração com lógica de animação baseada em dados.",
+          "examples": {
+            "javascript": "// Mostrar/esconder\n$('#painel').hide();\n$('#painel').show(400); // 400ms\n$('#painel').toggle();\n\n// Fade\n$('#msg').fadeIn(500).delay(2000).fadeOut(500);\n\n// Slide (acordeão)\n$('.titulo-acordeao').on('click', function() {\n  $(this).next('.conteudo').slideToggle(300);\n});\n\n// animate() personalizado\n$('#barra').animate({\n  width: '75%',\n  opacity: 1\n}, {\n  duration: 800,\n  easing: 'swing',\n  complete: function() { $(this).text('75% concluído'); }\n});\n\n// Parar animação em andamento\n$('#el').stop(true, true).fadeOut(300);"
+          }
+        }
+      ]
+    }
+  ]
+}
