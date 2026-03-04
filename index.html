@@ -572,13 +572,127 @@ tr:hover td { background: var(--bg3); }
 .breadcrumb span { color: var(--text2); }
 .breadcrumb .sep { opacity: 0.4; }
 
+/* ===== HAMBURGER BUTTON ===== */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--text2);
+  border-radius: 2px;
+  transition: all 0.25s;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ===== MOBILE DRAWER ===== */
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 150;
+  backdrop-filter: blur(2px);
+}
+.mobile-overlay.open { display: block; }
+
 /* ===== MOBILE ===== */
 @media (max-width: 768px) {
-  .sidebar { display: none; }
+  /* Header */
+  .site-header {
+    padding: 0 12px;
+    gap: 8px;
+  }
+  .hamburger { display: flex; }
+  .header-tabs {
+    flex: 1;
+    overflow-x: auto;
+    gap: 2px;
+  }
+  .htab {
+    padding: 4px 8px;
+    font-size: 0.65rem;
+  }
+
+  /* Sidebar becomes a drawer */
+  .sidebar {
+    position: fixed;
+    top: 56px;
+    left: -280px;
+    width: 260px;
+    height: calc(100vh - 56px);
+    z-index: 160;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    display: block !important;
+  }
+  .sidebar.open { left: 0; }
+
+  /* Layout */
+  .app { flex-direction: column; }
+  .content { width: 100%; }
+
+  /* Search */
+  .search-wrap { padding: 10px 12px; top: 56px; }
+  .search-input { max-width: 100%; font-size: 0.8rem; }
+
+  /* Breadcrumb */
+  .breadcrumb { padding: 8px 12px; font-size: 0.63rem; }
+
+  /* Section */
+  .section { padding: 12px 12px 100px; max-width: 100%; }
+  .section-header { gap: 8px; margin-bottom: 18px; }
+  .section-title { font-size: 1.2rem; }
+
+  /* Stats bar */
+  .stats-bar {
+    gap: 12px;
+    padding: 14px 12px;
+    justify-content: space-around;
+  }
+  .stat-num { font-size: 1.1rem; }
+  .stat-lbl { font-size: 0.58rem; }
+
+  /* Hero */
+  .hero { padding: 32px 16px 24px; }
+  .hero h1 { font-size: clamp(1.4rem, 7vw, 2rem); }
+  .hero p { font-size: 0.82rem; }
+
+  /* Cards */
+  .topic-grid { grid-template-columns: 1fr; gap: 12px; }
   .pros-cons { grid-template-columns: 1fr; }
-  .section { padding: 16px 16px 80px; }
-  .stats-bar { gap: 20px; }
-  .topic-grid { grid-template-columns: 1fr; }
+  .card-head { padding: 12px 14px; }
+  .card-title { font-size: 0.85rem; }
+
+  /* Table responsiva */
+  .complexity-section { overflow-x: auto; }
+  .complexity-section table { min-width: 520px; }
+
+  /* Code blocks */
+  pre { font-size: 0.68rem; padding: 10px; }
+  .code-header { padding: 5px 10px; }
+
+  /* Detail tabs */
+  .detail-tabs { gap: 3px; }
+  .dtab { padding: 3px 8px; font-size: 0.63rem; }
+
+  /* Panel */
+  #panel { padding: 14px 14px; }
 }
 
 /* ===== ANIMATIONS ===== */
@@ -610,9 +724,13 @@ mark {
 
 <!-- HEADER -->
 <header class="site-header">
+  <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </button>
   <div class="logo">⌨ Dev Manual</div>
   <div class="header-tabs" id="headerTabs"></div>
 </header>
+<div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div>
 
 <!-- HERO -->
 <div class="hero" id="heroSection">
@@ -1053,6 +1171,29 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+// ===== MOBILE MENU =====
+function toggleMobileMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('mobileOverlay');
+  const hamburger = document.getElementById('hamburger');
+  const isOpen = sidebar.classList.toggle('open');
+  overlay.classList.toggle('open', isOpen);
+  hamburger.classList.toggle('open', isOpen);
+}
+
+function closeMobileMenu() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('mobileOverlay').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+}
+
+// Close mobile menu on sidebar item click (mobile)
+document.addEventListener('click', (e) => {
+  if (e.target.closest('.sidebar-item') && window.innerWidth <= 768) {
+    closeMobileMenu();
+  }
+});
+
 // ===== INIT =====
 loadData().catch(() => {
   // Fallback if data.json can't be loaded (CORS on local file)
@@ -1069,3 +1210,4 @@ loadData().catch(() => {
 </script>
 </body>
 </html>
+
