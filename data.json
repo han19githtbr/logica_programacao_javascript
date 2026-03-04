@@ -3,6 +3,8 @@
     {
       "id": "logica",
       "label": "Lógica de Programação",
+      "label_en": "Programming Logic",
+      "label_fr": "Logique de Programmation",
       "icon": "🧠",
       "color": "#f78166",
       "accent": "#da3633",
@@ -10,11 +12,45 @@
         {
           "id": "variaveis",
           "title": "Variáveis",
+          "title_en": "Variables",
+          "title_fr": "Variables",
           "icon": "📦",
           "desc": "Espaço nomeado na memória que armazena um valor que PODE ser alterado durante a execução.",
-          "pros": ["Flexíveis — podem ser reatribuídas", "Permitem acumular estado (ex: contadores)", "Suportam múltiplos tipos em linguagens dinâmicas"],
-          "cons": ["Podem gerar bugs por reatribuição acidental", "Difíceis de rastrear em escopos grandes", "Em threads paralelas podem causar race conditions"],
+          "desc_en": "Named memory space that stores a value that CAN be changed during execution.",
+          "desc_fr": "Espace mémoire nommé qui stocke une valeur pouvant être modifiée pendant l'exécution.",
+          "pros": [
+            "Flexíveis — podem ser reatribuídas",
+            "Permitem acumular estado (ex: contadores)",
+            "Suportam múltiplos tipos em linguagens dinâmicas"
+          ],
+          "pros_en": [
+            "Flexible — can be reassigned",
+            "Allow state accumulation (e.g. counters)",
+            "Support multiple types in dynamic languages"
+          ],
+          "pros_fr": [
+            "Flexibles — peuvent être réassignées",
+            "Permettent d'accumuler un état (ex: compteurs)",
+            "Supportent plusieurs types dans les langages dynamiques"
+          ],
+          "cons": [
+            "Podem gerar bugs por reatribuição acidental",
+            "Difíceis de rastrear em escopos grandes",
+            "Em threads paralelas podem causar race conditions"
+          ],
+          "cons_en": [
+            "Can cause bugs by accidental reassignment",
+            "Hard to trace in large scopes",
+            "Can cause race conditions in parallel threads"
+          ],
+          "cons_fr": [
+            "Peuvent générer des bugs par réassignation accidentelle",
+            "Difficiles à tracer dans des portées larges",
+            "Peuvent causer des race conditions en parallèle"
+          ],
           "when": "Use quando o valor precisa mudar ao longo do tempo: contadores, acumuladores, estado de UI.",
+          "when_en": "Use when the value needs to change over time: counters, accumulators, UI state.",
+          "when_fr": "Utilisez lorsque la valeur doit changer au fil du temps : compteurs, accumulateurs, état de l'interface.",
           "examples": {
             "javascript": "let contador = 0;\ncontador = contador + 1;\nlet nome = 'Alice';\nnome = 'Bob'; // OK",
             "python": "contador = 0\ncontador += 1\nnome = 'Alice'\nnome = 'Bob'  # OK",
@@ -26,11 +62,45 @@
         {
           "id": "constantes",
           "title": "Constantes",
+          "title_en": "Constants",
+          "title_fr": "Constantes",
           "icon": "🔒",
           "desc": "Identificador cujo valor é definido uma vez e NÃO pode ser alterado após a atribuição inicial.",
-          "pros": ["Evitam alteração acidental de valores críticos", "Melhoram legibilidade (PI, MAX_SIZE)", "Compiladores otimizam constantes com mais facilidade"],
-          "cons": ["Menos flexíveis por definição", "Em JS, const para objetos não congela as propriedades internas", "Requerem valor definido na declaração"],
+          "desc_en": "Identifier whose value is set once and CANNOT be changed after initial assignment.",
+          "desc_fr": "Identifiant dont la valeur est définie une fois et NE PEUT PAS être modifiée après l'assignation initiale.",
+          "pros": [
+            "Evitam alteração acidental de valores críticos",
+            "Melhoram legibilidade (PI, MAX_SIZE)",
+            "Compiladores otimizam constantes com mais facilidade"
+          ],
+          "pros_en": [
+            "Prevent accidental change of critical values",
+            "Improve readability (PI, MAX_SIZE)",
+            "Compilers optimize constants more easily"
+          ],
+          "pros_fr": [
+            "Empêchent la modification accidentelle de valeurs critiques",
+            "Améliorent la lisibilité (PI, MAX_SIZE)",
+            "Les compilateurs optimisent les constantes plus facilement"
+          ],
+          "cons": [
+            "Menos flexíveis por definição",
+            "Em JS, const para objetos não congela as propriedades internas",
+            "Requerem valor definido na declaração"
+          ],
+          "cons_en": [
+            "Less flexible by definition",
+            "In JS, const for objects doesn't freeze inner properties",
+            "Require value defined at declaration"
+          ],
+          "cons_fr": [
+            "Moins flexibles par définition",
+            "En JS, const pour les objets ne gèle pas les propriétés internes",
+            "Nécessitent une valeur définie à la déclaration"
+          ],
           "when": "Use para valores que nunca mudam: PI, tamanhos máximos, chaves de API, configurações fixas.",
+          "when_en": "Use for values that never change: PI, max sizes, API keys, fixed configurations.",
+          "when_fr": "Utilisez pour les valeurs qui ne changent jamais : PI, tailles maximales, clés API, configurations fixes.",
           "examples": {
             "javascript": "const PI = 3.14159;\nconst MAX_TENTATIVAS = 3;\nconst CONFIG = { host: 'localhost' };\nCONFIG.host = 'prod'; // Permitido! (propriedade)\n// CONFIG = {}; // ERRO — reatribuição proibida",
             "python": "# Python usa convenção de MAIÚSCULAS\nPI = 3.14159\nMAX_TENTATIVAS = 3\n# Ou com typing:\nfrom typing import Final\nPI: Final = 3.14159",
@@ -42,11 +112,45 @@
         {
           "id": "arrays",
           "title": "Arrays",
+          "title_en": "Arrays",
+          "title_fr": "Tableaux",
           "icon": "📋",
           "desc": "Coleção de elementos do mesmo tipo armazenados em posições contíguas de memória, acessados por índice numérico (começa em 0).",
-          "pros": ["Acesso O(1) por índice — extremamente rápido", "Simples e suportado nativamente em todas as linguagens", "Ótimo uso de cache da CPU (memória contígua)"],
-          "cons": ["Tamanho fixo em linguagens estáticas", "Inserção/remoção no meio é O(n)", "Índice fora do limite causa erros críticos"],
+          "desc_en": "Collection of same-type elements stored in contiguous memory positions, accessed by numeric index (starts at 0).",
+          "desc_fr": "Collection d'éléments du même type stockés en mémoire contiguë, accessibles par index numérique (commence à 0).",
+          "pros": [
+            "Acesso O(1) por índice — extremamente rápido",
+            "Simples e suportado nativamente em todas as linguagens",
+            "Ótimo uso de cache da CPU (memória contígua)"
+          ],
+          "pros_en": [
+            "O(1) access by index — extremely fast",
+            "Simple and natively supported in all languages",
+            "Great CPU cache usage (contiguous memory)"
+          ],
+          "pros_fr": [
+            "Accès O(1) par index — extrêmement rapide",
+            "Simple et supporté nativement dans tous les langages",
+            "Excellent usage du cache CPU (mémoire contiguë)"
+          ],
+          "cons": [
+            "Tamanho fixo em linguagens estáticas",
+            "Inserção/remoção no meio é O(n)",
+            "Índice fora do limite causa erros críticos"
+          ],
+          "cons_en": [
+            "Fixed size in static languages",
+            "Insertion/removal in the middle is O(n)",
+            "Out-of-bounds index causes critical errors"
+          ],
+          "cons_fr": [
+            "Taille fixe dans les langages statiques",
+            "Insertion/suppression au milieu est O(n)",
+            "L'indice hors limites provoque des erreurs critiques"
+          ],
           "when": "Use quando precisa de acesso rápido por posição, lista ordenada de tamanho conhecido, iteração sequencial.",
+          "when_en": "Use when you need fast access by position, ordered list of known size, sequential iteration.",
+          "when_fr": "Utilisez quand vous avez besoin d'un accès rapide par position, une liste ordonnée de taille connue, itération séquentielle.",
           "examples": {
             "javascript": "// Arrays dinâmicos em JS\nconst frutas = ['maçã', 'banana', 'laranja'];\nconsole.log(frutas[0]); // 'maçã'\nfrutas.push('uva');      // Adiciona no fim\nfrutas.pop();            // Remove do fim\nfrutas.splice(1, 1);     // Remove índice 1\n\n// Métodos funcionais\nconst maiusculas = frutas.map(f => f.toUpperCase());\nconst comA = frutas.filter(f => f.startsWith('a'));\nconst total = [1,2,3].reduce((acc, n) => acc + n, 0);",
             "python": "frutas = ['maçã', 'banana', 'laranja']\nprint(frutas[0])   # 'maçã'\nfrutas.append('uva')\nfrutas.remove('banana')\n\n# List comprehension\nmaiusculas = [f.upper() for f in frutas]\ncomA = [f for f in frutas if f.startswith('a')]",
@@ -58,11 +162,45 @@
         {
           "id": "structs",
           "title": "Structs / Objetos",
+          "title_en": "Structs / Objects",
+          "title_fr": "Structs / Objets",
           "icon": "🏗️",
           "desc": "Estrutura de dados que agrupa campos de tipos diferentes sob um único nome. Base para orientação a objetos e modelagem do domínio.",
-          "pros": ["Agrupa dados relacionados em uma unidade coesa", "Melhora legibilidade: pessoa.nome vs nome_da_pessoa", "Base para OOP: classes são structs com comportamento"],
-          "cons": ["Mais verboso para criar e manipular", "Serialização (JSON, binário) exige cuidado", "Herança mal usada gera acoplamento excessivo"],
+          "desc_en": "Data structure that groups fields of different types under a single name. Foundation for OOP and domain modeling.",
+          "desc_fr": "Structure de données qui regroupe des champs de types différents sous un seul nom. Base de la POO et de la modélisation du domaine.",
+          "pros": [
+            "Agrupa dados relacionados em uma unidade coesa",
+            "Melhora legibilidade: pessoa.nome vs nome_da_pessoa",
+            "Base para OOP: classes são structs com comportamento"
+          ],
+          "pros_en": [
+            "Groups related data in a cohesive unit",
+            "Improves readability: person.name vs person_name",
+            "OOP foundation: classes are structs with behavior"
+          ],
+          "pros_fr": [
+            "Regroupe les données liées dans une unité cohésive",
+            "Améliore la lisibilité : personne.nom vs nom_de_personne",
+            "Base de la POO : les classes sont des structs avec comportement"
+          ],
+          "cons": [
+            "Mais verboso para criar e manipular",
+            "Serialização (JSON, binário) exige cuidado",
+            "Herança mal usada gera acoplamento excessivo"
+          ],
+          "cons_en": [
+            "More verbose to create and manipulate",
+            "Serialization (JSON, binary) requires care",
+            "Misused inheritance creates excessive coupling"
+          ],
+          "cons_fr": [
+            "Plus verbeux à créer et manipuler",
+            "La sérialisation (JSON, binaire) demande de l'attention",
+            "L'héritage mal utilisé génère un couplage excessif"
+          ],
           "when": "Use para modelar entidades do mundo real: Usuário, Produto, Pedido, Endereço.",
+          "when_en": "Use to model real-world entities: User, Product, Order, Address.",
+          "when_fr": "Utilisez pour modéliser des entités réelles : Utilisateur, Produit, Commande, Adresse.",
           "examples": {
             "javascript": "// Objeto literal\nconst pessoa = {\n  nome: 'Alice',\n  idade: 30,\n  saudar() { return `Olá, sou ${this.nome}`; }\n};\n\n// Classe (ES6+)\nclass Produto {\n  constructor(nome, preco) {\n    this.nome = nome;\n    this.preco = preco;\n  }\n  comDesconto(pct) {\n    return this.preco * (1 - pct / 100);\n  }\n}\nconst p = new Produto('Notebook', 3000);\nconsole.log(p.comDesconto(10)); // 2700",
             "python": "# dataclass (Python 3.7+)\nfrom dataclasses import dataclass\n\n@dataclass\nclass Produto:\n    nome: str\n    preco: float\n\n    def com_desconto(self, pct: float) -> float:\n        return self.preco * (1 - pct / 100)\n\np = Produto('Notebook', 3000)\nprint(p.com_desconto(10)) # 2700.0",
@@ -74,11 +212,45 @@
         {
           "id": "listas",
           "title": "Listas Encadeadas",
+          "title_en": "Linked Lists",
+          "title_fr": "Listes Chaînées",
           "icon": "🔗",
           "desc": "Estrutura onde cada elemento (nó) contém um valor e um ponteiro para o próximo nó. Não usa memória contígua — cresce/encolhe dinamicamente.",
-          "pros": ["Inserção/remoção O(1) no início ou com ponteiro", "Crescimento dinâmico sem realocação de memória", "Base para pilhas, filas e outras estruturas"],
-          "cons": ["Acesso por índice é O(n) — sem acesso direto", "Maior uso de memória (ponteiros extras)", "Cache-unfriendly — nós espalhados na memória"],
+          "desc_en": "Structure where each element (node) contains a value and a pointer to the next node. Does not use contiguous memory — grows/shrinks dynamically.",
+          "desc_fr": "Structure où chaque élément (nœud) contient une valeur et un pointeur vers le nœud suivant. N'utilise pas de mémoire contiguë — grandit/rétrécit dynamiquement.",
+          "pros": [
+            "Inserção/remoção O(1) no início ou com ponteiro",
+            "Crescimento dinâmico sem realocação de memória",
+            "Base para pilhas, filas e outras estruturas"
+          ],
+          "pros_en": [
+            "O(1) insertion/removal at start or with pointer",
+            "Dynamic growth without memory reallocation",
+            "Foundation for stacks, queues and other structures"
+          ],
+          "pros_fr": [
+            "Insertion/suppression O(1) au début ou avec pointeur",
+            "Croissance dynamique sans réallocation mémoire",
+            "Base des piles, files et autres structures"
+          ],
+          "cons": [
+            "Acesso por índice é O(n) — sem acesso direto",
+            "Maior uso de memória (ponteiros extras)",
+            "Cache-unfriendly — nós espalhados na memória"
+          ],
+          "cons_en": [
+            "Index access is O(n) — no direct access",
+            "Higher memory usage (extra pointers)",
+            "Cache-unfriendly — nodes scattered in memory"
+          ],
+          "cons_fr": [
+            "L'accès par index est O(n) — pas d'accès direct",
+            "Utilisation mémoire plus élevée (pointeurs supplémentaires)",
+            "Cache-unfriendly — nœuds dispersés en mémoire"
+          ],
           "when": "Use quando há muitas inserções/remoções no início ou meio; quando o tamanho é imprevisível; para implementar filas ou pilhas.",
+          "when_en": "Use when there are many insertions/removals at the start or middle; when size is unpredictable; to implement queues or stacks.",
+          "when_fr": "Utilisez quand il y a de nombreuses insertions/suppressions au début ou au milieu ; quand la taille est imprévisible ; pour implémenter des files ou piles.",
           "examples": {
             "javascript": "class No {\n  constructor(valor) {\n    this.valor = valor;\n    this.proximo = null;\n  }\n}\n\nclass ListaEncadeada {\n  constructor() { this.cabeca = null; }\n\n  inserirInicio(valor) {\n    const no = new No(valor);\n    no.proximo = this.cabeca;\n    this.cabeca = no;\n  }\n\n  imprimir() {\n    let atual = this.cabeca;\n    const resultado = [];\n    while (atual) {\n      resultado.push(atual.valor);\n      atual = atual.proximo;\n    }\n    console.log(resultado.join(' → '));\n  }\n}\n\nconst lista = new ListaEncadeada();\nlista.inserirInicio(3);\nlista.inserirInicio(2);\nlista.inserirInicio(1);\nlista.imprimir(); // 1 → 2 → 3",
             "python": "class No:\n    def __init__(self, valor):\n        self.valor = valor\n        self.proximo = None\n\nclass ListaEncadeada:\n    def __init__(self):\n        self.cabeca = None\n\n    def inserir_inicio(self, valor):\n        no = No(valor)\n        no.proximo = self.cabeca\n        self.cabeca = no\n\n    def imprimir(self):\n        atual = self.cabeca\n        while atual:\n            print(atual.valor, end=' → ')\n            atual = atual.proximo\n\nlista = ListaEncadeada()\nlista.inserir_inicio(3)\nlista.inserir_inicio(1)\nlista.imprimir() # 1 → 3",
@@ -90,13 +262,47 @@
         {
           "id": "arvores",
           "title": "Árvores (BST)",
+          "title_en": "Trees (BST)",
+          "title_fr": "Arbres (BST)",
           "icon": "🌳",
           "desc": "Estrutura hierárquica com nó raiz, filhos e folhas. BST (Binary Search Tree): nós à esquerda < raiz < nós à direita. Busca em O(log n).",
-          "pros": ["Busca, inserção e remoção O(log n) em árvore balanceada", "Estrutura natural para hierarquias (arquivos, DOM, categorias)", "Base para algoritmos de busca eficientes"],
-          "cons": ["Pode degenerar em lista (O(n)) se não balanceada", "Implementação mais complexa que arrays/listas", "Balanceamento automático (AVL, Red-Black) é complexo"],
+          "desc_en": "Hierarchical structure with root node, children and leaves. BST: left nodes < root < right nodes. Search in O(log n).",
+          "desc_fr": "Structure hiérarchique avec nœud racine, enfants et feuilles. BST : nœuds à gauche < racine < nœuds à droite. Recherche en O(log n).",
+          "pros": [
+            "Busca, inserção e remoção O(log n) em árvore balanceada",
+            "Estrutura natural para hierarquias (arquivos, DOM, categorias)",
+            "Base para algoritmos de busca eficientes"
+          ],
+          "pros_en": [
+            "Search, insert and remove O(log n) in balanced tree",
+            "Natural structure for hierarchies (files, DOM, categories)",
+            "Foundation for efficient search algorithms"
+          ],
+          "pros_fr": [
+            "Recherche, insertion et suppression O(log n) dans un arbre équilibré",
+            "Structure naturelle pour les hiérarchies (fichiers, DOM, catégories)",
+            "Base des algorithmes de recherche efficaces"
+          ],
+          "cons": [
+            "Pode degenerar em lista (O(n)) se não balanceada",
+            "Implementação mais complexa que arrays/listas",
+            "Balanceamento automático (AVL, Red-Black) é complexo"
+          ],
+          "cons_en": [
+            "Can degenerate into a list (O(n)) if unbalanced",
+            "More complex implementation than arrays/lists",
+            "Auto-balancing (AVL, Red-Black) is complex"
+          ],
+          "cons_fr": [
+            "Peut dégénérer en liste (O(n)) si non équilibré",
+            "Implémentation plus complexe que les tableaux/listes",
+            "L'auto-équilibrage (AVL, Rouge-Noir) est complexe"
+          ],
           "when": "Use para buscas frequentes em dados ordenados, representar hierarquias, implementar dicionários e conjuntos.",
+          "when_en": "Use for frequent searches on sorted data, representing hierarchies, implementing dictionaries and sets.",
+          "when_fr": "Utilisez pour les recherches fréquentes sur des données triées, représenter des hiérarchies, implémenter des dictionnaires et ensembles.",
           "examples": {
-            "javascript": "class NoArvore {\n  constructor(valor) {\n    this.valor = valor;\n    this.esq = null;\n    this.dir = null;\n  }\n}\n\nclass BST {\n  constructor() { this.raiz = null; }\n\n  inserir(valor) {\n    const inserirRec = (no, v) => {\n      if (!no) return new NoArvore(v);\n      if (v < no.valor) no.esq = inserirRec(no.esq, v);\n      else if (v > no.valor) no.dir = inserirRec(no.dir, v);\n      return no;\n    };\n    this.raiz = inserirRec(this.raiz, valor);\n  }\n\n  buscar(valor) {\n    const buscarRec = (no, v) => {\n      if (!no || no.valor === v) return no;\n      return v < no.valor\n        ? buscarRec(no.esq, v)\n        : buscarRec(no.dir, v);\n    };\n    return buscarRec(this.raiz, valor);\n  }\n}\n\nconst arvore = new BST();\n[5, 3, 7, 1, 4].forEach(v => arvore.inserir(v));\nconsole.log(arvore.buscar(4)); // NoArvore { valor: 4, ... }",
+            "javascript": "class NoArvore {\n  constructor(valor) {\n    this.valor = valor;\n    this.esq = null;\n    this.dir = null;\n  }\n}\n\nclass BST {\n  constructor() { this.raiz = null; }\n\n  inserir(valor) {\n    const inserirRec = (no, v) => {\n      if (!no) return new NoArvore(v);\n      if (v < no.valor) no.esq = inserirRec(no.esq, v);\n      else if (v > no.valor) no.dir = inserirRec(no.dir, v);\n      return no;\n    };\n    this.raiz = inserirRec(this.raiz, valor);\n  }\n\n  buscar(valor) {\n    const buscarRec = (no, v) => {\n      if (!no || no.valor === v) return no;\n      return v < no.valor\n        ? buscarRec(no.esq, v)\n        : buscarRec(no.dir, v);\n    };\n    return buscarRec(this.raiz, valor);\n  }\n}\n\nconst arvore = new BST();\n[5, 3, 7, 1, 4].forEach(v => arvore.inserir(v));\nconsole.log(arvore.buscar(4));",
             "python": "class No:\n    def __init__(self, valor):\n        self.valor = valor\n        self.esq = self.dir = None\n\nclass BST:\n    def __init__(self): self.raiz = None\n\n    def inserir(self, valor):\n        def _ins(no, v):\n            if not no: return No(v)\n            if v < no.valor: no.esq = _ins(no.esq, v)\n            elif v > no.valor: no.dir = _ins(no.dir, v)\n            return no\n        self.raiz = _ins(self.raiz, valor)\n\n    def buscar(self, valor):\n        def _bus(no, v):\n            if not no or no.valor == v: return no\n            return _bus(no.esq, v) if v < no.valor else _bus(no.dir, v)\n        return _bus(self.raiz, valor)",
             "java": "class No {\n    int valor;\n    No esq, dir;\n    No(int v) { valor = v; }\n}\n\nclass BST {\n    No raiz;\n\n    No inserir(No no, int v) {\n        if (no == null) return new No(v);\n        if (v < no.valor) no.esq = inserir(no.esq, v);\n        else if (v > no.valor) no.dir = inserir(no.dir, v);\n        return no;\n    }\n}",
             "php": "class No {\n    public int $valor;\n    public ?No $esq = null, $dir = null;\n    public function __construct(int $v) { $this->valor = $v; }\n}\n\nfunction inserir(?No $no, int $v): No {\n    if (!$no) return new No($v);\n    if ($v < $no->valor) $no->esq = inserir($no->esq, $v);\n    elseif ($v > $no->valor) $no->dir = inserir($no->dir, $v);\n    return $no;\n}",
@@ -106,11 +312,45 @@
         {
           "id": "mapa",
           "title": "Mapa / Dicionário (Hash Map)",
+          "title_en": "Map / Dictionary (Hash Map)",
+          "title_fr": "Map / Dictionnaire (Hash Map)",
           "icon": "🗺️",
           "desc": "Estrutura chave→valor onde a chave é transformada em hash para acesso O(1). Também chamado de Hash Table, Dictionary ou Object.",
-          "pros": ["Acesso, inserção e remoção médio O(1)", "Chaves de qualquer tipo hashable", "Elimina necessidade de buscas lineares"],
-          "cons": ["Pior caso O(n) com muitas colisões de hash", "Não garante ordem de inserção (depende da implementação)", "Maior uso de memória que arrays"],
+          "desc_en": "Key→value structure where the key is hashed for O(1) access. Also called Hash Table, Dictionary or Object.",
+          "desc_fr": "Structure clé→valeur où la clé est transformée en hash pour un accès O(1). Aussi appelé Hash Table, Dictionary ou Object.",
+          "pros": [
+            "Acesso, inserção e remoção médio O(1)",
+            "Chaves de qualquer tipo hashable",
+            "Elimina necessidade de buscas lineares"
+          ],
+          "pros_en": [
+            "Average O(1) access, insert and remove",
+            "Keys of any hashable type",
+            "Eliminates the need for linear searches"
+          ],
+          "pros_fr": [
+            "Accès, insertion et suppression en O(1) en moyenne",
+            "Clés de tout type hashable",
+            "Élimine le besoin de recherches linéaires"
+          ],
+          "cons": [
+            "Pior caso O(n) com muitas colisões de hash",
+            "Não garante ordem de inserção (depende da implementação)",
+            "Maior uso de memória que arrays"
+          ],
+          "cons_en": [
+            "Worst case O(n) with many hash collisions",
+            "Does not guarantee insertion order (implementation-dependent)",
+            "Higher memory usage than arrays"
+          ],
+          "cons_fr": [
+            "Pire cas O(n) avec beaucoup de collisions de hash",
+            "Ne garantit pas l'ordre d'insertion (dépend de l'implémentation)",
+            "Utilisation mémoire plus élevée que les tableaux"
+          ],
           "when": "Use para cache, contagem de frequências, índices invertidos, lookup rápido por chave.",
+          "when_en": "Use for cache, frequency counting, inverted indexes, fast lookup by key.",
+          "when_fr": "Utilisez pour le cache, le comptage de fréquences, les index inversés, la recherche rapide par clé.",
           "examples": {
             "javascript": "// Map nativo (qualquer tipo como chave)\nconst mapa = new Map();\nmapa.set('usuario', { nome: 'Alice', id: 1 });\nmapa.set(42, 'resposta');\nconsole.log(mapa.get('usuario')); // { nome: 'Alice', id: 1 }\nconsole.log(mapa.has(42)); // true\nmapa.delete(42);\n\n// Object (chaves string/symbol)\nconst cache = {};\ncache['req_123'] = { data: '...', ts: Date.now() };\n\n// Contagem de frequência\nconst texto = 'banana';\nconst freq = {};\nfor (const c of texto) freq[c] = (freq[c] || 0) + 1;\nconsole.log(freq); // { b:1, a:3, n:2 }",
             "python": "# dict nativo\nmapa = {}\nmapa['usuario'] = {'nome': 'Alice', 'id': 1}\nprint(mapa.get('usuario'))  # {'nome': 'Alice', 'id': 1}\n\n# Contagem com Counter\nfrom collections import Counter\nfreq = Counter('banana')\nprint(freq)  # Counter({'a': 3, 'n': 2, 'b': 1})\n\n# defaultdict\nfrom collections import defaultdict\ngrupos = defaultdict(list)\ngrupos['frutas'].append('maçã')\ngrupos['frutas'].append('banana')",
@@ -124,6 +364,8 @@
     {
       "id": "javascript",
       "label": "JavaScript",
+      "label_en": "JavaScript",
+      "label_fr": "JavaScript",
       "icon": "⚡",
       "color": "#f0db4f",
       "accent": "#d29922",
@@ -131,11 +373,51 @@
         {
           "id": "js_intro",
           "title": "O que é JavaScript?",
+          "title_en": "What is JavaScript?",
+          "title_fr": "Qu'est-ce que JavaScript ?",
           "icon": "📖",
           "desc": "Linguagem de programação interpretada, orientada a eventos, single-threaded com event loop. Roda nativamente no browser e, via Node.js, no servidor.",
-          "pros": ["Única linguagem que roda nativamente no browser", "Assíncrono nativo (Promises, async/await)", "Ecossistema imenso (npm)", "Full-stack: browser + Node.js + mobile (React Native)"],
-          "cons": ["Coerção de tipos implícita gera bugs sutis (==)", "Single-threaded — CPU-bound trava a UI", "Escopo histórico confuso (var, hoisting)", "Sem tipagem estática nativa (use TypeScript)"],
+          "desc_en": "Interpreted, event-driven, single-threaded programming language with event loop. Runs natively in the browser and, via Node.js, on the server.",
+          "desc_fr": "Langage de programmation interprété, orienté événements, mono-thread avec event loop. S'exécute nativement dans le navigateur et, via Node.js, sur le serveur.",
+          "pros": [
+            "Única linguagem que roda nativamente no browser",
+            "Assíncrono nativo (Promises, async/await)",
+            "Ecossistema imenso (npm)",
+            "Full-stack: browser + Node.js + mobile (React Native)"
+          ],
+          "pros_en": [
+            "Only language that runs natively in the browser",
+            "Native async (Promises, async/await)",
+            "Huge ecosystem (npm)",
+            "Full-stack: browser + Node.js + mobile (React Native)"
+          ],
+          "pros_fr": [
+            "Seul langage natif dans le navigateur",
+            "Async natif (Promises, async/await)",
+            "Ecosystème immense (npm)",
+            "Full-stack : navigateur + Node.js + mobile (React Native)"
+          ],
+          "cons": [
+            "Coerção de tipos implícita gera bugs sutis (==)",
+            "Single-threaded — CPU-bound trava a UI",
+            "Escopo histórico confuso (var, hoisting)",
+            "Sem tipagem estática nativa (use TypeScript)"
+          ],
+          "cons_en": [
+            "Implicit type coercion causes subtle bugs (==)",
+            "Single-threaded — CPU-bound freezes the UI",
+            "Historical confusing scope (var, hoisting)",
+            "No native static typing (use TypeScript)"
+          ],
+          "cons_fr": [
+            "La coercition de type implicite génère des bugs subtils (==)",
+            "Mono-thread — les opérations CPU bloquent l'interface",
+            "Portée historiquement confuse (var, hoisting)",
+            "Pas de typage statique natif (utilisez TypeScript)"
+          ],
           "when": "Front-end web, scripts de automação, APIs REST (Node.js), apps mobile (React Native), serverless.",
+          "when_en": "Web front-end, automation scripts, REST APIs (Node.js), mobile apps (React Native), serverless.",
+          "when_fr": "Front-end web, scripts d'automatisation, APIs REST (Node.js), apps mobiles (React Native), serverless.",
           "examples": {
             "javascript": "// Tipos e coerção\nconsole.log(1 + '2');   // '12' (string)\nconsole.log(1 - '2');   // -1  (número)\nconsole.log([] == ![]);  // true (!)\n\n// Sempre use === (igualdade estrita)\nconsole.log(1 === '1'); // false\nconsole.log(1 == '1');  // true (perigoso!)\n\n// Nullish coalescing e optional chaining\nconst user = null;\nconsole.log(user?.nome ?? 'Anônimo'); // 'Anônimo'"
           }
@@ -143,11 +425,42 @@
         {
           "id": "js_closures",
           "title": "Closures & Escopo",
+          "title_en": "Closures & Scope",
+          "title_fr": "Closures & Portée",
           "icon": "🔐",
           "desc": "Uma closure é uma função que 'lembra' o ambiente léxico onde foi criada, mesmo após esse ambiente não estar mais na pilha de chamadas.",
-          "pros": ["Encapsulamento de estado sem classes", "Base dos módulos e do padrão Module Pattern", "Permitem factory functions e currying"],
-          "cons": ["Podem causar memory leaks se não forem liberadas", "Dificulta debugging se o estado interno for opaco"],
+          "desc_en": "A closure is a function that 'remembers' the lexical environment where it was created, even after that environment is no longer on the call stack.",
+          "desc_fr": "Une closure est une fonction qui 'se souvient' de l'environnement lexical où elle a été créée, même après que cet environnement n'est plus sur la pile d'appels.",
+          "pros": [
+            "Encapsulamento de estado sem classes",
+            "Base dos módulos e do padrão Module Pattern",
+            "Permitem factory functions e currying"
+          ],
+          "pros_en": [
+            "State encapsulation without classes",
+            "Foundation of modules and Module Pattern",
+            "Enable factory functions and currying"
+          ],
+          "pros_fr": [
+            "Encapsulation d'état sans classes",
+            "Base des modules et du Module Pattern",
+            "Permettent les factory functions et le currying"
+          ],
+          "cons": [
+            "Podem causar memory leaks se não forem liberadas",
+            "Dificulta debugging se o estado interno for opaco"
+          ],
+          "cons_en": [
+            "Can cause memory leaks if not released",
+            "Makes debugging harder if internal state is opaque"
+          ],
+          "cons_fr": [
+            "Peuvent causer des fuites mémoire si non libérées",
+            "Rend le débogage difficile si l'état interne est opaque"
+          ],
           "when": "Callbacks, event listeners, factory functions, memoização, módulos.",
+          "when_en": "Callbacks, event listeners, factory functions, memoization, modules.",
+          "when_fr": "Callbacks, event listeners, factory functions, mémoïsation, modules.",
           "examples": {
             "javascript": "// Closure clássica: contador encapsulado\nfunction criarContador() {\n  let contagem = 0; // variável privada!\n  return {\n    incrementar: () => ++contagem,\n    resetar: () => { contagem = 0; },\n    obter: () => contagem\n  };\n}\n\nconst c = criarContador();\nc.incrementar(); // 1\nc.incrementar(); // 2\nconsole.log(c.obter()); // 2\n// contagem não é acessível de fora!\n\n// Closure em loop (bug clássico de entrevista)\nfor (let i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 100);\n}\n// Com let: 0, 1, 2 ✓\n// Com var: 3, 3, 3 ✗ (mesmo escopo)"
           }
@@ -155,25 +468,93 @@
         {
           "id": "js_async",
           "title": "Assincronismo (Event Loop)",
+          "title_en": "Async (Event Loop)",
+          "title_fr": "Asynchronisme (Event Loop)",
           "icon": "🔄",
           "desc": "JS é single-threaded mas lida com I/O assíncrono via Event Loop: operações lentas são delegadas ao browser/Node.js, e os callbacks entram na fila quando completos.",
-          "pros": ["Não bloqueia a UI durante I/O", "async/await torna código assíncrono legível como síncrono", "Promise.all paraleliza múltiplas operações"],
-          "cons": ["Callback hell (sem Promises)", "Erros em Promises não capturados causam falhas silenciosas", "Não serve para CPU-bound (use Web Workers)"],
+          "desc_en": "JS is single-threaded but handles async I/O via Event Loop: slow operations are delegated to the browser/Node.js, and callbacks enter the queue when done.",
+          "desc_fr": "JS est mono-thread mais gère l'I/O asynchrone via l'Event Loop : les opérations lentes sont déléguées au navigateur/Node.js, et les callbacks entrent dans la file quand ils sont terminés.",
+          "pros": [
+            "Não bloqueia a UI durante I/O",
+            "async/await torna código assíncrono legível como síncrono",
+            "Promise.all paraleliza múltiplas operações"
+          ],
+          "pros_en": [
+            "Does not block the UI during I/O",
+            "async/await makes async code read like sync",
+            "Promise.all parallelizes multiple operations"
+          ],
+          "pros_fr": [
+            "Ne bloque pas l'interface pendant l'I/O",
+            "async/await rend le code asynchrone lisible comme du synchrone",
+            "Promise.all parallélise plusieurs opérations"
+          ],
+          "cons": [
+            "Callback hell (sem Promises)",
+            "Erros em Promises não capturados causam falhas silenciosas",
+            "Não serve para CPU-bound (use Web Workers)"
+          ],
+          "cons_en": [
+            "Callback hell (without Promises)",
+            "Uncaught Promise errors cause silent failures",
+            "Not suitable for CPU-bound (use Web Workers)"
+          ],
+          "cons_fr": [
+            "Callback hell (sans Promises)",
+            "Les erreurs Promise non capturées causent des échecs silencieux",
+            "Pas adapté aux opérations CPU-intensive (utilisez Web Workers)"
+          ],
           "when": "Toda operação de I/O: fetch, leitura de arquivo, timers, banco de dados.",
+          "when_en": "Every I/O operation: fetch, file reading, timers, database.",
+          "when_fr": "Toute opération I/O : fetch, lecture de fichier, timers, base de données.",
           "examples": {
-            "javascript": "// Callback (antiga forma)\nfetch('/api/dados')\n  .then(res => res.json())\n  .then(data => console.log(data))\n  .catch(err => console.error(err));\n\n// async/await (forma moderna)\nasync function carregarDados() {\n  try {\n    const res = await fetch('/api/dados');\n    const data = await res.json();\n    return data;\n  } catch (err) {\n    console.error('Erro:', err);\n  }\n}\n\n// Paralelismo\nasync function carregarTudo() {\n  const [usuarios, produtos] = await Promise.all([\n    fetch('/api/usuarios').then(r => r.json()),\n    fetch('/api/produtos').then(r => r.json())\n  ]);\n  return { usuarios, produtos };\n}"
+            "javascript": "// async/await (forma moderna)\nasync function carregarDados() {\n  try {\n    const res = await fetch('/api/dados');\n    const data = await res.json();\n    return data;\n  } catch (err) {\n    console.error('Erro:', err);\n  }\n}\n\n// Paralelismo\nasync function carregarTudo() {\n  const [usuarios, produtos] = await Promise.all([\n    fetch('/api/usuarios').then(r => r.json()),\n    fetch('/api/produtos').then(r => r.json())\n  ]);\n  return { usuarios, produtos };\n}"
           }
         },
         {
           "id": "js_dom",
           "title": "Manipulação do DOM",
+          "title_en": "DOM Manipulation",
+          "title_fr": "Manipulation du DOM",
           "icon": "🌐",
           "desc": "O DOM (Document Object Model) é a representação em árvore do HTML. JavaScript pode criar, modificar, remover e ouvir eventos em qualquer elemento.",
-          "pros": ["Controle total da interface sem recarregar a página", "API padronizada (W3C) funciona em todos os browsers", "Base para todos os frameworks modernos (React, Vue)"],
-          "cons": ["Operações no DOM são lentas — minimizar reflows", "innerHTML com dados do usuário abre XSS", "API verbosa comparada a jQuery"],
+          "desc_en": "The DOM (Document Object Model) is the tree representation of HTML. JavaScript can create, modify, remove and listen to events on any element.",
+          "desc_fr": "Le DOM (Document Object Model) est la représentation arborescente du HTML. JavaScript peut créer, modifier, supprimer et écouter des événements sur n'importe quel élément.",
+          "pros": [
+            "Controle total da interface sem recarregar a página",
+            "API padronizada (W3C) funciona em todos os browsers",
+            "Base para todos os frameworks modernos (React, Vue)"
+          ],
+          "pros_en": [
+            "Full control of the UI without page reload",
+            "Standardized API (W3C) works in all browsers",
+            "Foundation for all modern frameworks (React, Vue)"
+          ],
+          "pros_fr": [
+            "Contrôle total de l'interface sans rechargement",
+            "API standardisée (W3C) fonctionne dans tous les navigateurs",
+            "Base de tous les frameworks modernes (React, Vue)"
+          ],
+          "cons": [
+            "Operações no DOM são lentas — minimizar reflows",
+            "innerHTML com dados do usuário abre XSS",
+            "API verbosa comparada a jQuery"
+          ],
+          "cons_en": [
+            "DOM operations are slow — minimize reflows",
+            "innerHTML with user data opens XSS",
+            "Verbose API compared to jQuery"
+          ],
+          "cons_fr": [
+            "Les opérations DOM sont lentes — minimiser les reflows",
+            "innerHTML avec des données utilisateur ouvre des failles XSS",
+            "API verbeuse comparée à jQuery"
+          ],
           "when": "Toda interação dinâmica de UI: formulários, listas dinâmicas, modais, validações.",
+          "when_en": "Every dynamic UI interaction: forms, dynamic lists, modals, validations.",
+          "when_fr": "Toute interaction UI dynamique : formulaires, listes dynamiques, modales, validations.",
           "examples": {
-            "javascript": "// Seleção\nconst btn = document.querySelector('#meu-btn');\nconst itens = document.querySelectorAll('.item');\n\n// Criação e inserção\nconst li = document.createElement('li');\nli.textContent = 'Novo item'; // SEGURO: sem XSS\n// li.innerHTML = user_input;  // PERIGOSO!\ndocument.querySelector('ul').appendChild(li);\n\n// Eventos\nbtn.addEventListener('click', (e) => {\n  e.preventDefault();\n  btn.disabled = true;\n  btn.textContent = 'Carregando...';\n});\n\n// Delegação de eventos (eficiente para listas dinâmicas)\ndocument.querySelector('#lista').addEventListener('click', (e) => {\n  if (e.target.matches('.item')) {\n    console.log('Item clicado:', e.target.textContent);\n  }\n});"
+            "javascript": "// Seleção\nconst btn = document.querySelector('#meu-btn');\nconst itens = document.querySelectorAll('.item');\n\n// Criação e inserção\nconst li = document.createElement('li');\nli.textContent = 'Novo item'; // SEGURO: sem XSS\ndocument.querySelector('ul').appendChild(li);\n\n// Eventos\nbtn.addEventListener('click', (e) => {\n  e.preventDefault();\n  btn.disabled = true;\n  btn.textContent = 'Carregando...';\n});\n\n// Delegação de eventos (eficiente para listas dinâmicas)\ndocument.querySelector('#lista').addEventListener('click', (e) => {\n  if (e.target.matches('.item')) {\n    console.log('Item clicado:', e.target.textContent);\n  }\n});"
           }
         }
       ]
@@ -181,6 +562,8 @@
     {
       "id": "html",
       "label": "HTML",
+      "label_en": "HTML",
+      "label_fr": "HTML",
       "icon": "📄",
       "color": "#e44d26",
       "accent": "#f16529",
@@ -188,11 +571,42 @@
         {
           "id": "html_semantico",
           "title": "HTML Semântico",
+          "title_en": "Semantic HTML",
+          "title_fr": "HTML Sémantique",
           "icon": "🏷️",
           "desc": "Usar elementos HTML pelo seu SIGNIFICADO, não pela aparência. `<article>`, `<nav>`, `<header>`, `<main>` comunicam estrutura para browsers, leitores de tela e SEO.",
-          "pros": ["Melhora acessibilidade (ARIA implícito)", "SEO: motores de busca entendem a estrutura", "Manutenção: código autodocumentado"],
-          "cons": ["Curva de aprendizado para escolher o elemento certo", "Browsers legados precisam de polyfills (IE)"],
+          "desc_en": "Using HTML elements for their MEANING, not appearance. `<article>`, `<nav>`, `<header>`, `<main>` communicate structure to browsers, screen readers and SEO.",
+          "desc_fr": "Utiliser les éléments HTML pour leur SENS, pas leur apparence. `<article>`, `<nav>`, `<header>`, `<main>` communiquent la structure aux navigateurs, lecteurs d'écran et SEO.",
+          "pros": [
+            "Melhora acessibilidade (ARIA implícito)",
+            "SEO: motores de busca entendem a estrutura",
+            "Manutenção: código autodocumentado"
+          ],
+          "pros_en": [
+            "Improves accessibility (implicit ARIA)",
+            "SEO: search engines understand the structure",
+            "Maintenance: self-documenting code"
+          ],
+          "pros_fr": [
+            "Améliore l'accessibilité (ARIA implicite)",
+            "SEO : les moteurs de recherche comprennent la structure",
+            "Maintenance : code auto-documenté"
+          ],
+          "cons": [
+            "Curva de aprendizado para escolher o elemento certo",
+            "Browsers legados precisam de polyfills (IE)"
+          ],
+          "cons_en": [
+            "Learning curve to choose the right element",
+            "Legacy browsers need polyfills (IE)"
+          ],
+          "cons_fr": [
+            "Courbe d'apprentissage pour choisir le bon élément",
+            "Les navigateurs legacy ont besoin de polyfills (IE)"
+          ],
           "when": "SEMPRE. HTML sem semântica é anti-pattern moderno.",
+          "when_en": "ALWAYS. HTML without semantics is a modern anti-pattern.",
+          "when_fr": "TOUJOURS. HTML sans sémantique est un anti-pattern moderne.",
           "examples": {
             "javascript": "<!-- ❌ Sem semântica -->\n<div class='cabecalho'>\n  <div class='nav'><a href='/'>Home</a></div>\n</div>\n<div class='conteudo'>\n  <div class='artigo'>...</div>\n</div>\n\n<!-- ✅ Semântico -->\n<header>\n  <nav aria-label='Navegação principal'>\n    <a href='/'>Home</a>\n  </nav>\n</header>\n<main>\n  <article>\n    <h1>Título do artigo</h1>\n    <p>Conteúdo...</p>\n    <footer><time datetime='2024-01-15'>15 jan 2024</time></footer>\n  </article>\n  <aside>Conteúdo relacionado</aside>\n</main>\n<footer>Rodapé do site</footer>"
           }
@@ -200,11 +614,42 @@
         {
           "id": "html_forms",
           "title": "Formulários e Validação",
+          "title_en": "Forms and Validation",
+          "title_fr": "Formulaires et Validation",
           "icon": "📝",
           "desc": "Formulários HTML têm validação nativa embutida: required, type=email, min, max, pattern. Reduz necessidade de JavaScript e melhora acessibilidade.",
-          "pros": ["Validação nativa sem JS (type, required, pattern)", "Acessível por padrão (label + input associados)", "Suporte a diferentes tipos de input (date, color, range)"],
-          "cons": ["Customização visual limitada sem CSS avançado", "Comportamento inconsistente entre browsers em alguns tipos"],
+          "desc_en": "HTML forms have built-in native validation: required, type=email, min, max, pattern. Reduces JavaScript need and improves accessibility.",
+          "desc_fr": "Les formulaires HTML ont une validation native intégrée : required, type=email, min, max, pattern. Réduit le besoin de JavaScript et améliore l'accessibilité.",
+          "pros": [
+            "Validação nativa sem JS (type, required, pattern)",
+            "Acessível por padrão (label + input associados)",
+            "Suporte a diferentes tipos de input (date, color, range)"
+          ],
+          "pros_en": [
+            "Native validation without JS (type, required, pattern)",
+            "Accessible by default (label + associated input)",
+            "Support for different input types (date, color, range)"
+          ],
+          "pros_fr": [
+            "Validation native sans JS (type, required, pattern)",
+            "Accessible par défaut (label + input associés)",
+            "Support de différents types d'input (date, color, range)"
+          ],
+          "cons": [
+            "Customização visual limitada sem CSS avançado",
+            "Comportamento inconsistente entre browsers em alguns tipos"
+          ],
+          "cons_en": [
+            "Limited visual customization without advanced CSS",
+            "Inconsistent behavior across browsers for some types"
+          ],
+          "cons_fr": [
+            "Personnalisation visuelle limitée sans CSS avancé",
+            "Comportement incohérent entre navigateurs pour certains types"
+          ],
           "when": "Login, cadastro, busca, qualquer coleta de dados do usuário.",
+          "when_en": "Login, signup, search, any user data collection.",
+          "when_fr": "Connexion, inscription, recherche, toute collecte de données utilisateur.",
           "examples": {
             "javascript": "<form id='form-cadastro' novalidate>\n  <label for='email'>E-mail</label>\n  <input\n    id='email'\n    type='email'\n    name='email'\n    required\n    autocomplete='email'\n    placeholder='seu@email.com'\n  />\n\n  <label for='senha'>Senha</label>\n  <input\n    id='senha'\n    type='password'\n    name='senha'\n    required\n    minlength='8'\n    pattern='^(?=.*[A-Z])(?=.*[0-9]).+$'\n    title='Mínimo 8 chars, 1 maiúscula e 1 número'\n  />\n\n  <button type='submit'>Cadastrar</button>\n</form>\n\n<script>\n  document.getElementById('form-cadastro')\n    .addEventListener('submit', async (e) => {\n      e.preventDefault();\n      if (!e.target.checkValidity()) {\n        e.target.reportValidity();\n        return;\n      }\n      const dados = new FormData(e.target);\n      // Enviar via fetch...\n    });\n</script>"
           }
@@ -212,11 +657,42 @@
         {
           "id": "html_meta",
           "title": "Meta Tags & SEO",
+          "title_en": "Meta Tags & SEO",
+          "title_fr": "Meta Tags & SEO",
           "icon": "🔍",
           "desc": "Meta tags controlam como a página é indexada por buscadores e como aparece em redes sociais (Open Graph). Crítico para SEO e compartilhamento.",
-          "pros": ["Controle total da apresentação nos buscadores", "Open Graph para preview rico em redes sociais", "Viewport meta essencial para responsividade"],
-          "cons": ["Não substituem conteúdo de qualidade para SEO", "Exigem manutenção quando o conteúdo muda"],
+          "desc_en": "Meta tags control how the page is indexed by search engines and how it appears on social media (Open Graph). Critical for SEO and sharing.",
+          "desc_fr": "Les meta tags contrôlent comment la page est indexée par les moteurs de recherche et comment elle apparaît sur les réseaux sociaux (Open Graph). Critique pour le SEO et le partage.",
+          "pros": [
+            "Controle total da apresentação nos buscadores",
+            "Open Graph para preview rico em redes sociais",
+            "Viewport meta essencial para responsividade"
+          ],
+          "pros_en": [
+            "Full control of presentation in search engines",
+            "Open Graph for rich preview on social media",
+            "Viewport meta essential for responsiveness"
+          ],
+          "pros_fr": [
+            "Contrôle total de la présentation dans les moteurs de recherche",
+            "Open Graph pour un aperçu riche sur les réseaux sociaux",
+            "Viewport meta essentiel pour la réactivité"
+          ],
+          "cons": [
+            "Não substituem conteúdo de qualidade para SEO",
+            "Exigem manutenção quando o conteúdo muda"
+          ],
+          "cons_en": [
+            "Do not replace quality content for SEO",
+            "Require maintenance when content changes"
+          ],
+          "cons_fr": [
+            "Ne remplacent pas un contenu de qualité pour le SEO",
+            "Nécessitent une maintenance quand le contenu change"
+          ],
           "when": "Todas as páginas públicas. Obrigatório em projetos profissionais.",
+          "when_en": "All public pages. Mandatory in professional projects.",
+          "when_fr": "Toutes les pages publiques. Obligatoire dans les projets professionnels.",
           "examples": {
             "javascript": "<!DOCTYPE html>\n<html lang='pt-BR'>\n<head>\n  <meta charset='UTF-8'>\n  <meta name='viewport' content='width=device-width, initial-scale=1.0'>\n  <meta name='description' content='Manual técnico de JS, HTML, CSS e jQuery'>\n  <meta name='robots' content='index, follow'>\n\n  <!-- Open Graph (Facebook, LinkedIn) -->\n  <meta property='og:title' content='Manual Técnico Front-end'>\n  <meta property='og:description' content='Guia completo para entrevistas'>\n  <meta property='og:image' content='https://site.com/thumbnail.png'>\n  <meta property='og:type' content='website'>\n\n  <!-- Twitter Card -->\n  <meta name='twitter:card' content='summary_large_image'>\n\n  <title>Manual Técnico Front-end</title>\n</head>"
           }
@@ -226,6 +702,8 @@
     {
       "id": "css",
       "label": "CSS",
+      "label_en": "CSS",
+      "label_fr": "CSS",
       "icon": "🎨",
       "color": "#264de4",
       "accent": "#2965f1",
@@ -233,11 +711,45 @@
         {
           "id": "css_especificidade",
           "title": "Especificidade & Cascade",
+          "title_en": "Specificity & Cascade",
+          "title_fr": "Spécificité & Cascade",
           "icon": "⚖️",
           "desc": "O CSS aplica regras com base em especificidade: ID (0,1,0,0) > classe (0,0,1,0) > tag (0,0,0,1). Em empate, vence a regra mais abaixo no arquivo.",
-          "pros": ["Sistema previsível quando bem entendido", "Permite temas e overrides organizados", "!important como válvula de escape (usar com moderação)"],
-          "cons": ["Guerras de especificidade em projetos grandes", "!important excessivo cria dívida técnica", "Herança implícita pode causar surpresas"],
+          "desc_en": "CSS applies rules based on specificity: ID (0,1,0,0) > class (0,0,1,0) > tag (0,0,0,1). On a tie, the last rule in the file wins.",
+          "desc_fr": "Le CSS applique des règles basées sur la spécificité : ID (0,1,0,0) > classe (0,0,1,0) > balise (0,0,0,1). En cas d'égalité, la règle la plus basse dans le fichier l'emporte.",
+          "pros": [
+            "Sistema previsível quando bem entendido",
+            "Permite temas e overrides organizados",
+            "!important como válvula de escape (usar com moderação)"
+          ],
+          "pros_en": [
+            "Predictable system when well understood",
+            "Allows organized themes and overrides",
+            "!important as an escape valve (use sparingly)"
+          ],
+          "pros_fr": [
+            "Système prévisible quand bien compris",
+            "Permet des thèmes et overrides organisés",
+            "!important comme soupape de sécurité (à utiliser avec modération)"
+          ],
+          "cons": [
+            "Guerras de especificidade em projetos grandes",
+            "!important excessivo cria dívida técnica",
+            "Herança implícita pode causar surpresas"
+          ],
+          "cons_en": [
+            "Specificity wars in large projects",
+            "Excessive !important creates technical debt",
+            "Implicit inheritance can cause surprises"
+          ],
+          "cons_fr": [
+            "Guerres de spécificité dans les grands projets",
+            "!important excessif crée une dette technique",
+            "L'héritage implicite peut causer des surprises"
+          ],
           "when": "Fundamental para qualquer projeto CSS. Entender especificidade evita 80% dos bugs de estilo.",
+          "when_en": "Fundamental for any CSS project. Understanding specificity prevents 80% of styling bugs.",
+          "when_fr": "Fondamental pour tout projet CSS. Comprendre la spécificité évite 80% des bugs de style.",
           "examples": {
             "javascript": "/* Especificidade: tag=1, classe=10, id=100 */\n\np { color: blue; }          /* 0,0,0,1 */\n.texto { color: red; }      /* 0,0,1,0 — VENCE */\n#titulo { color: green; }   /* 0,1,0,0 — VENCE */\n\n/* BEM (Block Element Modifier) evita guerras */\n.card { }           /* bloco */\n.card__titulo { }   /* elemento */\n.card--destaque { } /* modificador */\n\n/* CSS moderno: :is() e :where() */\n:is(h1, h2, h3) { margin-top: 1rem; }\n:where(.card, .modal) p { color: gray; } /* especificidade zero! */"
           }
@@ -245,23 +757,85 @@
         {
           "id": "css_flexbox",
           "title": "Flexbox",
+          "title_en": "Flexbox",
+          "title_fr": "Flexbox",
           "icon": "📐",
           "desc": "Modelo de layout unidimensional (uma linha OU uma coluna). Ideal para alinhar itens, distribuir espaço e criar layouts responsivos simples.",
-          "pros": ["Alinhamento vertical e horizontal trivial", "flex-wrap cria layouts responsivos sem media queries", "Ordem visual independente do DOM (order)"],
-          "cons": ["Unidimensional — para 2D use Grid", "Confusão entre eixo principal e cruzado para iniciantes"],
+          "desc_en": "One-dimensional layout model (one row OR one column). Ideal for aligning items, distributing space and creating simple responsive layouts.",
+          "desc_fr": "Modèle de mise en page unidimensionnel (une ligne OU une colonne). Idéal pour aligner des éléments, distribuer l'espace et créer des mises en page réactives simples.",
+          "pros": [
+            "Alinhamento vertical e horizontal trivial",
+            "flex-wrap cria layouts responsivos sem media queries",
+            "Ordem visual independente do DOM (order)"
+          ],
+          "pros_en": [
+            "Trivial vertical and horizontal alignment",
+            "flex-wrap creates responsive layouts without media queries",
+            "Visual order independent of the DOM (order)"
+          ],
+          "pros_fr": [
+            "Alignement vertical et horizontal trivial",
+            "flex-wrap crée des mises en page réactives sans media queries",
+            "Ordre visuel indépendant du DOM (order)"
+          ],
+          "cons": [
+            "Unidimensional — para 2D use Grid",
+            "Confusão entre eixo principal e cruzado para iniciantes"
+          ],
+          "cons_en": [
+            "One-dimensional — for 2D use Grid",
+            "Confusion between main and cross axis for beginners"
+          ],
+          "cons_fr": [
+            "Unidimensionnel — pour 2D utilisez Grid",
+            "Confusion entre axe principal et croisé pour les débutants"
+          ],
           "when": "Navbar, cards em linha, centralização, distribuição de espaço entre itens.",
+          "when_en": "Navbar, inline cards, centering, space distribution between items.",
+          "when_fr": "Navbar, cartes en ligne, centrage, distribution d'espace entre éléments.",
           "examples": {
-            "javascript": ".container {\n  display: flex;\n  flex-direction: row;       /* row | column */\n  justify-content: space-between; /* eixo principal */\n  align-items: center;       /* eixo cruzado */\n  gap: 16px;\n  flex-wrap: wrap;           /* quebra em telas pequenas */\n}\n\n.item {\n  flex: 1;                   /* cresce igualmente */\n  min-width: 200px;\n}\n\n.item-especial {\n  flex: 2;                   /* ocupa o dobro do espaço */\n}\n\n/* Centralizar qualquer coisa */\n.centralizado {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  min-height: 100vh;\n}"
+            "javascript": ".container {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: center;\n  gap: 16px;\n  flex-wrap: wrap;\n}\n\n.item { flex: 1; min-width: 200px; }\n.item-especial { flex: 2; }\n\n/* Centralizar qualquer coisa */\n.centralizado {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  min-height: 100vh;\n}"
           }
         },
         {
           "id": "css_grid",
           "title": "CSS Grid",
+          "title_en": "CSS Grid",
+          "title_fr": "CSS Grid",
           "icon": "🔲",
           "desc": "Modelo de layout bidimensional (linhas E colunas simultâneas). Ideal para layouts complexos de página, galerias e dashboards.",
-          "pros": ["Layout 2D completo em CSS puro", "grid-template-areas cria layouts autodocumentados", "Responsividade com auto-fit e minmax sem JS"],
-          "cons": ["Curva de aprendizado maior que Flexbox", "Suporte a subgrid ainda limitado em browsers antigos"],
+          "desc_en": "Two-dimensional layout model (rows AND columns simultaneously). Ideal for complex page layouts, galleries and dashboards.",
+          "desc_fr": "Modèle de mise en page bidimensionnel (lignes ET colonnes simultanément). Idéal pour les mises en page complexes, galeries et tableaux de bord.",
+          "pros": [
+            "Layout 2D completo em CSS puro",
+            "grid-template-areas cria layouts autodocumentados",
+            "Responsividade com auto-fit e minmax sem JS"
+          ],
+          "pros_en": [
+            "Complete 2D layout in pure CSS",
+            "grid-template-areas creates self-documenting layouts",
+            "Responsiveness with auto-fit and minmax without JS"
+          ],
+          "pros_fr": [
+            "Mise en page 2D complète en CSS pur",
+            "grid-template-areas crée des mises en page auto-documentées",
+            "Réactivité avec auto-fit et minmax sans JS"
+          ],
+          "cons": [
+            "Curva de aprendizado maior que Flexbox",
+            "Suporte a subgrid ainda limitado em browsers antigos"
+          ],
+          "cons_en": [
+            "Steeper learning curve than Flexbox",
+            "Subgrid support still limited in older browsers"
+          ],
+          "cons_fr": [
+            "Courbe d'apprentissage plus élevée que Flexbox",
+            "Le support de subgrid est encore limité dans les anciens navigateurs"
+          ],
           "when": "Layout principal da página, galerias de imagens, dashboards, qualquer layout em grade.",
+          "when_en": "Main page layout, image galleries, dashboards, any grid-based layout.",
+          "when_fr": "Mise en page principale, galeries d'images, tableaux de bord, toute mise en page en grille.",
           "examples": {
             "javascript": "/* Layout clássico de página */\n.pagina {\n  display: grid;\n  grid-template-areas:\n    'header  header '\n    'sidebar main   '\n    'footer  footer ';\n  grid-template-columns: 250px 1fr;\n  grid-template-rows: auto 1fr auto;\n  min-height: 100vh;\n}\n\n.header  { grid-area: header; }\n.sidebar { grid-area: sidebar; }\n.main    { grid-area: main; }\n.footer  { grid-area: footer; }\n\n/* Galeria responsiva sem media queries! */\n.galeria {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));\n  gap: 16px;\n}"
           }
@@ -269,13 +843,44 @@
         {
           "id": "css_variaveis",
           "title": "CSS Variables & Design Tokens",
+          "title_en": "CSS Variables & Design Tokens",
+          "title_fr": "Variables CSS & Design Tokens",
           "icon": "🎛️",
           "desc": "Variáveis CSS (custom properties) permitem centralizar valores reutilizáveis e criar temas dinâmicos via JavaScript ou media queries.",
-          "pros": ["Tema claro/escuro sem JavaScript", "Cascata: variáveis podem ser sobrescritas em escopos", "JavaScript pode ler e escrever variáveis CSS"],
-          "cons": ["Não suportadas no IE11", "Sem tipagem — erro de digitação falha silenciosamente"],
+          "desc_en": "CSS variables (custom properties) allow centralizing reusable values and creating dynamic themes via JavaScript or media queries.",
+          "desc_fr": "Les variables CSS (propriétés personnalisées) permettent de centraliser des valeurs réutilisables et de créer des thèmes dynamiques via JavaScript ou media queries.",
+          "pros": [
+            "Tema claro/escuro sem JavaScript",
+            "Cascata: variáveis podem ser sobrescritas em escopos",
+            "JavaScript pode ler e escrever variáveis CSS"
+          ],
+          "pros_en": [
+            "Light/dark theme without JavaScript",
+            "Cascade: variables can be overridden in scopes",
+            "JavaScript can read and write CSS variables"
+          ],
+          "pros_fr": [
+            "Thème clair/sombre sans JavaScript",
+            "Cascade : les variables peuvent être remplacées dans les portées",
+            "JavaScript peut lire et écrire les variables CSS"
+          ],
+          "cons": [
+            "Não suportadas no IE11",
+            "Sem tipagem — erro de digitação falha silenciosamente"
+          ],
+          "cons_en": [
+            "Not supported in IE11",
+            "No typing — typo fails silently"
+          ],
+          "cons_fr": [
+            "Non supportées dans IE11",
+            "Sans typage — une faute de frappe échoue silencieusement"
+          ],
           "when": "Qualquer projeto com design system, temas ou valores reutilizáveis.",
+          "when_en": "Any project with a design system, themes or reusable values.",
+          "when_fr": "Tout projet avec un système de design, des thèmes ou des valeurs réutilisables.",
           "examples": {
-            "javascript": ":root {\n  --cor-primaria: #1f6feb;\n  --cor-fundo: #0d1117;\n  --cor-texto: #e6edf3;\n  --espaco-md: 16px;\n  --raio-borda: 8px;\n  --sombra: 0 4px 12px rgba(0,0,0,0.3);\n}\n\n/* Tema escuro automático */\n@media (prefers-color-scheme: dark) {\n  :root {\n    --cor-fundo: #0d1117;\n    --cor-texto: #e6edf3;\n  }\n}\n\n.botao {\n  background: var(--cor-primaria);\n  padding: var(--espaco-md);\n  border-radius: var(--raio-borda);\n  box-shadow: var(--sombra);\n}\n\n// JavaScript lendo/escrevendo\ndocument.documentElement.style\n  .setProperty('--cor-primaria', '#ff6b6b');"
+            "javascript": ":root {\n  --cor-primaria: #1f6feb;\n  --cor-fundo: #0d1117;\n  --cor-texto: #e6edf3;\n  --espaco-md: 16px;\n  --raio-borda: 8px;\n}\n\n@media (prefers-color-scheme: dark) {\n  :root {\n    --cor-fundo: #0d1117;\n    --cor-texto: #e6edf3;\n  }\n}\n\n.botao {\n  background: var(--cor-primaria);\n  padding: var(--espaco-md);\n  border-radius: var(--raio-borda);\n}\n\n// JavaScript lendo/escrevendo\ndocument.documentElement.style\n  .setProperty('--cor-primaria', '#ff6b6b');"
           }
         }
       ]
@@ -283,6 +888,8 @@
     {
       "id": "jquery",
       "label": "jQuery",
+      "label_en": "jQuery",
+      "label_fr": "jQuery",
       "icon": "⚡",
       "color": "#0769AD",
       "accent": "#78cff5",
@@ -290,11 +897,51 @@
         {
           "id": "jq_intro",
           "title": "O que é jQuery?",
+          "title_en": "What is jQuery?",
+          "title_fr": "Qu'est-ce que jQuery ?",
           "icon": "📖",
           "desc": "Biblioteca JavaScript criada em 2006 por John Resig. Abstrai diferenças entre browsers, simplifica manipulação de DOM, eventos, AJAX e animações com uma API concisa.",
-          "pros": ["API curta e expressiva: $('seletor').acao()", "Compatibilidade cross-browser automática", "Plugin ecosystem enorme", "Ainda presente em 77% dos sites (2024)"],
-          "cons": ["Adiciona ~30kb ao bundle (minificado + gzip: ~30kb)", "JS moderno (ES6+) cobre a maioria dos casos", "Frameworks como React/Vue tornam jQuery redundante", "Abstração excessiva esconde o que o browser realmente faz"],
+          "desc_en": "JavaScript library created in 2006 by John Resig. Abstracts browser differences, simplifies DOM manipulation, events, AJAX and animations with a concise API.",
+          "desc_fr": "Bibliothèque JavaScript créée en 2006 par John Resig. Abstrait les différences entre navigateurs, simplifie la manipulation du DOM, les événements, AJAX et les animations avec une API concise.",
+          "pros": [
+            "API curta e expressiva: $('seletor').acao()",
+            "Compatibilidade cross-browser automática",
+            "Plugin ecosystem enorme",
+            "Ainda presente em 77% dos sites (2024)"
+          ],
+          "pros_en": [
+            "Short and expressive API: $('selector').action()",
+            "Automatic cross-browser compatibility",
+            "Huge plugin ecosystem",
+            "Still present in 77% of sites (2024)"
+          ],
+          "pros_fr": [
+            "API courte et expressive : $('sélecteur').action()",
+            "Compatibilité cross-browser automatique",
+            "Immense écosystème de plugins",
+            "Encore présent dans 77% des sites (2024)"
+          ],
+          "cons": [
+            "Adiciona ~30kb ao bundle (minificado + gzip: ~30kb)",
+            "JS moderno (ES6+) cobre a maioria dos casos",
+            "Frameworks como React/Vue tornam jQuery redundante",
+            "Abstração excessiva esconde o que o browser realmente faz"
+          ],
+          "cons_en": [
+            "Adds ~30kb to bundle (minified + gzip: ~30kb)",
+            "Modern JS (ES6+) covers most cases",
+            "Frameworks like React/Vue make jQuery redundant",
+            "Excessive abstraction hides what the browser really does"
+          ],
+          "cons_fr": [
+            "Ajoute ~30kb au bundle (minifié + gzip : ~30kb)",
+            "Le JS moderne (ES6+) couvre la plupart des cas",
+            "Les frameworks comme React/Vue rendent jQuery redondant",
+            "L'abstraction excessive cache ce que le navigateur fait réellement"
+          ],
           "when": "Projetos legados, integração com plugins jQuery (Datepicker, DataTables), prototipagem rápida.",
+          "when_en": "Legacy projects, integration with jQuery plugins (Datepicker, DataTables), rapid prototyping.",
+          "when_fr": "Projets legacy, intégration avec des plugins jQuery (Datepicker, DataTables), prototypage rapide.",
           "examples": {
             "javascript": "// jQuery vs Vanilla JS moderno\n\n// Seleção\n$('#botao')               // jQuery\ndocument.querySelector('#botao') // Vanilla\n\n// Evento\n$('#btn').click(fn);      // jQuery\nbtn.addEventListener('click', fn); // Vanilla\n\n// AJAX\n$.get('/api/dados', fn);  // jQuery\nfetch('/api/dados').then(r => r.json()).then(fn); // Vanilla\n\n// Classe\n$('#el').addClass('ativo');   // jQuery\nel.classList.add('ativo');     // Vanilla"
           }
@@ -302,37 +949,754 @@
         {
           "id": "jq_dom",
           "title": "Manipulação de DOM com jQuery",
+          "title_en": "DOM Manipulation with jQuery",
+          "title_fr": "Manipulation du DOM avec jQuery",
           "icon": "🔧",
           "desc": "jQuery torna manipulação de DOM e CSS trivial com encadeamento de métodos (method chaining) e seleção CSS.",
-          "pros": ["Encadeamento fluente: $().find().filter().css()", "$(document).ready() garante DOM carregado", "Métodos .html(), .text(), .val() unificam leitura e escrita"],
-          "cons": [".html() com input de usuário abre XSS", "Performance menor que manipulação direta do DOM", "$(this) dentro de arrow functions não funciona"],
+          "desc_en": "jQuery makes DOM and CSS manipulation trivial with method chaining and CSS selection.",
+          "desc_fr": "jQuery rend la manipulation du DOM et du CSS triviale avec le chaînage de méthodes et la sélection CSS.",
+          "pros": [
+            "Encadeamento fluente: $().find().filter().css()",
+            "$(document).ready() garante DOM carregado",
+            "Métodos .html(), .text(), .val() unificam leitura e escrita"
+          ],
+          "pros_en": [
+            "Fluent chaining: $().find().filter().css()",
+            "$(document).ready() ensures DOM is loaded",
+            "Methods .html(), .text(), .val() unify read and write"
+          ],
+          "pros_fr": [
+            "Chaînage fluide : $().find().filter().css()",
+            "$(document).ready() garantit que le DOM est chargé",
+            "Méthodes .html(), .text(), .val() unifient lecture et écriture"
+          ],
+          "cons": [
+            ".html() com input de usuário abre XSS",
+            "Performance menor que manipulação direta do DOM",
+            "$(this) dentro de arrow functions não funciona"
+          ],
+          "cons_en": [
+            ".html() with user input opens XSS",
+            "Lower performance than direct DOM manipulation",
+            "$(this) inside arrow functions does not work"
+          ],
+          "cons_fr": [
+            ".html() avec une entrée utilisateur ouvre des failles XSS",
+            "Performance inférieure à la manipulation directe du DOM",
+            "$(this) dans les fonctions fléchées ne fonctionne pas"
+          ],
           "when": "Manipulação complexa de listas, tabelas dinâmicas, widgets legados.",
+          "when_en": "Complex list manipulation, dynamic tables, legacy widgets.",
+          "when_fr": "Manipulation complexe de listes, tableaux dynamiques, widgets legacy.",
           "examples": {
-            "javascript": "$(document).ready(function() {\n\n  // Leitura e escrita\n  const nome = $('#campo-nome').val();    // lê\n  $('#campo-nome').val('Alice');          // escreve\n  $('#titulo').text('Novo Título');       // seguro\n  // $('#div').html(userInput); // PERIGOSO!\n\n  // Encadeamento\n  $('li.item')\n    .addClass('ativo')\n    .css({ color: '#58a6ff', fontWeight: 'bold' })\n    .filter(':first')\n    .prepend('<span>★ </span>');\n\n  // Inserção dinâmica\n  const linha = $('<tr>')\n    .append($('<td>').text('Alice'))\n    .append($('<td>').text('30'));\n  $('tbody').append(linha);\n\n  // Remoção com confirmação\n  $('.btn-remover').on('click', function() {\n    $(this).closest('tr').fadeOut(300, function() {\n      $(this).remove();\n    });\n  });\n});"
+            "javascript": "$(document).ready(function() {\n\n  // Leitura e escrita\n  const nome = $('#campo-nome').val();\n  $('#campo-nome').val('Alice');\n  $('#titulo').text('Novo Título');\n\n  // Encadeamento\n  $('li.item')\n    .addClass('ativo')\n    .css({ color: '#58a6ff', fontWeight: 'bold' })\n    .filter(':first')\n    .prepend('<span>★ </span>');\n\n  // Inserção dinâmica\n  const linha = $('<tr>')\n    .append($('<td>').text('Alice'))\n    .append($('<td>').text('30'));\n  $('tbody').append(linha);\n\n  // Remoção com fadeOut\n  $('.btn-remover').on('click', function() {\n    $(this).closest('tr').fadeOut(300, function() {\n      $(this).remove();\n    });\n  });\n});"
           }
         },
         {
           "id": "jq_ajax",
           "title": "AJAX com jQuery",
+          "title_en": "AJAX with jQuery",
+          "title_fr": "AJAX avec jQuery",
           "icon": "🌐",
           "desc": "$.ajax(), $.get() e $.post() simplificam chamadas HTTP assíncronas, com callbacks de sucesso, erro e complete integrados.",
-          "pros": ["API simples para GET/POST/PUT/DELETE", "Serialização automática de objetos para JSON", "Suporte a cancelamento de requisições (jqXHR.abort())"],
-          "cons": ["Baseado em callbacks (sem Promises nativas em versões antigas)", "$.ajax() retorna jqXHR, não Promise padrão", "fetch() é mais moderno e nativo"],
+          "desc_en": "$.ajax(), $.get() and $.post() simplify async HTTP calls, with built-in success, error and complete callbacks.",
+          "desc_fr": "$.ajax(), $.get() et $.post() simplifient les appels HTTP asynchrones, avec des callbacks de succès, d'erreur et de fin intégrés.",
+          "pros": [
+            "API simples para GET/POST/PUT/DELETE",
+            "Serialização automática de objetos para JSON",
+            "Suporte a cancelamento de requisições (jqXHR.abort())"
+          ],
+          "pros_en": [
+            "Simple API for GET/POST/PUT/DELETE",
+            "Automatic object serialization to JSON",
+            "Support for request cancellation (jqXHR.abort())"
+          ],
+          "pros_fr": [
+            "API simple pour GET/POST/PUT/DELETE",
+            "Sérialisation automatique des objets en JSON",
+            "Support d'annulation des requêtes (jqXHR.abort())"
+          ],
+          "cons": [
+            "Baseado em callbacks (sem Promises nativas em versões antigas)",
+            "$.ajax() retorna jqXHR, não Promise padrão",
+            "fetch() é mais moderno e nativo"
+          ],
+          "cons_en": [
+            "Callback-based (no native Promises in old versions)",
+            "$.ajax() returns jqXHR, not a standard Promise",
+            "fetch() is more modern and native"
+          ],
+          "cons_fr": [
+            "Basé sur les callbacks (sans Promises natives dans les anciennes versions)",
+            "$.ajax() retourne jqXHR, pas une Promise standard",
+            "fetch() est plus moderne et natif"
+          ],
           "when": "Projetos que já usam jQuery. Para projetos novos, prefira fetch().",
+          "when_en": "Projects already using jQuery. For new projects, prefer fetch().",
+          "when_fr": "Projets utilisant déjà jQuery. Pour les nouveaux projets, préférez fetch().",
           "examples": {
-            "javascript": "// GET simplificado\n$.get('/api/usuarios', function(data) {\n  data.forEach(u => {\n    $('tbody').append(\n      `<tr><td>${u.nome}</td><td>${u.email}</td></tr>`\n    );\n  });\n});\n\n// POST com $.ajax completo\n$.ajax({\n  url: '/api/usuarios',\n  method: 'POST',\n  contentType: 'application/json',\n  data: JSON.stringify({ nome: 'Alice', email: 'alice@ex.com' }),\n  success: function(resposta) {\n    console.log('Criado:', resposta);\n  },\n  error: function(xhr, status, erro) {\n    console.error(`Erro ${xhr.status}:`, erro);\n  },\n  complete: function() {\n    $('#spinner').hide(); // sempre executa\n  }\n});\n\n// Formulário via AJAX\n$('#meu-form').on('submit', function(e) {\n  e.preventDefault();\n  $.post(\n    $(this).attr('action'),\n    $(this).serialize(), // serializa campos do form\n    function(res) { alert('Enviado!'); }\n  );\n});"
+            "javascript": "// GET simplificado\n$.get('/api/usuarios', function(data) {\n  data.forEach(u => {\n    $('tbody').append(\n      `<tr><td>${u.nome}</td><td>${u.email}</td></tr>`\n    );\n  });\n});\n\n// POST com $.ajax completo\n$.ajax({\n  url: '/api/usuarios',\n  method: 'POST',\n  contentType: 'application/json',\n  data: JSON.stringify({ nome: 'Alice', email: 'alice@ex.com' }),\n  success: function(resposta) {\n    console.log('Criado:', resposta);\n  },\n  error: function(xhr, status, erro) {\n    console.error(`Erro ${xhr.status}:`, erro);\n  }\n});\n\n// Formulário via AJAX\n$('#meu-form').on('submit', function(e) {\n  e.preventDefault();\n  $.post(\n    $(this).attr('action'),\n    $(this).serialize(),\n    function(res) { alert('Enviado!'); }\n  );\n});"
           }
         },
         {
           "id": "jq_animacoes",
           "title": "Animações e Efeitos",
+          "title_en": "Animations and Effects",
+          "title_fr": "Animations et Effets",
           "icon": "✨",
           "desc": "jQuery tem animações embutidas: hide/show, fadeIn/fadeOut, slideUp/slideDown e animate() para propriedades CSS numéricas.",
-          "pros": ["Animações cross-browser sem CSS keyframes", "Fila de animações automática", ".stop() para cancelar animações em andamento"],
-          "cons": ["Performance inferior a CSS transitions/animations", "Anima via JavaScript — consome CPU, não GPU", "animate() não suporta propriedades de cor sem plugin"],
+          "desc_en": "jQuery has built-in animations: hide/show, fadeIn/fadeOut, slideUp/slideDown and animate() for numeric CSS properties.",
+          "desc_fr": "jQuery dispose d'animations intégrées : hide/show, fadeIn/fadeOut, slideUp/slideDown et animate() pour les propriétés CSS numériques.",
+          "pros": [
+            "Animações cross-browser sem CSS keyframes",
+            "Fila de animações automática",
+            ".stop() para cancelar animações em andamento"
+          ],
+          "pros_en": [
+            "Cross-browser animations without CSS keyframes",
+            "Automatic animation queue",
+            ".stop() to cancel ongoing animations"
+          ],
+          "pros_fr": [
+            "Animations cross-browser sans CSS keyframes",
+            "File d'animations automatique",
+            ".stop() pour annuler les animations en cours"
+          ],
+          "cons": [
+            "Performance inferior a CSS transitions/animations",
+            "Anima via JavaScript — consome CPU, não GPU",
+            "animate() não suporta propriedades de cor sem plugin"
+          ],
+          "cons_en": [
+            "Lower performance than CSS transitions/animations",
+            "Animates via JavaScript — uses CPU, not GPU",
+            "animate() doesn't support color properties without plugin"
+          ],
+          "cons_fr": [
+            "Performance inférieure aux transitions/animations CSS",
+            "Anime via JavaScript — utilise le CPU, pas le GPU",
+            "animate() ne supporte pas les propriétés de couleur sans plugin"
+          ],
           "when": "Compatibilidade com browsers antigos ou integração com lógica de animação baseada em dados.",
+          "when_en": "Compatibility with old browsers or integration with data-driven animation logic.",
+          "when_fr": "Compatibilité avec les anciens navigateurs ou intégration avec une logique d'animation basée sur les données.",
           "examples": {
-            "javascript": "// Mostrar/esconder\n$('#painel').hide();\n$('#painel').show(400); // 400ms\n$('#painel').toggle();\n\n// Fade\n$('#msg').fadeIn(500).delay(2000).fadeOut(500);\n\n// Slide (acordeão)\n$('.titulo-acordeao').on('click', function() {\n  $(this).next('.conteudo').slideToggle(300);\n});\n\n// animate() personalizado\n$('#barra').animate({\n  width: '75%',\n  opacity: 1\n}, {\n  duration: 800,\n  easing: 'swing',\n  complete: function() { $(this).text('75% concluído'); }\n});\n\n// Parar animação em andamento\n$('#el').stop(true, true).fadeOut(300);"
+            "javascript": "// Mostrar/esconder\n$('#painel').hide();\n$('#painel').show(400);\n$('#painel').toggle();\n\n// Fade\n$('#msg').fadeIn(500).delay(2000).fadeOut(500);\n\n// Slide (acordeão)\n$('.titulo-acordeao').on('click', function() {\n  $(this).next('.conteudo').slideToggle(300);\n});\n\n// animate() personalizado\n$('#barra').animate({\n  width: '75%',\n  opacity: 1\n}, {\n  duration: 800,\n  easing: 'swing',\n  complete: function() { $(this).text('75% concluído'); }\n});"
+          }
+        }
+      ]
+    },
+    {
+      "id": "api_rest",
+      "label": "API REST",
+      "label_en": "REST API",
+      "label_fr": "API REST",
+      "icon": "🔌",
+      "color": "#2ea043",
+      "accent": "#3fb950",
+      "subtopics": [
+        {
+          "id": "rest_conceitos",
+          "title": "Conceitos REST & HTTP",
+          "title_en": "REST & HTTP Concepts",
+          "title_fr": "Concepts REST & HTTP",
+          "icon": "📡",
+          "desc": "REST (Representational State Transfer) é um estilo arquitetural para APIs. Usa verbos HTTP (GET, POST, PUT, DELETE, PATCH) e códigos de status para comunicar estado.",
+          "desc_en": "REST (Representational State Transfer) is an architectural style for APIs. Uses HTTP verbs (GET, POST, PUT, DELETE, PATCH) and status codes to communicate state.",
+          "desc_fr": "REST (Representational State Transfer) est un style architectural pour les APIs. Utilise les verbes HTTP (GET, POST, PUT, DELETE, PATCH) et les codes de statut pour communiquer l'état.",
+          "pros": [
+            "Stateless — cada requisição é independente",
+            "Usa infraestrutura HTTP já existente (cache, CDN, proxies)",
+            "Interface uniforme facilita integração entre sistemas"
+          ],
+          "pros_en": [
+            "Stateless — each request is independent",
+            "Uses existing HTTP infrastructure (cache, CDN, proxies)",
+            "Uniform interface facilitates integration between systems"
+          ],
+          "pros_fr": [
+            "Sans état — chaque requête est indépendante",
+            "Utilise l'infrastructure HTTP existante (cache, CDN, proxies)",
+            "Interface uniforme facilite l'intégration entre systèmes"
+          ],
+          "cons": [
+            "Over-fetching: recebe dados além do necessário",
+            "Under-fetching: múltiplas requisições para dados relacionados",
+            "Sem contrato formal de tipos (use OpenAPI/Swagger)"
+          ],
+          "cons_en": [
+            "Over-fetching: receives more data than needed",
+            "Under-fetching: multiple requests for related data",
+            "No formal type contract (use OpenAPI/Swagger)"
+          ],
+          "cons_fr": [
+            "Over-fetching : reçoit plus de données que nécessaire",
+            "Under-fetching : plusieurs requêtes pour des données liées",
+            "Pas de contrat de types formel (utilisez OpenAPI/Swagger)"
+          ],
+          "when": "Comunicação entre frontend e backend, integrações com serviços externos, microsserviços.",
+          "when_en": "Communication between frontend and backend, integrations with external services, microservices.",
+          "when_fr": "Communication entre frontend et backend, intégrations avec des services externes, microservices.",
+          "examples": {
+            "javascript": "// ===== Fetch com tratamento completo =====\nasync function apiRequest(method, url, body = null) {\n  const options = {\n    method,\n    headers: {\n      'Content-Type': 'application/json',\n      'Authorization': `Bearer ${getToken()}`\n    },\n    ...(body && { body: JSON.stringify(body) })\n  };\n\n  const res = await fetch(url, options);\n\n  // Tratar status codes\n  if (res.status === 401) redirectToLogin();\n  if (res.status === 404) throw new Error('Recurso não encontrado');\n  if (!res.ok) throw new Error(`HTTP ${res.status}`);\n\n  return res.json();\n}\n\n// Uso\nconst user = await apiRequest('GET', '/api/users/1');\nconst novo = await apiRequest('POST', '/api/users', { nome: 'Alice' });\nawait apiRequest('DELETE', '/api/users/1');\n\n// Códigos de status importantes:\n// 200 OK, 201 Created, 204 No Content\n// 400 Bad Request, 401 Unauthorized, 403 Forbidden\n// 404 Not Found, 422 Unprocessable, 429 Too Many Requests\n// 500 Internal Server Error"
+          }
+        },
+        {
+          "id": "rest_autenticacao",
+          "title": "Autenticação JWT & OAuth2",
+          "title_en": "JWT & OAuth2 Authentication",
+          "title_fr": "Authentification JWT & OAuth2",
+          "icon": "🔑",
+          "desc": "JWT (JSON Web Token) é um padrão para transmitir informações seguras entre partes como um token assinado. OAuth2 é o protocolo de autorização mais usado na web.",
+          "desc_en": "JWT (JSON Web Token) is a standard for securely transmitting information between parties as a signed token. OAuth2 is the most widely used authorization protocol on the web.",
+          "desc_fr": "JWT (JSON Web Token) est un standard pour transmettre des informations de manière sécurisée entre parties sous forme de token signé. OAuth2 est le protocole d'autorisation le plus utilisé sur le web.",
+          "pros": [
+            "JWT é stateless — servidor não precisa de sessão",
+            "OAuth2 permite login com Google/GitHub sem armazenar senha",
+            "Tokens têm expiração e podem ser revogados (refresh tokens)"
+          ],
+          "pros_en": [
+            "JWT is stateless — server doesn't need session",
+            "OAuth2 enables Google/GitHub login without storing passwords",
+            "Tokens have expiration and can be revoked (refresh tokens)"
+          ],
+          "pros_fr": [
+            "JWT est sans état — le serveur n'a pas besoin de session",
+            "OAuth2 permet la connexion avec Google/GitHub sans stocker de mot de passe",
+            "Les tokens ont une expiration et peuvent être révoqués (refresh tokens)"
+          ],
+          "cons": [
+            "JWT não pode ser invalidado antes do vencimento sem blocklist",
+            "Tokens grandes aumentam tamanho de cada requisição",
+            "Implementação incorreta de OAuth2 abre vulnerabilidades"
+          ],
+          "cons_en": [
+            "JWT cannot be invalidated before expiry without blocklist",
+            "Large tokens increase request size",
+            "Incorrect OAuth2 implementation opens vulnerabilities"
+          ],
+          "cons_fr": [
+            "JWT ne peut pas être invalidé avant expiration sans blocklist",
+            "Les tokens volumineux augmentent la taille de chaque requête",
+            "Une implémentation incorrecte d'OAuth2 ouvre des vulnérabilités"
+          ],
+          "when": "Toda API que precisa identificar quem está fazendo a requisição e o que tem permissão de acessar.",
+          "when_en": "Any API that needs to identify who is making the request and what they have permission to access.",
+          "when_fr": "Toute API qui doit identifier qui fait la requête et ce à quoi il a accès.",
+          "examples": {
+            "javascript": "// ===== JWT: estrutura =====\n// Header.Payload.Signature\n// eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMiLCJleHAiOjE3MDB9.xyz\n\n// Decodificar payload (sem verificar assinatura)\nfunction decodeJWT(token) {\n  const payload = token.split('.')[1];\n  return JSON.parse(atob(payload));\n}\n\n// Verificar expiração\nfunction isTokenExpired(token) {\n  const { exp } = decodeJWT(token);\n  return Date.now() >= exp * 1000;\n}\n\n// ===== Armazenamento seguro =====\n// ❌ localStorage — vulnerável a XSS\n// ✅ httpOnly cookie — servidor seta, JS não acessa\n// ✅ Memory (variável) — perdido no refresh\n\n// ===== Refresh Token flow =====\nasync function fetchWithAuth(url, opts = {}) {\n  let token = getAccessToken();\n  if (isTokenExpired(token)) {\n    token = await refreshAccessToken();\n  }\n  return fetch(url, {\n    ...opts,\n    headers: { ...opts.headers, Authorization: `Bearer ${token}` }\n  });\n}"
+          }
+        },
+        {
+          "id": "rest_fetch",
+          "title": "Fetch API & Axios",
+          "title_en": "Fetch API & Axios",
+          "title_fr": "Fetch API & Axios",
+          "icon": "🚀",
+          "desc": "Fetch é a API nativa do browser para requisições HTTP. Axios é uma biblioteca popular que adiciona interceptors, cancelamento, timeout e transforms automáticos.",
+          "desc_en": "Fetch is the browser's native API for HTTP requests. Axios is a popular library that adds interceptors, cancellation, timeout and automatic transforms.",
+          "desc_fr": "Fetch est l'API native du navigateur pour les requêtes HTTP. Axios est une bibliothèque populaire qui ajoute des interceptors, l'annulation, le timeout et des transformations automatiques.",
+          "pros": [
+            "Fetch é nativo — zero dependências",
+            "Axios interceptors centralizam autenticação e tratamento de erros",
+            "Axios cancela requisições com AbortController/CancelToken"
+          ],
+          "pros_en": [
+            "Fetch is native — zero dependencies",
+            "Axios interceptors centralize auth and error handling",
+            "Axios cancels requests with AbortController/CancelToken"
+          ],
+          "pros_fr": [
+            "Fetch est natif — zéro dépendance",
+            "Les interceptors Axios centralisent l'auth et la gestion des erreurs",
+            "Axios annule les requêtes avec AbortController/CancelToken"
+          ],
+          "cons": [
+            "Fetch não lança erro em status 4xx/5xx — verificar res.ok",
+            "Axios adiciona ~14kb ao bundle",
+            "Fetch não suporta timeout nativo (use AbortController)"
+          ],
+          "cons_en": [
+            "Fetch doesn't throw on 4xx/5xx status — check res.ok",
+            "Axios adds ~14kb to bundle",
+            "Fetch has no native timeout support (use AbortController)"
+          ],
+          "cons_fr": [
+            "Fetch ne lance pas d'erreur pour les statuts 4xx/5xx — vérifier res.ok",
+            "Axios ajoute ~14kb au bundle",
+            "Fetch n'a pas de support natif du timeout (utilisez AbortController)"
+          ],
+          "when": "Fetch para projetos simples/novos. Axios para projetos com muitas requisições, interceptors e transformações.",
+          "when_en": "Fetch for simple/new projects. Axios for projects with many requests, interceptors and transformations.",
+          "when_fr": "Fetch pour les projets simples/nouveaux. Axios pour les projets avec de nombreuses requêtes, interceptors et transformations.",
+          "examples": {
+            "javascript": "// ===== Axios com interceptors =====\nimport axios from 'axios';\n\nconst api = axios.create({\n  baseURL: 'https://api.exemplo.com',\n  timeout: 10000,\n});\n\n// Interceptor de request: adiciona token\napi.interceptors.request.use(config => {\n  config.headers.Authorization = `Bearer ${getToken()}`;\n  return config;\n});\n\n// Interceptor de response: trata erros globalmente\napi.interceptors.response.use(\n  res => res.data,\n  err => {\n    if (err.response?.status === 401) logout();\n    return Promise.reject(err);\n  }\n);\n\n// Uso simples\nconst users = await api.get('/users');\nconst novo = await api.post('/users', { nome: 'Alice' });\n\n// ===== Fetch com AbortController (timeout) =====\nconst controller = new AbortController();\nconst id = setTimeout(() => controller.abort(), 5000);\n\ntry {\n  const res = await fetch('/api/dados', { signal: controller.signal });\n  const data = await res.json();\n} finally {\n  clearTimeout(id);\n}"
+          }
+        }
+      ]
+    },
+    {
+      "id": "versionamento",
+      "label": "Versionamento",
+      "label_en": "Version Control",
+      "label_fr": "Versionnement",
+      "icon": "🗂️",
+      "color": "#f0883e",
+      "accent": "#d18616",
+      "subtopics": [
+        {
+          "id": "git_basico",
+          "title": "Git Essencial",
+          "title_en": "Git Essentials",
+          "title_fr": "Git Essentiel",
+          "icon": "📌",
+          "desc": "Git é o sistema de controle de versão distribuído mais usado no mundo. Permite rastrear mudanças, colaborar em equipe e reverter erros com segurança.",
+          "desc_en": "Git is the most widely used distributed version control system. Allows tracking changes, collaborating in teams and safely reverting errors.",
+          "desc_fr": "Git est le système de contrôle de version distribué le plus utilisé au monde. Permet de suivre les modifications, de collaborer en équipe et d'annuler des erreurs en toute sécurité.",
+          "pros": [
+            "Histórico completo de todas as mudanças",
+            "Branches para desenvolver features sem afetar produção",
+            "Distribuído — cada clone é um backup completo"
+          ],
+          "pros_en": [
+            "Complete history of all changes",
+            "Branches to develop features without affecting production",
+            "Distributed — each clone is a full backup"
+          ],
+          "pros_fr": [
+            "Historique complet de toutes les modifications",
+            "Branches pour développer des fonctionnalités sans affecter la production",
+            "Distribué — chaque clone est une sauvegarde complète"
+          ],
+          "cons": [
+            "Curva de aprendizado para conflitos de merge e rebase",
+            "Histórico pode ser reescrito acidentalmente (force push)",
+            "Arquivos binários grandes são mal gerenciados (use Git LFS)"
+          ],
+          "cons_en": [
+            "Learning curve for merge conflicts and rebase",
+            "History can be accidentally rewritten (force push)",
+            "Large binary files are poorly managed (use Git LFS)"
+          ],
+          "cons_fr": [
+            "Courbe d'apprentissage pour les conflits de merge et rebase",
+            "L'historique peut être réécrit accidentellement (force push)",
+            "Les gros fichiers binaires sont mal gérés (utilisez Git LFS)"
+          ],
+          "when": "SEMPRE. Qualquer projeto de software deve usar controle de versão desde o primeiro commit.",
+          "when_en": "ALWAYS. Any software project should use version control from the first commit.",
+          "when_fr": "TOUJOURS. Tout projet logiciel doit utiliser le contrôle de version dès le premier commit.",
+          "examples": {
+            "javascript": "# Fluxo básico diário\ngit status                    # ver o que mudou\ngit add .                     # stagear tudo\ngit add src/componente.jsx    # stagear arquivo específico\ngit commit -m 'feat: adiciona botão de logout'\ngit push origin main\n\n# Branches\ngit checkout -b feature/login   # criar e trocar de branch\ngit merge feature/login          # merge na main\ngit branch -d feature/login      # deletar branch local\n\n# Desfazer erros\ngit restore arquivo.js           # descartar mudanças locais\ngit reset HEAD~1                 # desfazer último commit (mantém mudanças)\ngit revert abc1234               # criar commit de reversão (seguro)\n\n# Inspecionar\ngit log --oneline --graph        # histórico visual\ngit diff HEAD~1                  # diff com commit anterior\ngit blame arquivo.js             # ver quem alterou cada linha"
+          }
+        },
+        {
+          "id": "git_workflow",
+          "title": "Git Workflow & Conventional Commits",
+          "title_en": "Git Workflow & Conventional Commits",
+          "title_fr": "Git Workflow & Commits Conventionnels",
+          "icon": "🔀",
+          "desc": "Conventional Commits é um padrão de mensagens de commit que torna o histórico legível e permite automação de changelogs e versionamento semântico.",
+          "desc_en": "Conventional Commits is a commit message standard that makes history readable and enables changelog automation and semantic versioning.",
+          "desc_fr": "Conventional Commits est un standard de messages de commit qui rend l'historique lisible et permet l'automatisation des changelogs et du versionnement sémantique.",
+          "pros": [
+            "Histórico de commits legível por humanos e máquinas",
+            "Automação: changelog, bump de versão, release notes",
+            "Facilita code review e entendimento de mudanças"
+          ],
+          "pros_en": [
+            "Commit history readable by humans and machines",
+            "Automation: changelog, version bump, release notes",
+            "Facilitates code review and understanding of changes"
+          ],
+          "pros_fr": [
+            "Historique de commits lisible par les humains et les machines",
+            "Automatisation : changelog, bump de version, release notes",
+            "Facilite la revue de code et la compréhension des changements"
+          ],
+          "cons": [
+            "Exige disciplina do time para manter o padrão",
+            "Commits muito pequenos podem poluir o histórico"
+          ],
+          "cons_en": [
+            "Requires team discipline to maintain the standard",
+            "Very small commits can pollute the history"
+          ],
+          "cons_fr": [
+            "Nécessite de la discipline de l'équipe pour maintenir le standard",
+            "Les commits trop petits peuvent polluer l'historique"
+          ],
+          "when": "Times com mais de uma pessoa, projetos open source, qualquer projeto com CI/CD.",
+          "when_en": "Teams with more than one person, open source projects, any project with CI/CD.",
+          "when_fr": "Équipes avec plus d'une personne, projets open source, tout projet avec CI/CD.",
+          "examples": {
+            "javascript": "# Formato: tipo(escopo?): descrição\n# Tipos: feat, fix, docs, style, refactor, test, chore, perf\n\ngit commit -m 'feat(auth): adiciona login com Google OAuth2'\ngit commit -m 'fix(button): corrige cor no tema escuro'\ngit commit -m 'docs: atualiza README com instruções de setup'\ngit commit -m 'refactor(api): extrai lógica de fetch para hook'\ngit commit -m 'test(login): adiciona testes para validação do form'\ngit commit -m 'chore: atualiza dependências para versões LTS'\ngit commit -m 'perf(imagens): adiciona lazy loading na galeria'\n\n# Breaking change:\ngit commit -m 'feat!: migra API para v2\\n\\nBREAKING CHANGE: endpoint /users agora retorna paginação'\n\n# Gitflow resumido:\n# main       → produção (tags de versão)\n# develop    → integração de features\n# feature/*  → novas funcionalidades\n# hotfix/*   → correções urgentes em produção\n# release/*  → preparação para release"
+          }
+        },
+        {
+          "id": "github_pr",
+          "title": "GitHub / GitLab & Pull Requests",
+          "title_en": "GitHub / GitLab & Pull Requests",
+          "title_fr": "GitHub / GitLab & Pull Requests",
+          "icon": "🐙",
+          "desc": "Pull Requests (GitHub) / Merge Requests (GitLab) são a forma padrão de propor, revisar e integrar mudanças em equipe. CI/CD roda automaticamente em cada PR.",
+          "desc_en": "Pull Requests (GitHub) / Merge Requests (GitLab) are the standard way to propose, review and integrate changes in a team. CI/CD runs automatically on each PR.",
+          "desc_fr": "Les Pull Requests (GitHub) / Merge Requests (GitLab) sont la façon standard de proposer, réviser et intégrer des changements en équipe. CI/CD s'exécute automatiquement sur chaque PR.",
+          "pros": [
+            "Code review antes de chegar em produção",
+            "CI/CD automático: testes, lint, build em cada PR",
+            "Histórico de decisões técnicas nos comentários"
+          ],
+          "pros_en": [
+            "Code review before reaching production",
+            "Automatic CI/CD: tests, lint, build on each PR",
+            "History of technical decisions in comments"
+          ],
+          "pros_fr": [
+            "Revue de code avant d'atteindre la production",
+            "CI/CD automatique : tests, lint, build sur chaque PR",
+            "Historique des décisions techniques dans les commentaires"
+          ],
+          "cons": [
+            "PRs grandes são difíceis de revisar — prefira PRs pequenos",
+            "Dependência de plataforma (GitHub/GitLab)",
+            "Pode atrasar entrega se o processo de review for lento"
+          ],
+          "cons_en": [
+            "Large PRs are hard to review — prefer small PRs",
+            "Platform dependency (GitHub/GitLab)",
+            "Can delay delivery if the review process is slow"
+          ],
+          "cons_fr": [
+            "Les grandes PR sont difficiles à réviser — préférez les petites PR",
+            "Dépendance à la plateforme (GitHub/GitLab)",
+            "Peut retarder la livraison si le processus de révision est lent"
+          ],
+          "when": "Qualquer equipe com mais de uma pessoa. Essencial para código em produção.",
+          "when_en": "Any team with more than one person. Essential for production code.",
+          "when_fr": "Toute équipe avec plus d'une personne. Essentiel pour le code en production.",
+          "examples": {
+            "javascript": "# GitHub Actions — CI básico para frontend\n# .github/workflows/ci.yml\n\nname: CI\non: [push, pull_request]\n\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with: { node-version: 20 }\n      - run: npm ci\n      - run: npm run lint\n      - run: npm run test\n      - run: npm run build\n\n  deploy-preview:\n    if: github.event_name == 'pull_request'\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - run: npm ci && npm run build\n      - uses: amondnet/vercel-action@v25\n        with:\n          vercel-token: ${{ secrets.VERCEL_TOKEN }}\n          vercel-org-id: ${{ secrets.ORG_ID }}\n          vercel-project-id: ${{ secrets.PROJECT_ID }}"
+          }
+        }
+      ]
+    },
+    {
+      "id": "frameworks",
+      "label": "Frameworks",
+      "label_en": "Frameworks",
+      "label_fr": "Frameworks",
+      "icon": "⚙️",
+      "color": "#a371f7",
+      "accent": "#8957e5",
+      "subtopics": [
+        {
+          "id": "react",
+          "title": "React",
+          "title_en": "React",
+          "title_fr": "React",
+          "icon": "⚛️",
+          "desc": "Biblioteca JavaScript para construção de interfaces de usuário. Baseada em componentes reutilizáveis, Virtual DOM e fluxo de dados unidirecional.",
+          "desc_en": "JavaScript library for building user interfaces. Based on reusable components, Virtual DOM and unidirectional data flow.",
+          "desc_fr": "Bibliothèque JavaScript pour construire des interfaces utilisateur. Basée sur des composants réutilisables, un DOM Virtuel et un flux de données unidirectionnel.",
+          "pros": [
+            "Ecossistema imenso (Next.js, React Native, React Query)",
+            "Componentes reutilizáveis e composáveis",
+            "Hooks simplificam gerenciamento de estado e efeitos colaterais"
+          ],
+          "pros_en": [
+            "Huge ecosystem (Next.js, React Native, React Query)",
+            "Reusable and composable components",
+            "Hooks simplify state management and side effects"
+          ],
+          "pros_fr": [
+            "Écosystème immense (Next.js, React Native, React Query)",
+            "Composants réutilisables et composables",
+            "Les Hooks simplifient la gestion d'état et les effets de bord"
+          ],
+          "cons": [
+            "Apenas View — precisa de libs extras para routing, state, etc.",
+            "Curva de aprendizado para hooks avançados (useReducer, useMemo)",
+            "Re-renders desnecessários se não otimizado corretamente"
+          ],
+          "cons_en": [
+            "View only — needs extra libs for routing, state, etc.",
+            "Learning curve for advanced hooks (useReducer, useMemo)",
+            "Unnecessary re-renders if not optimized correctly"
+          ],
+          "cons_fr": [
+            "Vue seulement — nécessite des libs supplémentaires pour le routing, l'état, etc.",
+            "Courbe d'apprentissage pour les hooks avancés (useReducer, useMemo)",
+            "Re-renders inutiles si non optimisé correctement"
+          ],
+          "when": "SPAs, dashboards, apps interativas, projetos que escalem com Next.js para SSR.",
+          "when_en": "SPAs, dashboards, interactive apps, projects that scale with Next.js for SSR.",
+          "when_fr": "SPA, tableaux de bord, apps interactives, projets qui évoluent avec Next.js pour le SSR.",
+          "examples": {
+            "javascript": "import { useState, useEffect } from 'react';\n\n// Componente funcional com hooks\nfunction UserCard({ userId }) {\n  const [user, setUser] = useState(null);\n  const [loading, setLoading] = useState(true);\n\n  useEffect(() => {\n    fetch(`/api/users/${userId}`)\n      .then(r => r.json())\n      .then(data => { setUser(data); setLoading(false); });\n  }, [userId]); // re-executa se userId mudar\n\n  if (loading) return <div>Carregando...</div>;\n\n  return (\n    <div className='card'>\n      <h2>{user.nome}</h2>\n      <p>{user.email}</p>\n    </div>\n  );\n}\n\n// Hook customizado (reutilizável)\nfunction useUser(userId) {\n  const [user, setUser] = useState(null);\n  const [loading, setLoading] = useState(true);\n  useEffect(() => {\n    fetch(`/api/users/${userId}`)\n      .then(r => r.json())\n      .then(data => { setUser(data); setLoading(false); });\n  }, [userId]);\n  return { user, loading };\n}"
+          }
+        },
+        {
+          "id": "nextjs",
+          "title": "Next.js",
+          "title_en": "Next.js",
+          "title_fr": "Next.js",
+          "icon": "▲",
+          "desc": "Framework React fullstack com SSR, SSG, ISR, API Routes e App Router. Padrão da indústria para projetos React em produção.",
+          "desc_en": "Fullstack React framework with SSR, SSG, ISR, API Routes and App Router. Industry standard for production React projects.",
+          "desc_fr": "Framework React fullstack avec SSR, SSG, ISR, API Routes et App Router. Standard de l'industrie pour les projets React en production.",
+          "pros": [
+            "SSR/SSG melhora SEO e performance de carga inicial",
+            "App Router com React Server Components reduz JS no cliente",
+            "Deploy automático na Vercel com preview por branch"
+          ],
+          "pros_en": [
+            "SSR/SSG improves SEO and initial load performance",
+            "App Router with React Server Components reduces client JS",
+            "Automatic deployment on Vercel with per-branch preview"
+          ],
+          "pros_fr": [
+            "SSR/SSG améliore le SEO et la performance de chargement initial",
+            "App Router avec React Server Components réduit le JS côté client",
+            "Déploiement automatique sur Vercel avec preview par branche"
+          ],
+          "cons": [
+            "Complexidade maior que React puro para projetos simples",
+            "App Router ainda tem curva de aprendizado alta",
+            "Build pode ser lento em projetos muito grandes"
+          ],
+          "cons_en": [
+            "More complex than pure React for simple projects",
+            "App Router still has a steep learning curve",
+            "Build can be slow on very large projects"
+          ],
+          "cons_fr": [
+            "Plus complexe que React pur pour les projets simples",
+            "L'App Router a encore une courbe d'apprentissage élevée",
+            "Le build peut être lent sur les très grands projets"
+          ],
+          "when": "Projetos que precisam de SEO, marketing sites, e-commerce, apps com autenticação e dados do servidor.",
+          "when_en": "Projects that need SEO, marketing sites, e-commerce, apps with auth and server data.",
+          "when_fr": "Projets nécessitant du SEO, sites marketing, e-commerce, apps avec auth et données serveur.",
+          "examples": {
+            "javascript": "// app/users/[id]/page.tsx (App Router — Server Component)\nexport default async function UserPage({ params }) {\n  // Executado no servidor — acesso direto ao banco!\n  const user = await db.users.findById(params.id);\n\n  if (!user) notFound(); // 404 automático\n\n  return (\n    <main>\n      <h1>{user.nome}</h1>\n      <p>Email: {user.email}</p>\n    </main>\n  );\n}\n\n// Metadata dinâmica para SEO\nexport async function generateMetadata({ params }) {\n  const user = await db.users.findById(params.id);\n  return {\n    title: `Perfil de ${user.nome}`,\n    description: `Página de ${user.nome}`\n  };\n}\n\n// Tipos de rendering:\n// SSG: export async function generateStaticParams() {}\n// ISR: export const revalidate = 60; // segundos\n// SSR: export const dynamic = 'force-dynamic';"
+          }
+        },
+        {
+          "id": "typescript",
+          "title": "TypeScript",
+          "title_en": "TypeScript",
+          "title_fr": "TypeScript",
+          "icon": "🔷",
+          "desc": "Superset tipado do JavaScript. Adiciona tipagem estática, interfaces, generics e enums. Compila para JS puro. Padrão em projetos profissionais modernos.",
+          "desc_en": "Typed superset of JavaScript. Adds static typing, interfaces, generics and enums. Compiles to plain JS. Standard in modern professional projects.",
+          "desc_fr": "Sur-ensemble typé de JavaScript. Ajoute le typage statique, les interfaces, les génériques et les énumérations. Compile en JS pur. Standard dans les projets professionnels modernes.",
+          "pros": [
+            "Erros capturados em tempo de compilação, não em runtime",
+            "Autocomplete e refactor muito mais precisos no IDE",
+            "Documenta a API do código (interfaces como contrato)"
+          ],
+          "pros_en": [
+            "Errors caught at compile time, not runtime",
+            "Much more accurate autocomplete and refactor in IDE",
+            "Documents the code API (interfaces as contract)"
+          ],
+          "pros_fr": [
+            "Erreurs détectées à la compilation, pas à l'exécution",
+            "Autocomplétion et refactoring beaucoup plus précis dans l'IDE",
+            "Documente l'API du code (interfaces comme contrat)"
+          ],
+          "cons": [
+            "Configuração inicial (tsconfig) pode ser complexa",
+            "Aumenta tempo de build",
+            "Tipos externos às vezes ausentes ou incorretos (@types)"
+          ],
+          "cons_en": [
+            "Initial configuration (tsconfig) can be complex",
+            "Increases build time",
+            "External types sometimes missing or incorrect (@types)"
+          ],
+          "cons_fr": [
+            "La configuration initiale (tsconfig) peut être complexe",
+            "Augmente le temps de build",
+            "Les types externes sont parfois manquants ou incorrects (@types)"
+          ],
+          "when": "Qualquer projeto com mais de um desenvolvedor ou que vai crescer. Praticamente obrigatório em 2024+.",
+          "when_en": "Any project with more than one developer or that will grow. Practically mandatory in 2024+.",
+          "when_fr": "Tout projet avec plus d'un développeur ou qui va croître. Pratiquement obligatoire en 2024+.",
+          "examples": {
+            "javascript": "// Interfaces e tipos\ninterface User {\n  id: number;\n  nome: string;\n  email: string;\n  role: 'admin' | 'user' | 'guest'; // union type\n  criadoEm?: Date; // opcional\n}\n\n// Generics\nasync function fetchData<T>(url: string): Promise<T> {\n  const res = await fetch(url);\n  if (!res.ok) throw new Error(`HTTP ${res.status}`);\n  return res.json() as T;\n}\n\nconst user = await fetchData<User>('/api/users/1');\nconsole.log(user.nome); // TypeScript sabe o tipo!\n\n// Utility Types\ntype CreateUser = Omit<User, 'id' | 'criadoEm'>;\ntype PartialUser = Partial<User>;\ntype ReadonlyUser = Readonly<User>;\n\n// Type Guard\nfunction isAdmin(user: User): user is User & { role: 'admin' } {\n  return user.role === 'admin';\n}"
+          }
+        }
+      ]
+    },
+    {
+      "id": "performance",
+      "label": "Performance & Stack",
+      "label_en": "Performance & Stack",
+      "label_fr": "Performance & Stack",
+      "icon": "🚀",
+      "color": "#e3b341",
+      "accent": "#d29922",
+      "subtopics": [
+        {
+          "id": "core_web_vitals",
+          "title": "Core Web Vitals",
+          "title_en": "Core Web Vitals",
+          "title_fr": "Core Web Vitals",
+          "icon": "📊",
+          "desc": "Métricas do Google que medem a experiência real do usuário: LCP (carregamento), FID/INP (interatividade), CLS (estabilidade visual). Afetam diretamente o ranqueamento no Google.",
+          "desc_en": "Google's metrics measuring real user experience: LCP (loading), FID/INP (interactivity), CLS (visual stability). Directly affect Google rankings.",
+          "desc_fr": "Métriques Google mesurant l'expérience utilisateur réelle : LCP (chargement), FID/INP (interactivité), CLS (stabilité visuelle). Affectent directement le classement Google.",
+          "pros": [
+            "Métricas objetivas de qualidade UX",
+            "Auditoria com Lighthouse é gratuita",
+            "Melhora performance impacta diretamente conversões"
+          ],
+          "pros_en": [
+            "Objective UX quality metrics",
+            "Lighthouse audit is free",
+            "Improved performance directly impacts conversions"
+          ],
+          "pros_fr": [
+            "Métriques de qualité UX objectives",
+            "L'audit Lighthouse est gratuit",
+            "L'amélioration des performances impacte directement les conversions"
+          ],
+          "cons": [
+            "Métricas medidas no campo podem variar por dispositivo/rede",
+            "Otimização pode exigir refatoração profunda",
+            "CLS difícil de evitar com conteúdo dinâmico sem reserva de espaço"
+          ],
+          "cons_en": [
+            "Field-measured metrics can vary by device/network",
+            "Optimization may require deep refactoring",
+            "CLS hard to avoid with dynamic content without space reservation"
+          ],
+          "cons_fr": [
+            "Les métriques mesurées sur le terrain peuvent varier selon l'appareil/réseau",
+            "L'optimisation peut nécessiter une refactorisation profonde",
+            "CLS difficile à éviter avec du contenu dynamique sans réservation d'espace"
+          ],
+          "when": "Todo site público. Especialmente e-commerce, landing pages e sites de conteúdo.",
+          "when_en": "Every public site. Especially e-commerce, landing pages and content sites.",
+          "when_fr": "Tout site public. Surtout l'e-commerce, les landing pages et les sites de contenu.",
+          "examples": {
+            "javascript": "// ===== LCP: otimizar maior elemento visível =====\n// 1. Preload do hero image\n<link rel='preload' as='image' href='hero.webp' fetchpriority='high'>\n\n// 2. Imagens com tamanho explícito (evita layout shift)\n<img src='foto.webp' width='800' height='600'\n  alt='Descrição' loading='lazy' decoding='async'>\n\n// ===== CLS: reservar espaço para conteúdo dinâmico =====\n.skeleton {\n  width: 100%;\n  aspect-ratio: 16/9; /* reserva espaço antes da imagem carregar */\n  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);\n  background-size: 200% 100%;\n  animation: shimmer 1.5s infinite;\n}\n\n// ===== INP: evitar bloqueio da thread principal =====\n// Dividir tasks longas com scheduler\nasync function processarLista(items) {\n  for (let i = 0; i < items.length; i++) {\n    processar(items[i]);\n    if (i % 100 === 0) {\n      await new Promise(r => setTimeout(r, 0)); // yield para o browser\n    }\n  }\n}"
+          }
+        },
+        {
+          "id": "stack_alto_desempenho",
+          "title": "Stacks de Alto Desempenho",
+          "title_en": "High-Performance Stacks",
+          "title_fr": "Stacks Haute Performance",
+          "icon": "⚡",
+          "desc": "Combinações de tecnologias que maximizam performance, DX (Developer Experience) e escalabilidade para diferentes contextos: mercado BR, internacional e máxima performance.",
+          "desc_en": "Technology combinations that maximize performance, DX (Developer Experience) and scalability for different contexts: BR market, international and maximum performance.",
+          "desc_fr": "Combinaisons de technologies qui maximisent les performances, la DX (Developer Experience) et l'évolutivité pour différents contextes : marché BR, international et performance maximale.",
+          "pros": [
+            "Cada stack é otimizada para seu contexto de uso",
+            "Combinações testadas por empresas referência",
+            "Reduz tempo de decisão técnica no início do projeto"
+          ],
+          "pros_en": [
+            "Each stack is optimized for its use context",
+            "Combinations tested by reference companies",
+            "Reduces technical decision time at project start"
+          ],
+          "pros_fr": [
+            "Chaque stack est optimisée pour son contexte d'utilisation",
+            "Combinaisons testées par des entreprises de référence",
+            "Réduit le temps de décision technique au début du projet"
+          ],
+          "cons": [
+            "Nenhuma stack serve para todos os casos",
+            "Dependência de ecossistema (lock-in)",
+            "Curva de aprendizado de múltiplas ferramentas simultaneamente"
+          ],
+          "cons_en": [
+            "No stack fits all cases",
+            "Ecosystem dependency (lock-in)",
+            "Learning curve of multiple tools simultaneously"
+          ],
+          "cons_fr": [
+            "Aucune stack ne convient à tous les cas",
+            "Dépendance à l'écosystème (lock-in)",
+            "Courbe d'apprentissage de plusieurs outils simultanément"
+          ],
+          "when": "Escolher a stack no início de um projeto ou para preparar o portfólio para processos seletivos.",
+          "when_en": "Choosing the stack at the start of a project or to prepare your portfolio for job applications.",
+          "when_fr": "Choisir la stack au début d'un projet ou pour préparer son portfolio pour les processus de recrutement.",
+          "examples": {
+            "javascript": "// ===== 🇧🇷 STACK MERCADO BR (Fintechs & Startups) =====\n// React + TypeScript + Next.js + Tailwind + Zustand\n// Jest + RTL + Playwright + Vercel + GitHub Actions\n//\n// Por quê? Dominante em Nubank, iFood, Hotmart, Creditas.\n// Next.js: SEO + SSR/SSG. TS: menos bugs em produção.\n// Tailwind: UI consistente rápida. Vercel: deploy instantâneo.\n\n// ===== 🌍 STACK INTERNACIONAL (Big Tech) =====\n// React/Vue 3 + TypeScript + GraphQL + Apollo\n// Storybook + Cypress + Docker + AWS/GCP\n//\n// Por quê? Times distribuídos precisam de GraphQL\n// para flexibilidade de dados. Storybook para design\n// system compartilhado. Docker garante paridade de ambientes.\n\n// ===== ⚡ STACK MÁXIMA PERFORMANCE =====\n// Next.js App Router + React Server Components\n// Tailwind + SWR/React Query + Vercel Edge\n//\n// Por quê? RSC reduz JS no cliente até 80%.\n// Edge functions aproximam lógica do usuário.\n// SWR gerencia cache com stale-while-revalidate.\n\n// Métricas típicas da stack de performance:\n// LCP < 1.2s (excelente: < 2.5s é 'bom')\n// INP < 100ms\n// CLS < 0.05\n// Bundle inicial < 50kb (gzipped)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "build_tools",
+      "label": "Build, Testes & DevOps",
+      "icon": "🔧",
+      "color": "#f59e0b",
+      "accent": "#d97706",
+      "subtopics": [
+        {
+          "id": "build_vite",
+          "title": "Vite & ESLint/Prettier",
+          "icon": "⚡",
+          "desc": "Vite é um bundler de nova geração que usa ES Modules nativos no dev, resultando em inicialização quase instantânea. ESLint detecta erros e Prettier formata automaticamente.",
+          "pros": [
+            "Vite: dev server inicia em < 1s independente do tamanho do projeto",
+            "HMR (Hot Module Replacement) ultra-rápido",
+            "ESLint + Prettier: código consistente em todo o time"
+          ],
+          "cons": [
+            "Vite usa Rollup no build (diferente do dev, pode ter inconsistências)",
+            "Configuração de aliases e plugins requer aprendizado"
+          ],
+          "when": "Projetos novos: sempre Vite. ESLint+Prettier: obrigatório em todo projeto profissional.",
+          "examples": {
+            "javascript": "# Criar projeto com Vite\nnpm create vite@latest meu-app -- --template react-ts\ncd meu-app && npm install && npm run dev\n\n// vite.config.ts\nimport { defineConfig } from 'vite';\nimport react from '@vitejs/plugin-react';\nimport path from 'path';\n\nexport default defineConfig({\n  plugins: [react()],\n  resolve: {\n    alias: { '@': path.resolve(__dirname, './src') }\n  },\n  server: { port: 3000 },\n  build: {\n    outDir: 'dist',\n    sourcemap: true\n  }\n});\n\n// .eslintrc.json\n{\n  \"extends\": [\"eslint:recommended\", \"plugin:@typescript-eslint/recommended\"],\n  \"rules\": {\n    \"no-console\": \"warn\",\n    \"@typescript-eslint/no-explicit-any\": \"error\"\n  }\n}\n\n// .prettierrc\n{\n  \"semi\": true,\n  \"singleQuote\": true,\n  \"tabWidth\": 2,\n  \"trailingComma\": \"es5\"\n}"
+          }
+        },
+        {
+          "id": "testes_frontend",
+          "title": "Testes: Jest & Testing Library",
+          "icon": "🧪",
+          "desc": "Jest é o test runner. React Testing Library (RTL) testa componentes como o usuário os usa — pelo comportamento visível, não pela implementação interna.",
+          "pros": [
+            "RTL: testes resilientes a refatorações (testa comportamento)",
+            "Jest: snapshot tests detectam regressões visuais",
+            "Cypress/Playwright: testes E2E automatizam o browser real"
+          ],
+          "cons": [
+            "Testes mal escritos dão falsa sensação de segurança",
+            "E2E lentos para CI (use com moderação)",
+            "Mocks excessivos tornam testes frágeis"
+          ],
+          "when": "Lógica de negócio crítica (unitário), fluxos de usuário (integração), jornadas críticas como checkout (E2E).",
+          "examples": {
+            "javascript": "// Testando um componente React com RTL\nimport { render, screen, fireEvent, waitFor } from '@testing-library/react';\nimport userEvent from '@testing-library/user-event';\nimport { BotaoLogin } from './BotaoLogin';\n\ndescribe('BotaoLogin', () => {\n  it('mostra spinner ao clicar e mensagem de sucesso', async () => {\n    const mockLogin = jest.fn().mockResolvedValue({ ok: true });\n    render(<BotaoLogin onLogin={mockLogin} />);\n\n    // Encontra pelo texto visível (como o usuário vê)\n    const btn = screen.getByRole('button', { name: /entrar/i });\n    await userEvent.click(btn);\n\n    // Verifica loading\n    expect(screen.getByText(/carregando/i)).toBeInTheDocument();\n\n    // Aguarda resultado assíncrono\n    await waitFor(() => {\n      expect(screen.getByText(/bem-vindo/i)).toBeInTheDocument();\n    });\n    expect(mockLogin).toHaveBeenCalledTimes(1);\n  });\n\n  it('exibe erro quando login falha', async () => {\n    const mockLogin = jest.fn().mockRejectedValue(new Error('Credenciais inválidas'));\n    render(<BotaoLogin onLogin={mockLogin} />);\n    await userEvent.click(screen.getByRole('button', { name: /entrar/i }));\n    await waitFor(() => {\n      expect(screen.getByRole('alert')).toHaveTextContent(/credenciais inválidas/i);\n    });\n  });\n});"
+          }
+        },
+        {
+          "id": "cicd_deploy",
+          "title": "CI/CD & Deploy (GitHub Actions + Vercel)",
+          "icon": "☁️",
+          "desc": "CI (Continuous Integration) executa testes e lint automaticamente em cada PR. CD (Continuous Deployment) faz deploy automático após merge. GitHub Actions + Vercel é a combinação mais popular para Front-end.",
+          "pros": [
+            "Deploy automático elimina erros manuais",
+            "Preview URLs por PR facilitam code review com contexto visual",
+            "Vercel: Edge Network com CDN global, zero config para Next.js"
+          ],
+          "cons": [
+            "Pipelines mal configurados travam o time",
+            "Custos de Vercel em projetos de alta escala",
+            "Segredos (API keys) precisam de gestão cuidadosa"
+          ],
+          "when": "Todo projeto profissional. GitHub Actions é gratuito para repositórios públicos.",
+          "examples": {
+            "javascript": "# .github/workflows/ci.yml\nname: CI\n\non:\n  push:\n    branches: [main, develop]\n  pull_request:\n    branches: [main]\n\njobs:\n  lint-test-build:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n\n      - uses: actions/setup-node@v4\n        with:\n          node-version: '20'\n          cache: 'npm'\n\n      - run: npm ci          # instala dependências (mais rápido que npm i)\n      - run: npm run lint    # ESLint\n      - run: npm test        # Jest\n      - run: npm run build   # verifica se o build não quebra\n\n      # Upload de coverage para Codecov\n      - uses: codecov/codecov-action@v3\n        with:\n          files: ./coverage/lcov.info\n\n# vercel.json (configurações do deploy)\n{\n  \"framework\": \"nextjs\",\n  \"buildCommand\": \"npm run build\",\n  \"devCommand\": \"npm run dev\",\n  \"installCommand\": \"npm ci\",\n  \"env\": {\n    \"NEXT_PUBLIC_API_URL\": \"@api_url_production\"\n  }\n}"
           }
         }
       ]

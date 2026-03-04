@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Manual Técnico — Entrevista Front-end</title>
+<title>Manual Técnico — Entrevista Front-end | Dev Map</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
 <style>
@@ -716,6 +716,91 @@ mark {
 }
 .no-results .nr-icon { font-size: 2.5rem; margin-bottom: 12px; }
 .no-results p { font-size: 0.85rem; }
+
+/* ===== LANGUAGE SWITCHER ===== */
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 12px;
+  flex-shrink: 0;
+}
+.lang-switch-btn {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1.5px solid var(--border);
+  background: none;
+  color: var(--text3);
+  font-family: var(--font-head);
+  transition: all 0.18s;
+  letter-spacing: 0.04em;
+}
+.lang-switch-btn:hover { color: var(--text); border-color: var(--border2); }
+.lang-switch-btn.active {
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ===== STACK SECTION ===== */
+.stack-section {
+  margin-top: 40px;
+  padding: 24px;
+  background: var(--bg2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r2);
+}
+.stack-section-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+}
+.stacks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+.stack-card {
+  background: var(--bg3);
+  border-radius: var(--r);
+  border: 1.5px solid var(--border);
+  padding: 16px;
+  transition: border-color 0.2s;
+}
+.stack-card:hover { border-color: var(--stack-color); }
+.stack-card-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--stack-color);
+}
+.stack-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 12px;
+}
+.stack-tag {
+  background: color-mix(in srgb, var(--stack-color) 15%, transparent);
+  color: var(--stack-color);
+  border: 1px solid color-mix(in srgb, var(--stack-color) 35%, transparent);
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+.stack-why {
+  font-size: 0.74rem;
+  color: var(--text2);
+  line-height: 1.6;
+}
 </style>
 </head>
 <body>
@@ -729,21 +814,26 @@ mark {
   </button>
   <div class="logo">⌨ Dev Manual</div>
   <div class="header-tabs" id="headerTabs"></div>
+  <div class="lang-switcher">
+    <button class="lang-switch-btn active" onclick="setLang('pt', this)">🇧🇷 PT</button>
+    <button class="lang-switch-btn" onclick="setLang('en', this)">🇺🇸 EN</button>
+    <button class="lang-switch-btn" onclick="setLang('fr', this)">🇫🇷 FR</button>
+  </div>
 </header>
 <div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div>
 
 <!-- HERO -->
 <div class="hero" id="heroSection">
-  <div class="hero-badge">📚 Guia Técnico · Entrevista Front-end</div>
-  <h1>Manual de <span>Programação</span><br>para Entrevistas</h1>
-  <p>Lógica, JavaScript, HTML, CSS e jQuery — com exemplos em múltiplas linguagens, prós, contras e quando usar cada tecnologia.</p>
+  <div class="hero-badge">📚 <span id="heroBadge">Guia Técnico · Entrevista Front-end</span></div>
+  <h1 id="heroTitle">Manual de <span>Programação</span><br>para Entrevistas</h1>
+  <p id="heroDesc">Lógica, JavaScript, HTML, CSS, API REST, Git e Frameworks — com exemplos em múltiplas linguagens, prós, contras e quando usar cada tecnologia.</p>
 </div>
 
 <!-- STATS -->
 <div class="stats-bar" id="statsBar">
-  <div class="stat"><div class="stat-num" id="statTopics">0</div><div class="stat-lbl">Tópicos</div></div>
-  <div class="stat"><div class="stat-num" id="statLangs">5</div><div class="stat-lbl">Linguagens</div></div>
-  <div class="stat"><div class="stat-num" id="statExamples">0</div><div class="stat-lbl">Exemplos</div></div>
+  <div class="stat"><div class="stat-num" id="statTopics">0</div><div class="stat-lbl" id="lblTopics">Tópicos</div></div>
+  <div class="stat"><div class="stat-num" id="statLangs">5</div><div class="stat-lbl" id="lblLangs">Linguagens</div></div>
+  <div class="stat"><div class="stat-num" id="statExamples">0</div><div class="stat-lbl" id="lblExamples">Exemplos</div></div>
   <div class="stat"><div class="stat-num">O(1)</div><div class="stat-lbl">Hash Map</div></div>
   <div class="stat"><div class="stat-num">O(log n)</div><div class="stat-lbl">BST</div></div>
 </div>
@@ -762,7 +852,7 @@ mark {
       </div>
     </div>
     <div class="breadcrumb" id="breadcrumb">
-      <span>Home</span> <span class="sep">›</span> <span id="breadcrumbTopic">Selecione uma seção</span>
+      <span id="breadcrumbHome">Home</span> <span class="sep">›</span> <span id="breadcrumbTopic">Selecione uma seção</span>
     </div>
     <div id="sections"></div>
   </main>
@@ -775,10 +865,75 @@ mark {
 </div>
 
 <script>
+// ===== I18N =====
+const I18N = {
+  pt: {
+    badge: 'Guia Técnico · Entrevista Front-end',
+    heroTitle: 'Manual de <span>Programação</span><br>para Entrevistas',
+    heroDesc: 'Lógica, JavaScript, HTML, CSS, API REST, Git e Frameworks — com exemplos em múltiplas linguagens, prós, contras e quando usar.',
+    lblTopics: 'Tópicos', lblLangs: 'Linguagens', lblExamples: 'Exemplos',
+    searchPlaceholder: 'Buscar tópico, conceito ou linguagem...',
+    breadcrumbHome: 'Home', breadcrumbSelect: 'Selecione uma seção',
+    topicCount: (n) => `${n} tópicos`,
+    tabVision: 'ℹ Visão Geral', tabCode: '💻 Código',
+    pros: '✅ Vantagens', cons: '❌ Desvantagens', when: '🎯 Quando Usar',
+    noExample: 'Nenhum exemplo disponível.',
+    copiar: 'Copiar', copiado: '✓ Copiado!',
+    stackTitle: '🚀 Stacks de Alto Desempenho',
+    stacks: [
+      { name: '🇧🇷 Stack Mercado BR (Fintechs & Startups)', color: '#2ea043', techs: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS', 'Zustand/React Query', 'Jest + RTL', 'Vercel', 'GitHub Actions'], why: 'Dominante em Nubank, iFood, Hotmart. Next.js entrega SEO + performance com SSR/SSG. TypeScript reduz bugs em produção. Tailwind agiliza UI consistente.' },
+      { name: '🌍 Stack Internacional (Big Techs)', color: '#2563eb', techs: ['React / Vue 3', 'TypeScript', 'GraphQL + Apollo', 'Storybook', 'Cypress / Playwright', 'Docker', 'AWS / GCP'], why: 'Times distribuídos exigem GraphQL para flexibilidade de dados, Storybook para design system compartilhado e testes E2E robustos.' },
+      { name: '⚡ Stack Performance Máxima', color: '#dc2626', techs: ['Next.js App Router', 'React Server Components', 'Vite', 'Tailwind CSS', 'SWR / React Query', 'Vercel Edge', 'Service Workers'], why: 'RSC reduz JS enviado ao cliente. Edge functions aproximam a lógica do usuário. SWR gerencia cache com stale-while-revalidate.' }
+    ]
+  },
+  en: {
+    badge: 'Tech Guide · Front-end Interview',
+    heroTitle: '<span>Programming</span> Manual<br>for Interviews',
+    heroDesc: 'Logic, JavaScript, HTML, CSS, REST API, Git and Frameworks — with examples in multiple languages, pros, cons and when to use each.',
+    lblTopics: 'Topics', lblLangs: 'Languages', lblExamples: 'Examples',
+    searchPlaceholder: 'Search topic, concept or language...',
+    breadcrumbHome: 'Home', breadcrumbSelect: 'Select a section',
+    topicCount: (n) => `${n} topics`,
+    tabVision: 'ℹ Overview', tabCode: '💻 Code',
+    pros: '✅ Advantages', cons: '❌ Disadvantages', when: '🎯 When to Use',
+    noExample: 'No examples available.',
+    copiar: 'Copy', copiado: '✓ Copied!',
+    stackTitle: '🚀 High-Performance Stacks',
+    stacks: [
+      { name: '🇧🇷 BR Market Stack (Fintechs & Startups)', color: '#2ea043', techs: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS', 'Zustand/React Query', 'Jest + RTL', 'Vercel', 'GitHub Actions'], why: 'Dominant at Nubank, iFood, Hotmart. Next.js delivers SEO + performance with SSR/SSG. TypeScript reduces production bugs. Tailwind accelerates consistent UI.' },
+      { name: '🌍 International Stack (Big Tech)', color: '#2563eb', techs: ['React / Vue 3', 'TypeScript', 'GraphQL + Apollo', 'Storybook', 'Cypress / Playwright', 'Docker', 'AWS / GCP'], why: 'Distributed teams need GraphQL for data flexibility, Storybook for shared design systems and robust E2E testing. Docker ensures environment parity.' },
+      { name: '⚡ Maximum Performance Stack', color: '#dc2626', techs: ['Next.js App Router', 'React Server Components', 'Vite', 'Tailwind CSS', 'SWR / React Query', 'Vercel Edge', 'Service Workers'], why: 'RSC reduces JS sent to the client. Edge functions bring logic closer to the user. SWR handles smart caching with stale-while-revalidate.' }
+    ]
+  },
+  fr: {
+    badge: 'Guide Technique · Entretien Front-end',
+    heroTitle: 'Manuel de <span>Programmation</span><br>pour Entretiens',
+    heroDesc: 'Logique, JavaScript, HTML, CSS, API REST, Git et Frameworks — avec des exemples en plusieurs langages, avantages, inconvénients et quand utiliser.',
+    lblTopics: 'Sujets', lblLangs: 'Langages', lblExamples: 'Exemples',
+    searchPlaceholder: 'Rechercher un sujet, concept ou langage...',
+    breadcrumbHome: 'Accueil', breadcrumbSelect: 'Sélectionner une section',
+    topicCount: (n) => `${n} sujets`,
+    tabVision: 'ℹ Vue d\'ensemble', tabCode: '💻 Code',
+    pros: '✅ Avantages', cons: '❌ Inconvénients', when: '🎯 Quand Utiliser',
+    noExample: 'Aucun exemple disponible.',
+    copiar: 'Copier', copiado: '✓ Copié !',
+    stackTitle: '🚀 Stacks Haute Performance',
+    stacks: [
+      { name: '🇧🇷 Stack Marché BR (Fintechs & Startups)', color: '#2ea043', techs: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS', 'Zustand/React Query', 'Jest + RTL', 'Vercel', 'GitHub Actions'], why: 'Dominante chez Nubank, iFood, Hotmart. Next.js offre SEO + performance avec SSR/SSG. TypeScript réduit les bugs en production. Tailwind accélère une UI cohérente.' },
+      { name: '🌍 Stack International (Big Tech)', color: '#2563eb', techs: ['React / Vue 3', 'TypeScript', 'GraphQL + Apollo', 'Storybook', 'Cypress / Playwright', 'Docker', 'AWS / GCP'], why: 'Les équipes distribuées ont besoin de GraphQL pour la flexibilité des données, de Storybook pour un design system partagé et de tests E2E robustes.' },
+      { name: '⚡ Stack Performance Maximale', color: '#dc2626', techs: ['Next.js App Router', 'React Server Components', 'Vite', 'Tailwind CSS', 'SWR / React Query', 'Vercel Edge', 'Service Workers'], why: 'RSC réduit le JS envoyé au client. Les edge functions rapprochent la logique de l\'utilisateur. SWR gère le cache avec stale-while-revalidate.' }
+    ]
+  }
+};
+
 // ===== LOAD DATA & BUILD UI =====
 let DATA = null;
 let currentSection = null;
-let currentLangs = {}; // track selected lang per card
+let currentLangs = {};
+let currentLang = 'pt';
+
+function t(key) { return I18N[currentLang][key]; }
+function tSub(sub, key) { return sub[key + '_' + currentLang] || sub[key] || ''; }
 
 async function loadData() {
   const res = await fetch('data.json');
@@ -791,18 +946,19 @@ function buildUI() {
   buildSidebar();
   buildSections();
   buildComplexityTable();
+  buildStackSection();
   updateStats();
-  // Show first section
   showSection(DATA.topics[0].id);
 }
 
 function buildHeader() {
   const tabs = document.getElementById('headerTabs');
+  tabs.innerHTML = '';
   DATA.topics.forEach(topic => {
     const btn = document.createElement('button');
     btn.className = 'htab';
     btn.style.setProperty('--tab-color', topic.color);
-    btn.innerHTML = `<span class="dot"></span>${topic.icon} ${topic.label}`;
+    btn.innerHTML = `<span class="dot"></span>${topic.icon} ${tSub(topic, 'label')}`;
     btn.onclick = () => showSection(topic.id);
     btn.dataset.id = topic.id;
     tabs.appendChild(btn);
@@ -811,10 +967,11 @@ function buildHeader() {
 
 function buildSidebar() {
   const sb = document.getElementById('sidebar');
+  sb.innerHTML = '';
   DATA.topics.forEach(topic => {
     const sec = document.createElement('div');
     sec.className = 'sidebar-section';
-    sec.innerHTML = `<div class="sidebar-label">${topic.icon} ${topic.label}</div>`;
+    sec.innerHTML = `<div class="sidebar-label">${topic.icon} ${tSub(topic, 'label')}</div>`;
     topic.subtopics.forEach(sub => {
       const item = document.createElement('div');
       item.className = 'sidebar-item';
@@ -823,7 +980,7 @@ function buildSidebar() {
       item.dataset.sub = sub.id;
       item.innerHTML = `
         <span class="icon">${sub.icon}</span>
-        <span class="label">${sub.title}</span>
+        <span class="label">${tSub(sub, 'title')}</span>
       `;
       item.onclick = () => {
         showSection(topic.id);
@@ -837,6 +994,7 @@ function buildSidebar() {
 
 function buildSections() {
   const container = document.getElementById('sections');
+  container.innerHTML = '';
   DATA.topics.forEach(topic => {
     const section = document.createElement('div');
     section.className = 'section';
@@ -845,8 +1003,8 @@ function buildSections() {
       <div class="section-header">
         <div class="section-icon">${topic.icon}</div>
         <div>
-          <div class="section-title">${topic.label}</div>
-          <div class="section-sub">${topic.subtopics.length} tópicos</div>
+          <div class="section-title">${tSub(topic, 'label')}</div>
+          <div class="section-sub">${t('topicCount')(topic.subtopics.length)}</div>
         </div>
       </div>
       <div class="topic-grid" id="grid-${topic.id}"></div>
@@ -871,32 +1029,35 @@ function buildCard(sub, topic, idx) {
   const defaultLang = langs[0] || 'javascript';
   currentLangs[sub.id] = defaultLang;
 
+  const prosArr = tSub(sub, 'pros') || [];
+  const consArr = tSub(sub, 'cons') || [];
+
   card.innerHTML = `
     <div class="card-head" onclick="toggleCard('${sub.id}')">
       <span class="card-icon">${sub.icon}</span>
-      <span class="card-title">${sub.title}</span>
+      <span class="card-title">${tSub(sub, 'title')}</span>
       <span class="card-chevron">▼</span>
     </div>
-    <div class="card-desc">${sub.desc}</div>
+    <div class="card-desc">${tSub(sub, 'desc')}</div>
     <div class="card-detail">
       <div class="detail-tabs">
-        <button class="dtab active" onclick="showDetailTab('${sub.id}', 'info', this)">ℹ Visão Geral</button>
-        ${langs.length > 0 ? `<button class="dtab" onclick="showDetailTab('${sub.id}', 'code', this)">💻 Código</button>` : ''}
+        <button class="dtab active" onclick="showDetailTab('${sub.id}', 'info', this)">${t('tabVision')}</button>
+        ${langs.length > 0 ? `<button class="dtab" onclick="showDetailTab('${sub.id}', 'code', this)">${t('tabCode')}</button>` : ''}
       </div>
       <div id="detail-info-${sub.id}" class="detail-pane">
         <div class="pros-cons">
           <div class="pros-box">
-            <div class="pc-title">✅ Vantagens</div>
-            <ul class="pc-list">${(sub.pros||[]).map(p=>`<li>${p}</li>`).join('')}</ul>
+            <div class="pc-title">${t('pros')}</div>
+            <ul class="pc-list">${prosArr.map(p=>`<li>${p}</li>`).join('')}</ul>
           </div>
           <div class="cons-box">
-            <div class="pc-title">❌ Desvantagens</div>
-            <ul class="pc-list">${(sub.cons||[]).map(c=>`<li>${c}</li>`).join('')}</ul>
+            <div class="pc-title">${t('cons')}</div>
+            <ul class="pc-list">${consArr.map(c=>`<li>${c}</li>`).join('')}</ul>
           </div>
         </div>
         <div class="when-box">
-          <div class="when-label">🎯 Quando Usar</div>
-          <div class="when-text">${sub.when || ''}</div>
+          <div class="when-label">${t('when')}</div>
+          <div class="when-text">${tSub(sub, 'when') || ''}</div>
         </div>
       </div>
       <div id="detail-code-${sub.id}" class="detail-pane" style="display:none">
@@ -907,11 +1068,38 @@ function buildCard(sub, topic, idx) {
           <div id="code-block-${sub.id}">
             ${buildCodeBlock(sub.examples[defaultLang], defaultLang, sub.id)}
           </div>
-        ` : '<p style="color:var(--text3);font-size:.78rem">Nenhum exemplo disponível.</p>'}
+        ` : `<p style="color:var(--text3);font-size:.78rem">${t('noExample')}</p>`}
       </div>
     </div>
   `;
   return card;
+}
+
+function buildStackSection() {
+  // Remove old stack section if exists
+  const old = document.getElementById('stack-section-container');
+  if (old) old.remove();
+
+  const stacks = t('stacks');
+  const container = document.createElement('div');
+  container.id = 'stack-section-container';
+  container.innerHTML = `
+    <div class="stack-section">
+      <div class="stack-section-title">${t('stackTitle')}</div>
+      <div class="stacks-grid">
+        ${stacks.map(s => `
+          <div class="stack-card" style="--stack-color: ${s.color}">
+            <div class="stack-card-title">${s.name}</div>
+            <div class="stack-tags">
+              ${s.techs.map(tech => `<span class="stack-tag">${tech}</span>`).join('')}
+            </div>
+            <div class="stack-why">${s.why}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+  document.getElementById('sections').appendChild(container);
 }
 
 function langLabel(lang) {
@@ -926,7 +1114,7 @@ function buildCodeBlock(code, lang, id) {
       <div class="code-header">
         <div class="code-dots"><span></span><span></span><span></span></div>
         <span class="code-lang-tag">${langLabel(lang)}</span>
-        <button class="copy-btn" onclick="copyCode('${id}')">Copiar</button>
+        <button class="copy-btn" onclick="copyCode('${id}')">${t('copiar')}</button>
       </div>
       <pre>${highlighted}</pre>
     </div>
@@ -934,7 +1122,6 @@ function buildCodeBlock(code, lang, id) {
 }
 
 function syntaxHighlight(code, lang) {
-  // Basic highlighting
   return code
     .replace(/(\/\/.*)/g, '<span class="cmt">$1</span>')
     .replace(/(#.*)/g, '<span class="cmt">$1</span>')
@@ -949,71 +1136,65 @@ function escapeHtml(str) {
 }
 
 function buildComplexityTable() {
-  const container = document.getElementById('sections');
   const logicSection = document.getElementById('section-logica');
   if (!logicSection) return;
+  if (logicSection.querySelector('.complexity-section')) return;
+
+  const lang = currentLang;
+  const headers = {
+    pt: ['Estrutura','Acesso','Busca','Inserção','Remoção','Memória','Melhor Uso'],
+    en: ['Structure','Access','Search','Insert','Remove','Memory','Best Use'],
+    fr: ['Structure','Accès','Recherche','Insertion','Suppression','Mémoire','Meilleure Utilisation']
+  };
+  const rows = {
+    pt: [
+      ['Array','O(1)','O(n)','O(n)','O(n)','Contígua','Acesso por índice, iteração'],
+      ['Lista Encadeada','O(n)','O(n)','O(1)*','O(1)*','Dinâmica','Inserções/remoções frequentes'],
+      ['BST Balanceada','O(log n)','O(log n)','O(log n)','O(log n)','Média','Busca em dados ordenados'],
+      ['Hash Map','O(1)','O(1)','O(1)','O(1)','Extra (hash)','Lookup por chave, cache'],
+      ['Pilha / Fila','O(n)','O(n)','O(1)','O(1)','Mínima','LIFO (pilha), FIFO (fila)'],
+    ],
+    en: [
+      ['Array','O(1)','O(n)','O(n)','O(n)','Contiguous','Index access, iteration'],
+      ['Linked List','O(n)','O(n)','O(1)*','O(1)*','Dynamic','Frequent insertions/removals'],
+      ['Balanced BST','O(log n)','O(log n)','O(log n)','O(log n)','Average','Search on sorted data'],
+      ['Hash Map','O(1)','O(1)','O(1)','O(1)','Extra (hash)','Key lookup, cache'],
+      ['Stack / Queue','O(n)','O(n)','O(1)','O(1)','Minimal','LIFO (stack), FIFO (queue)'],
+    ],
+    fr: [
+      ['Tableau','O(1)','O(n)','O(n)','O(n)','Contiguë','Accès par index, itération'],
+      ['Liste Chaînée','O(n)','O(n)','O(1)*','O(1)*','Dynamique','Insertions/suppressions fréquentes'],
+      ['BST Équilibré','O(log n)','O(log n)','O(log n)','O(log n)','Moyenne','Recherche sur données triées'],
+      ['Hash Map','O(1)','O(1)','O(1)','O(1)','Extra (hash)','Recherche par clé, cache'],
+      ['Pile / File','O(n)','O(n)','O(1)','O(1)','Minimale','LIFO (pile), FIFO (file)'],
+    ]
+  };
+
+  const titles = { pt: '📊 Complexidade das Estruturas de Dados', en: '📊 Data Structure Complexity', fr: '📊 Complexité des Structures de Données' };
+
+  const h = headers[lang];
+  const r = rows[lang];
+  const title = titles[lang];
+
+  const cls = (val) => {
+    if (val === 'O(1)' || val === 'O(1)*') return 'o1';
+    if (val.includes('log')) return 'ologn';
+    if (val === 'O(n)') return 'on';
+    return '';
+  };
 
   const tableHTML = `
     <div class="complexity-section">
-      <div class="complexity-title">📊 Complexidade das Estruturas de Dados</div>
+      <div class="complexity-title">${title}</div>
       <table>
-        <thead>
-          <tr>
-            <th>Estrutura</th>
-            <th>Acesso</th>
-            <th>Busca</th>
-            <th>Inserção</th>
-            <th>Remoção</th>
-            <th>Memória</th>
-            <th>Melhor Uso</th>
-          </tr>
-        </thead>
+        <thead><tr>${h.map(c=>`<th>${c}</th>`).join('')}</tr></thead>
         <tbody>
-          <tr>
-            <td><strong>Array</strong></td>
-            <td><span class="badge-o o1">O(1)</span></td>
-            <td><span class="badge-o on">O(n)</span></td>
-            <td><span class="badge-o on">O(n)</span></td>
-            <td><span class="badge-o on">O(n)</span></td>
-            <td>Contígua</td>
-            <td>Acesso por índice, iteração</td>
-          </tr>
-          <tr>
-            <td><strong>Lista Encadeada</strong></td>
-            <td><span class="badge-o on">O(n)</span></td>
-            <td><span class="badge-o on">O(n)</span></td>
-            <td><span class="badge-o o1">O(1)*</span></td>
-            <td><span class="badge-o o1">O(1)*</span></td>
-            <td>Dinâmica</td>
-            <td>Inserções/remoções frequentes</td>
-          </tr>
-          <tr>
-            <td><strong>BST Balanceada</strong></td>
-            <td><span class="badge-o ologn">O(log n)</span></td>
-            <td><span class="badge-o ologn">O(log n)</span></td>
-            <td><span class="badge-o ologn">O(log n)</span></td>
-            <td><span class="badge-o ologn">O(log n)</span></td>
-            <td>Média</td>
-            <td>Busca em dados ordenados</td>
-          </tr>
-          <tr>
-            <td><strong>Hash Map</strong></td>
-            <td><span class="badge-o o1">O(1)</span></td>
-            <td><span class="badge-o o1">O(1)</span></td>
-            <td><span class="badge-o o1">O(1)</span></td>
-            <td><span class="badge-o o1">O(1)</span></td>
-            <td>Extra (hash)</td>
-            <td>Lookup por chave, cache</td>
-          </tr>
-          <tr>
-            <td><strong>Pilha / Fila</strong></td>
-            <td><span class="badge-o on">O(n)</span></td>
-            <td><span class="badge-o on">O(n)</span></td>
-            <td><span class="badge-o o1">O(1)</span></td>
-            <td><span class="badge-o o1">O(1)</span></td>
-            <td>Mínima</td>
-            <td>LIFO (pilha), FIFO (fila)</td>
-          </tr>
+          ${r.map(row => `<tr>
+            <td><strong>${row[0]}</strong></td>
+            ${row.slice(1,5).map(v=>`<td><span class="badge-o ${cls(v)}">${v}</span></td>`).join('')}
+            <td>${row[5]}</td>
+            <td>${row[6]}</td>
+          </tr>`).join('')}
         </tbody>
       </table>
     </div>
@@ -1032,6 +1213,36 @@ function updateStats() {
   });
   document.getElementById('statTopics').textContent = totalTopics;
   document.getElementById('statExamples').textContent = totalExamples;
+  document.getElementById('lblTopics').textContent = I18N[currentLang].lblTopics;
+  document.getElementById('lblLangs').textContent = I18N[currentLang].lblLangs;
+  document.getElementById('lblExamples').textContent = I18N[currentLang].lblExamples;
+}
+
+// ===== LANGUAGE SWITCH =====
+function setLang(lang, btn) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-switch-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  // Update hero
+  document.getElementById('heroBadge').textContent = I18N[lang].badge;
+  document.getElementById('heroTitle').innerHTML = I18N[lang].heroTitle;
+  document.getElementById('heroDesc').textContent = I18N[lang].heroDesc;
+  document.getElementById('searchInput').placeholder = I18N[lang].searchPlaceholder;
+  document.getElementById('breadcrumbHome').textContent = I18N[lang].breadcrumbHome;
+
+  // Rebuild everything
+  buildHeader();
+  buildSidebar();
+  buildSections();
+
+  // Remove & rebuild complexity table
+  document.querySelectorAll('.complexity-section').forEach(e => e.remove());
+  buildComplexityTable();
+
+  buildStackSection();
+  updateStats();
+  showSection(currentSection || DATA.topics[0].id);
 }
 
 // ===== INTERACTIONS =====
@@ -1041,21 +1252,17 @@ function showSection(id) {
   const target = document.getElementById(`section-${id}`);
   if (target) target.classList.add('visible');
 
-  // Update header tabs
   document.querySelectorAll('.htab').forEach(t => {
     t.classList.toggle('active', t.dataset.id === id);
   });
 
-  // Update sidebar
   document.querySelectorAll('.sidebar-item').forEach(i => {
     i.classList.toggle('active', i.dataset.section === id);
   });
 
-  // Update breadcrumb
   const topic = DATA.topics.find(t => t.id === id);
-  document.getElementById('breadcrumbTopic').textContent = topic ? `${topic.icon} ${topic.label}` : '';
+  document.getElementById('breadcrumbTopic').textContent = topic ? `${topic.icon} ${tSub(topic, 'label')}` : '';
 
-  // Scroll content to top
   target?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
@@ -1094,9 +1301,9 @@ function copyCode(cardId) {
   if (!sub || !sub.examples[lang]) return;
   navigator.clipboard.writeText(sub.examples[lang]).then(() => {
     const btn = document.querySelector(`#card-${cardId} .copy-btn`);
-    if (btn) { btn.textContent = '✓ Copiado!'; btn.classList.add('copied'); }
+    if (btn) { btn.textContent = t('copiado'); btn.classList.add('copied'); }
     setTimeout(() => {
-      if (btn) { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }
+      if (btn) { btn.textContent = t('copiar'); btn.classList.remove('copied'); }
     }, 2000);
   });
 }
@@ -1129,7 +1336,7 @@ document.getElementById('searchInput').addEventListener('input', function() {
     let sectionVisible = 0;
     topic.subtopics.forEach(sub => {
       const card = document.getElementById(`card-${sub.id}`);
-      const text = `${sub.title} ${sub.desc} ${sub.when || ''} ${(sub.pros||[]).join(' ')} ${(sub.cons||[]).join(' ')} ${Object.values(sub.examples||{}).join(' ')}`.toLowerCase();
+      const text = `${sub.title} ${sub.title_en || ''} ${sub.title_fr || ''} ${sub.desc} ${sub.desc_en || ''} ${sub.when || ''} ${(sub.pros||[]).join(' ')} ${Object.values(sub.examples||{}).join(' ')}`.toLowerCase();
       const match = text.includes(q);
       if (card) {
         card.style.display = match ? 'flex' : 'none';
@@ -1137,13 +1344,7 @@ document.getElementById('searchInput').addEventListener('input', function() {
         if (match) { sectionVisible++; totalVisible++; }
       }
     });
-    // Show section if it has results
-    const section = document.getElementById(`section-${topic.id}`);
-    if (section && sectionVisible > 0 && !section.classList.contains('visible')) {
-      // Don't force-show, let user navigate
-    }
   });
-  // Show first matching section
   if (totalVisible > 0) {
     for (const topic of DATA.topics) {
       const hasMatch = topic.subtopics.some(sub => {
@@ -1162,7 +1363,7 @@ window.addEventListener('scroll', () => {
   document.getElementById('progressBar').style.width = pct + '%';
 });
 
-// ===== KEYBOARD ===== 
+// ===== KEYBOARD =====
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closePanel();
   if (e.key === '/' && e.target !== document.getElementById('searchInput')) {
@@ -1187,7 +1388,6 @@ function closeMobileMenu() {
   document.getElementById('hamburger').classList.remove('open');
 }
 
-// Close mobile menu on sidebar item click (mobile)
 document.addEventListener('click', (e) => {
   if (e.target.closest('.sidebar-item') && window.innerWidth <= 768) {
     closeMobileMenu();
@@ -1196,7 +1396,6 @@ document.addEventListener('click', (e) => {
 
 // ===== INIT =====
 loadData().catch(() => {
-  // Fallback if data.json can't be loaded (CORS on local file)
   document.getElementById('sections').innerHTML = `
     <div class="no-results">
       <div class="nr-icon">⚠️</div>
