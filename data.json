@@ -57,6 +57,13 @@
             "java": "int contador = 0;\ncontador = contador + 1;\nString nome = \"Alice\";\nnome = \"Bob\"; // OK",
             "php": "$contador = 0;\n$contador++;\n$nome = 'Alice';\n$nome = 'Bob'; // OK",
             "c": "int contador = 0;\ncontador++;\nchar nome[20] = \"Alice\";\nstrcpy(nome, \"Bob\");"
+          },
+          "output": {
+            "javascript": "// contador após incremento\nconsole.log(contador); // 1\nconsole.log(nome);     // 'Bob'",
+            "python": "print(contador)  # 1\nprint(nome)      # Bob",
+            "java": "// contador = 1\n// nome = \"Bob\"",
+            "php": "// $contador = 1\n// $nome = 'Bob'",
+            "c": "// contador = 1\n// nome = \"Bob\""
           }
         },
         {
@@ -107,6 +114,13 @@
             "java": "static final double PI = 3.14159;\nstatic final int MAX_TENTATIVAS = 3;",
             "php": "define('PI', 3.14159);\nconst MAX_TENTATIVAS = 3;\necho PI; // 3.14159",
             "c": "#define PI 3.14159\nconst int MAX_TENTATIVAS = 3;"
+          },
+          "output": {
+            "javascript": "console.log(PI);             // 3.14159\nconsole.log(MAX_TENTATIVAS); // 3\nconsole.log(CONFIG.host);    // 'prod'\n// CONFIG = {}; → TypeError: Assignment to constant variable.",
+            "python": "print(PI)             # 3.14159\nprint(MAX_TENTATIVAS) # 3",
+            "java": "// PI = 3.14159\n// MAX_TENTATIVAS = 3",
+            "php": "echo PI;             // 3.14159\necho MAX_TENTATIVAS; // 3",
+            "c": "// PI = 3.14159 (substituição pelo preprocessador)\n// MAX_TENTATIVAS = 3"
           }
         },
         {
@@ -157,6 +171,13 @@
             "java": "// Array estático\nString[] frutas = {\"maçã\", \"banana\", \"laranja\"};\nSystem.out.println(frutas[0]);\n\n// ArrayList dinâmico\nimport java.util.ArrayList;\nArrayList<String> lista = new ArrayList<>();\nlista.add(\"maçã\");\nlista.remove(0);",
             "php": "$frutas = ['maçã', 'banana', 'laranja'];\necho $frutas[0]; // maçã\narray_push($frutas, 'uva');\narray_splice($frutas, 1, 1);\n\n// Funções úteis\n$maiusculas = array_map('strtoupper', $frutas);\n$filtrado = array_filter($frutas, fn($f) => $f[0] === 'a');",
             "c": "int numeros[5] = {10, 20, 30, 40, 50};\nprintf(\"%d\", numeros[0]); // 10\n// Percorrer\nfor (int i = 0; i < 5; i++) {\n    printf(\"%d \", numeros[i]);\n}"
+          },
+          "output": {
+            "javascript": "console.log(frutas[0]);   // 'maçã'\n// após push('uva'): ['maçã','banana','laranja','uva']\n// após pop():       ['maçã','banana','laranja']\n// após splice(1,1): ['maçã','laranja']\nconsole.log(maiusculas);  // ['MAÇÃ','LARANJA']\nconsole.log(total);       // 6",
+            "python": "print(frutas[0])    # maçã\n# após append:   ['maçã','banana','laranja','uva']\n# após remove:   ['maçã','laranja','uva']\nprint(maiusculas)   # ['MAÇÃ','LARANJA','UVA']",
+            "java": "// frutas[0] → \"maçã\"\n// ArrayList após add(\"maçã\") → [\"maçã\"]\n// após remove(0)             → []",
+            "php": "echo $frutas[0]; // maçã\n// após push:   ['maçã','banana','laranja','uva']\n// após splice: ['maçã','laranja','uva']\n// $maiusculas → ['MAÇÃ','LARANJA','UVA']",
+            "c": "printf(\"%d\", numeros[0]); // 10\n// loop: 10 20 30 40 50"
           }
         },
         {
@@ -207,6 +228,13 @@
             "java": "public class Produto {\n    private String nome;\n    private double preco;\n\n    public Produto(String nome, double preco) {\n        this.nome = nome;\n        this.preco = preco;\n    }\n\n    public double comDesconto(double pct) {\n        return preco * (1 - pct / 100);\n    }\n}\n\nProduto p = new Produto(\"Notebook\", 3000);\nSystem.out.println(p.comDesconto(10)); // 2700.0",
             "php": "class Produto {\n    public function __construct(\n        public string $nome,\n        public float $preco\n    ) {}\n\n    public function comDesconto(float $pct): float {\n        return $this->preco * (1 - $pct / 100);\n    }\n}\n\n$p = new Produto('Notebook', 3000);\necho $p->comDesconto(10); // 2700",
             "c": "struct Produto {\n    char nome[50];\n    float preco;\n};\n\nstruct Produto p;\nstrcpy(p.nome, \"Notebook\");\np.preco = 3000.0f;\nprintf(\"%s: %.2f\", p.nome, p.preco);"
+          },
+          "output": {
+            "javascript": "console.log(pessoa.saudar());  // 'Olá, sou Alice'\nconsole.log(p.comDesconto(10)); // 2700",
+            "python": "print(p.com_desconto(10))  # 2700.0",
+            "java": "System.out.println(p.comDesconto(10)); // 2700.0",
+            "php": "echo $p->comDesconto(10); // 2700",
+            "c": "printf(\"%s: %.2f\", p.nome, p.preco);\n// Notebook: 3000.00"
           }
         },
         {
@@ -262,6 +290,12 @@
             "python": "# ===== LISTA SIMPLES =====\nclass No:\n    def __init__(self, valor):\n        self.valor = valor\n        self.proximo = None\n\nclass ListaSimples:\n    def __init__(self):\n        self.cabeca = None\n\n    def inserir_inicio(self, valor):\n        no = No(valor)\n        no.proximo = self.cabeca\n        self.cabeca = no\n\n    def imprimir(self):\n        atual = self.cabeca\n        while atual:\n            print(atual.valor, end=' → ')\n            atual = atual.proximo\n        print('None')\n\n# ===== LISTA DUPLAMENTE ENCADEADA =====\nclass NoDuplo:\n    def __init__(self, valor):\n        self.valor = valor\n        self.proximo = None\n        self.anterior = None  # ponteiro extra!\n\nclass ListaDupla:\n    def __init__(self):\n        self.cabeca = None\n        self.cauda = None\n\n    def inserir_fim(self, valor):\n        no = NoDuplo(valor)\n        if not self.cauda:\n            self.cabeca = self.cauda = no\n        else:\n            no.anterior = self.cauda\n            self.cauda.proximo = no\n            self.cauda = no\n\n    def remover_fim(self):\n        if not self.cauda: return None\n        val = self.cauda.valor\n        self.cauda = self.cauda.anterior\n        if self.cauda: self.cauda.proximo = None\n        else: self.cabeca = None\n        return val\n\n    def imprimir_inverso(self):\n        atual = self.cauda\n        while atual:\n            print(atual.valor, end=' ← ')\n            atual = atual.anterior\n\ndupla = ListaDupla()\nfor v in [1, 2, 3]: dupla.inserir_fim(v)\ndupla.imprimir_inverso()  # 3 ← 2 ← 1",
             "c": "/* LISTA SIMPLES */\nstruct No {\n    int valor;\n    struct No* proximo;\n};\n\nvoid inserirInicio(struct No** cabeca, int valor) {\n    struct No* novo = malloc(sizeof(struct No));\n    novo->valor = valor;\n    novo->proximo = *cabeca;\n    *cabeca = novo;\n}\n\n/* LISTA DUPLAMENTE ENCADEADA */\nstruct NoDuplo {\n    int valor;\n    struct NoDuplo* proximo;\n    struct NoDuplo* anterior; /* ponteiro extra! */\n};\n\nvoid inserirFim(struct NoDuplo** cauda, int valor) {\n    struct NoDuplo* novo = malloc(sizeof(struct NoDuplo));\n    novo->valor = valor;\n    novo->proximo = NULL;\n    novo->anterior = *cauda;\n    if (*cauda) (*cauda)->proximo = novo;\n    *cauda = novo;\n}",
             "java": "// Lista Simples\nclass No<T> {\n    T valor;\n    No<T> proximo;\n    No(T v) { valor = v; }\n}\n\n// Lista Duplamente Encadeada\nclass NoDuplo<T> {\n    T valor;\n    NoDuplo<T> proximo, anterior; // dois ponteiros!\n    NoDuplo(T v) { valor = v; }\n}\n\nclass ListaDupla<T> {\n    NoDuplo<T> cabeca, cauda;\n\n    void inserirFim(T valor) {\n        NoDuplo<T> no = new NoDuplo<>(valor);\n        if (cauda == null) { cabeca = cauda = no; return; }\n        no.anterior = cauda;\n        cauda.proximo = no;\n        cauda = no;\n    }\n\n    void imprimirInverso() {\n        NoDuplo<T> atual = cauda;\n        while (atual != null) {\n            System.out.print(atual.valor + \" ← \");\n            atual = atual.anterior;\n        }\n    }\n}"
+          },
+          "output": {
+            "javascript": "// Lista simples (inserirInicio: 3→2→1)\nlista.imprimir(); // 3 → 2 → 1\n\n// Lista dupla (inserirFim: 1→2→3)\ndupla.imprimirInverso(); // 3 ← 2 ← 1\ndupla.removerFim();      // remove 3\ndupla.imprimirInverso(); // 2 ← 1",
+            "python": "# Lista simples\nlista.imprimir()\n# 3 → 2 → 1 → None\n\n# Lista dupla\ndupla.imprimir_inverso()\n# 3 ← 2 ← 1",
+            "c": "// inserirInicio(1), inserirInicio(2), inserirInicio(3)\n// imprimir: 3 -> 2 -> 1 -> NULL",
+            "java": "// lista.add(1); lista.add(2); lista.add(3);\n// imprimir: 1 -> 2 -> 3 -> null"
           }
         },
         {
@@ -312,6 +346,13 @@
             "java": "class No {\n    int valor;\n    No esq, dir;\n    No(int v) { valor = v; }\n}\n\nclass BST {\n    No raiz;\n\n    No inserir(No no, int v) {\n        if (no == null) return new No(v);\n        if (v < no.valor) no.esq = inserir(no.esq, v);\n        else if (v > no.valor) no.dir = inserir(no.dir, v);\n        return no;\n    }\n}",
             "php": "class No {\n    public int $valor;\n    public ?No $esq = null, $dir = null;\n    public function __construct(int $v) { $this->valor = $v; }\n}\n\nfunction inserir(?No $no, int $v): No {\n    if (!$no) return new No($v);\n    if ($v < $no->valor) $no->esq = inserir($no->esq, $v);\n    elseif ($v > $no->valor) $no->dir = inserir($no->dir, $v);\n    return $no;\n}",
             "c": "struct No {\n    int valor;\n    struct No *esq, *dir;\n};\n\nstruct No* inserir(struct No* raiz, int v) {\n    if (!raiz) {\n        struct No* n = malloc(sizeof(*n));\n        n->valor = v; n->esq = n->dir = NULL;\n        return n;\n    }\n    if (v < raiz->valor) raiz->esq = inserir(raiz->esq, v);\n    else if (v > raiz->valor) raiz->dir = inserir(raiz->dir, v);\n    return raiz;\n}"
+          },
+          "output": {
+            "javascript": "// Inserindo [5,3,7,1,4] na BST:\n//       5\n//      / \\\n//     3   7\n//    / \\\n//   1   4\nconsole.log(arvore.buscar(4));\n// NoArvore { valor: 4, esq: null, dir: null }\nconsole.log(arvore.buscar(9)); // null",
+            "python": "# BST após inserir [5,3,7,1,4]:\n#       5\n#      / \\\n#     3   7\n#    / \\\n#   1   4\nprint(bst.buscar(4))   # <No valor=4>\nprint(bst.buscar(9))   # None",
+            "java": "// BST após inserir [5,3,7,1,4]\n// buscar(4) → No{valor=4}\n// buscar(9) → null",
+            "php": "// BST após inserir [5,3,7,1,4]\n// buscar(4) → No{valor=4}\n// buscar(9) → null",
+            "c": "// BST após inserir [5,3,7,1,4]\n// buscar(4) → ponteiro válido (valor=4)\n// buscar(9) → NULL"
           }
         },
         {
@@ -362,6 +403,13 @@
             "java": "import java.util.HashMap;\nimport java.util.Map;\n\nMap<String, Integer> freq = new HashMap<>();\nString texto = \"banana\";\nfor (char c : texto.toCharArray()) {\n    freq.merge(String.valueOf(c), 1, Integer::sum);\n}\nSystem.out.println(freq); // {b=1, a=3, n=2}\n\n// LinkedHashMap mantém ordem de inserção\nMap<String, String> cache = new LinkedHashMap<>();",
             "php": "$mapa = [];\n$mapa['usuario'] = ['nome' => 'Alice', 'id' => 1];\necho $mapa['usuario']['nome']; // Alice\n\n// Contagem de frequência\n$texto = 'banana';\n$freq = array_count_values(str_split($texto));\nprint_r($freq); // Array ( [b]=>1 [a]=>3 [n]=>2 )\n\n// isset para verificar existência\nif (isset($mapa['usuario'])) { /* existe */ }",
             "c": "#include <stdlib.h>\n// C não tem hash map nativo.\n// Implementação simples com array de listas:\n#define TAMANHO 100\n\ntypedef struct Par { char* chave; int valor; struct Par* prox; } Par;\nPar* tabela[TAMANHO] = {NULL};\n\nunsigned int hash(const char* chave) {\n    unsigned int h = 0;\n    while (*chave) h = h * 31 + *chave++;\n    return h % TAMANHO;\n}"
+          },
+          "output": {
+            "javascript": "console.log(mapa.get('usuario')); // { nome: 'Alice', id: 1 }\nconsole.log(mapa.has(42));        // true\n// após delete(42):\nconsole.log(mapa.has(42));        // false\nconsole.log(freq); // { b: 1, a: 3, n: 2 }",
+            "python": "print(mapa.get('usuario'))  # {'nome': 'Alice', 'id': 1}\nprint(freq)  # Counter({'a': 3, 'n': 2, 'b': 1})\nprint(grupos['frutas'])  # ['maçã', 'banana']",
+            "java": "System.out.println(freq);\n// {b=1, a=3, n=2}",
+            "php": "echo $mapa['usuario']['nome']; // Alice\nprint_r($freq);\n// Array ( [b] => 1 [a] => 3 [n] => 2 )",
+            "c": "// hash('nome') → índice na tabela\n// get('nome')  → valor associado"
           }
         },
         {
@@ -411,6 +459,12 @@
             "python": "# ===== PILHA COM LISTA =====\nclass Pilha:\n    def __init__(self):\n        self._dados = []\n\n    def push(self, valor):\n        self._dados.append(valor)\n\n    def pop(self):\n        if self.vazia():\n            raise IndexError('Pilha vazia')\n        return self._dados.pop()\n\n    def topo(self):\n        return self._dados[-1]\n\n    def vazia(self):\n        return len(self._dados) == 0\n\n# ===== CASO DE USO: Undo/Redo =====\nclass Editor:\n    def __init__(self):\n        self.texto = ''\n        self._historico = Pilha()\n\n    def digitar(self, texto):\n        self._historico.push(self.texto)  # salva estado anterior\n        self.texto += texto\n\n    def desfazer(self):\n        if not self._historico.vazia():\n            self.texto = self._historico.pop()\n\neditor = Editor()\neditor.digitar('Olá')\neditor.digitar(' Mundo')\nprint(editor.texto)   # 'Olá Mundo'\neditor.desfazer()\nprint(editor.texto)   # 'Olá'",
             "c": "#include <stdio.h>\n#include <stdlib.h>\n#define MAX 100\n\n/* PILHA COM ARRAY */\ntypedef struct {\n    int dados[MAX];\n    int topo;\n} Pilha;\n\nvoid inicializar(Pilha* p) { p->topo = -1; }\n\nvoid push(Pilha* p, int valor) {\n    if (p->topo >= MAX - 1) { printf(\"Pilha cheia!\\n\"); return; }\n    p->dados[++p->topo] = valor;\n}\n\nint pop(Pilha* p) {\n    if (p->topo == -1) { printf(\"Pilha vazia!\\n\"); return -1; }\n    return p->dados[p->topo--];\n}\n\nint topo(Pilha* p) { return p->dados[p->topo]; }\n\nint main() {\n    Pilha p;\n    inicializar(&p);\n    push(&p, 10);\n    push(&p, 20);\n    push(&p, 30);\n    printf(\"Topo: %d\\n\", topo(&p)); // 30\n    printf(\"Pop: %d\\n\", pop(&p));   // 30\n    printf(\"Pop: %d\\n\", pop(&p));   // 20\n    return 0;\n}",
             "java": "import java.util.ArrayDeque;\nimport java.util.Deque;\n\n// ===== PILHA MANUAL =====\nclass Pilha<T> {\n    private Object[] dados;\n    private int topo = -1;\n\n    Pilha(int capacidade) { dados = new Object[capacidade]; }\n\n    void push(T valor) { dados[++topo] = valor; }\n\n    @SuppressWarnings(\"unchecked\")\n    T pop() { return (T) dados[topo--]; }\n\n    @SuppressWarnings(\"unchecked\")\n    T topo() { return (T) dados[topo]; }\n\n    boolean vazia() { return topo == -1; }\n}\n\n// ===== JAVA NATIVO: Deque como pilha =====\nDeque<Integer> pilha = new ArrayDeque<>();\npilha.push(10);\npilha.push(20);\nSystem.out.println(pilha.peek()); // 20 (topo)\nSystem.out.println(pilha.pop());  // 20"
+          },
+          "output": {
+            "javascript": "// Pilha: push(10), push(20), push(30)\n// topo() → 30\n// pop()  → 30  | pilha: [10,20]\n// pop()  → 20  | pilha: [10]\n\nparentesesBalanceados('({[]})'); // true\nparentesesBalanceados('({[})');  // false",
+            "python": "editor.digitar('Olá')\neditor.digitar(' Mundo')\nprint(editor.texto)   # 'Olá Mundo'\neditor.desfazer()\nprint(editor.texto)   # 'Olá'",
+            "c": "Topo: 30\nPop: 30\nPop: 20\n// pilha restante: [10]",
+            "java": "pilha.push(10); pilha.push(20);\nSystem.out.println(pilha.peek()); // 20 (topo)\nSystem.out.println(pilha.pop());  // 20\nSystem.out.println(pilha.peek()); // 10"
           }
         },
         {
@@ -460,6 +514,12 @@
             "python": "from collections import deque  # implementação eficiente nativa\n\n# ===== FILA NATIVA COM DEQUE =====\nfila = deque()\nfila.append('cliente1')    # enqueue\nfila.append('cliente2')\nfila.append('cliente3')\n\nprint(fila.popleft())  # dequeue → 'cliente1' (FIFO!)\nprint(fila.popleft())  # → 'cliente2'\n\n# ===== FILA MANUAL (para entender o conceito) =====\nclass Fila:\n    def __init__(self):\n        self._dados = deque()\n\n    def enqueue(self, valor):\n        self._dados.append(valor)\n\n    def dequeue(self):\n        if self.vazia():\n            raise IndexError('Fila vazia')\n        return self._dados.popleft()\n\n    def frente(self):\n        return self._dados[0]\n\n    def vazia(self):\n        return len(self._dados) == 0\n\n# ===== BFS com fila =====\nfrom collections import deque\n\ndef bfs(grafo, inicio):\n    visitado = {inicio}\n    fila = deque([inicio])\n    while fila:\n        no = fila.popleft()\n        print('Visitando:', no)\n        for vizinho in grafo.get(no, []):\n            if vizinho not in visitado:\n                visitado.add(vizinho)\n                fila.append(vizinho)",
             "c": "#include <stdio.h>\n#include <stdlib.h>\n#define MAX 100\n\n/* FILA COM ARRAY CIRCULAR */\ntypedef struct {\n    int dados[MAX];\n    int inicio, fim, tamanho;\n} Fila;\n\nvoid inicializar(Fila* f) { f->inicio = f->fim = f->tamanho = 0; }\n\nvoid enqueue(Fila* f, int valor) {\n    if (f->tamanho == MAX) { printf(\"Fila cheia!\\n\"); return; }\n    f->dados[f->fim] = valor;\n    f->fim = (f->fim + 1) % MAX;  /* circular! */\n    f->tamanho++;\n}\n\nint dequeue(Fila* f) {\n    if (f->tamanho == 0) { printf(\"Fila vazia!\\n\"); return -1; }\n    int val = f->dados[f->inicio];\n    f->inicio = (f->inicio + 1) % MAX; /* circular! */\n    f->tamanho--;\n    return val;\n}\n\nint main() {\n    Fila f;\n    inicializar(&f);\n    enqueue(&f, 10);\n    enqueue(&f, 20);\n    enqueue(&f, 30);\n    printf(\"%d\\n\", dequeue(&f)); // 10 (FIFO)\n    printf(\"%d\\n\", dequeue(&f)); // 20\n    return 0;\n}",
             "java": "import java.util.LinkedList;\nimport java.util.Queue;\n\n// ===== JAVA NATIVO =====\nQueue<String> fila = new LinkedList<>();\nfila.offer(\"cliente1\");  // enqueue\nfila.offer(\"cliente2\");\nfila.offer(\"cliente3\");\n\nSystem.out.println(fila.poll());  // dequeue → \"cliente1\"\nSystem.out.println(fila.peek());  // apenas olha → \"cliente2\"\n\n// ===== FILA MANUAL COM LISTA ENCADEADA =====\nclass Fila<T> {\n    private static class No<T> {\n        T valor; No<T> proximo;\n        No(T v) { valor = v; }\n    }\n\n    private No<T> inicio, fim;\n    private int tamanho;\n\n    void enqueue(T valor) {\n        No<T> no = new No<>(valor);\n        if (fim == null) { inicio = fim = no; }\n        else { fim.proximo = no; fim = no; }\n        tamanho++;\n    }\n\n    T dequeue() {\n        T val = inicio.valor;\n        inicio = inicio.proximo;\n        if (inicio == null) fim = null;\n        tamanho--;\n        return val;\n    }\n}"
+          },
+          "output": {
+            "javascript": "// enqueue: A→B→C→D→E\nbfs(grafo, 'A');\n// Visitando: A\n// Visitando: B\n// Visitando: C\n// Visitando: D\n// Visitando: E",
+            "python": "fila.popleft()  # 'cliente1'\nfila.popleft()  # 'cliente2'\n# fila restante: deque(['cliente3'])\n\n# BFS:\n# Visitando: A\n# Visitando: B\n# Visitando: C\n# Visitando: D\n# Visitando: E",
+            "c": "// enqueue: 10, 20, 30\ndequeue() → 10  // FIFO!\ndequeue() → 20\n// fila restante: [30]",
+            "java": "fila.poll()  // → \"cliente1\"\nfila.peek()  // → \"cliente2\" (não remove)\n// fila restante: [cliente2, cliente3]"
           }
         },
         {
@@ -515,6 +575,12 @@
             "javascript": "// Em JavaScript NÃO existem ponteiros explícitos,\n// mas objetos e arrays são passados por REFERÊNCIA!\n\n// ===== TIPOS PRIMITIVOS: passados por VALOR (cópia) =====\nlet a = 10;\nlet b = a;  // b é uma CÓPIA de a\nb = 20;\nconsole.log(a); // 10 — não foi afetado\n\n// ===== OBJETOS: passados por REFERÊNCIA =====\nconst obj1 = { nome: 'Alice' };\nconst obj2 = obj1;  // obj2 aponta para o MESMO objeto!\nobj2.nome = 'Bob';\nconsole.log(obj1.nome); // 'Bob' — foi afetado!\n\n// ===== COMO FAZER CÓPIA REAL =====\nconst original = { a: 1, b: { c: 2 } };\nconst rasa = { ...original };        // cópia rasa\nconst profunda = structuredClone(original); // cópia profunda (ES2022)\n\nrasa.b.c = 99;       // afeta original! (b ainda é referência)\nprofunda.b.c = 99;   // NÃO afeta original\n\n// ===== FUNÇÕES E REFERÊNCIAS =====\nfunction modificar(arr) {\n  arr.push(4);  // modifica o array ORIGINAL\n}\n\nconst lista = [1, 2, 3];\nmodificar(lista);\nconsole.log(lista); // [1, 2, 3, 4]",
             "python": "# Python: tudo é referência, mas imutáveis se comportam como valores\n\n# ===== IMUTÁVEIS (int, str, tuple): passados por valor efetivamente =====\nx = 10\ny = x\ny = 20\nprint(x)  # 10 — não afetado\n\n# ===== MUTÁVEIS (list, dict): passados por referência =====\nlista1 = [1, 2, 3]\nlista2 = lista1  # mesma referência!\nlista2.append(4)\nprint(lista1)    # [1, 2, 3, 4] — afetado!\n\n# ===== CÓPIA REAL =====\nimport copy\noriginal = [[1, 2], [3, 4]]\nrasa = original.copy()         # cópia rasa\nprofunda = copy.deepcopy(original)  # cópia profunda\n\n# ===== ID: ver o endereço de memória em Python =====\na = [1, 2, 3]\nb = a\nc = a.copy()\nprint(id(a) == id(b))  # True  — mesma referência\nprint(id(a) == id(c))  # False — objetos diferentes",
             "java": "// Java: primitivos por valor, objetos por referência\n\npublic class Ponteiros {\n\n    // Primitivo: passado por VALOR (cópia)\n    static void tentarModificar(int n) {\n        n = 100; // não afeta o original\n    }\n\n    // Objeto: passado por REFERÊNCIA\n    static void modificarObjeto(int[] arr) {\n        arr[0] = 99; // afeta o original!\n    }\n\n    public static void main(String[] args) {\n        int x = 42;\n        tentarModificar(x);\n        System.out.println(x); // 42 — não mudou\n\n        int[] nums = {1, 2, 3};\n        modificarObjeto(nums);\n        System.out.println(nums[0]); // 99 — mudou!\n\n        // Referências nulas\n        String s = null;\n        // s.length(); // NullPointerException! — equivalente ao segfault do C\n        if (s != null) s.length(); // verificação segura\n    }\n}"
+          },
+          "output": {
+            "c": "Valor de x:         42\nEndereço de x:      0x7ffd5abc1234\nptr aponta para:    0x7ffd5abc1234\n*ptr (deref.):      42\nx agora:            100\n\n// dobrar(5):\nnum → 10\n\n// criarArray(5):\n0 10 20 30 40",
+            "javascript": "// Primitivos (por valor):\na = 10  // não afetado por b = 20\n\n// Objetos (por referência):\nobj1.nome // 'Bob'  ← foi afetado por obj2!\n\n// Cópia rasa vs profunda:\nrasa.b.c    = 99  // afeta original.b.c!\nprofunda.b.c = 99 // original.b.c = 2 (intacto)\n\n// Array em função:\nlista // [1, 2, 3, 4]  ← arr.push afetou o original",
+            "python": "print(x)       # 10  (imutável, não afetado)\nprint(lista1)  # [1, 2, 3, 4]  (mutável, afetado!)\n\nprint(id(a) == id(b))  # True  — mesma referência\nprint(id(a) == id(c))  # False — cópia independente",
+            "java": "System.out.println(x);       // 42  (primitivo, não mudou)\nSystem.out.println(nums[0]); // 99  (objeto, mudou!)\n// s.length() sem verificação → NullPointerException"
           }
         },
         {
@@ -570,6 +636,12 @@
             "python": "# ===== FATORIAL =====\ndef fatorial(n):\n    if n <= 1: return 1          # caso base\n    return n * fatorial(n - 1)   # caso recursivo\n\n# ===== FIBONACCI COM MEMOIZATION =====\nfrom functools import lru_cache\n\n@lru_cache(maxsize=None)  # decorator de memoization automática!\ndef fib(n):\n    if n <= 1: return n\n    return fib(n-1) + fib(n-2)\n\nprint(fib(100))  # 354224848179261915075 — instantâneo!\n\n# ===== BUSCA BINÁRIA RECURSIVA =====\ndef busca_binaria(arr, alvo, inicio=0, fim=None):\n    if fim is None: fim = len(arr) - 1\n    if inicio > fim: return -1         # caso base: não encontrou\n\n    meio = (inicio + fim) // 2\n    if arr[meio] == alvo: return meio  # caso base: encontrou!\n    elif arr[meio] < alvo:\n        return busca_binaria(arr, alvo, meio + 1, fim)  # direita\n    else:\n        return busca_binaria(arr, alvo, inicio, meio - 1)  # esquerda\n\nnums = [1, 3, 5, 7, 9, 11, 13]\nprint(busca_binaria(nums, 7))  # 3 (índice)\n\n# ===== FLATTEN DE LISTA ANINHADA =====\ndef flatten(lista):\n    resultado = []\n    for item in lista:\n        if isinstance(item, list):\n            resultado.extend(flatten(item))  # recursão!\n        else:\n            resultado.append(item)\n    return resultado\n\nprint(flatten([1, [2, [3, 4]], [5, 6]]))  # [1, 2, 3, 4, 5, 6]",
             "c": "#include <stdio.h>\n\n/* FATORIAL */\nlong long fatorial(int n) {\n    if (n <= 1) return 1;           /* caso base */\n    return n * fatorial(n - 1);     /* caso recursivo */\n}\n\n/* FIBONACCI COM MEMOIZATION */\n#define MAX 100\nlong long memo[MAX];\n\nlong long fib(int n) {\n    if (n <= 1) return n;\n    if (memo[n] != -1) return memo[n];  /* cache */\n    memo[n] = fib(n-1) + fib(n-2);\n    return memo[n];\n}\n\n/* POTÊNCIA RECURSIVA (divide e conquista) */\nlong long potencia(long long base, int exp) {\n    if (exp == 0) return 1;           /* caso base */\n    if (exp % 2 == 0) {\n        long long metade = potencia(base, exp / 2);\n        return metade * metade;        /* O(log n)! */\n    }\n    return base * potencia(base, exp - 1);\n}\n\nint main() {\n    /* inicializa memo */\n    for (int i = 0; i < MAX; i++) memo[i] = -1;\n\n    printf(\"5! = %lld\\n\", fatorial(5));     /* 120 */\n    printf(\"fib(10) = %lld\\n\", fib(10));    /* 55 */\n    printf(\"2^10 = %lld\\n\", potencia(2, 10)); /* 1024 */\n    return 0;\n}",
             "java": "// ===== TORRES DE HANÓI =====\npublic class Recursao {\n\n    // Mover n discos da haste origem para destino usando auxiliar\n    static void hanoi(int n, char origem, char destino, char auxiliar) {\n        if (n == 1) {  // caso base\n            System.out.printf(\"Mover disco 1: %c → %c%n\", origem, destino);\n            return;\n        }\n        hanoi(n - 1, origem, auxiliar, destino);  // move n-1 para auxiliar\n        System.out.printf(\"Mover disco %d: %c → %c%n\", n, origem, destino);\n        hanoi(n - 1, auxiliar, destino, origem);  // move n-1 para destino\n    }\n\n    // ===== MERGE SORT =====\n    static int[] mergeSort(int[] arr) {\n        if (arr.length <= 1) return arr;\n        int meio = arr.length / 2;\n        int[] esq = mergeSort(java.util.Arrays.copyOfRange(arr, 0, meio));\n        int[] dir = mergeSort(java.util.Arrays.copyOfRange(arr, meio, arr.length));\n        return merge(esq, dir);\n    }\n\n    static int[] merge(int[] a, int[] b) {\n        int[] res = new int[a.length + b.length];\n        int i = 0, j = 0, k = 0;\n        while (i < a.length && j < b.length)\n            res[k++] = a[i] <= b[j] ? a[i++] : b[j++];\n        while (i < a.length) res[k++] = a[i++];\n        while (j < b.length) res[k++] = b[j++];\n        return res;\n    }\n\n    public static void main(String[] args) {\n        hanoi(3, 'A', 'C', 'B');  // Torres de Hanói com 3 discos\n    }\n}"
+          },
+          "output": {
+            "javascript": "fatorial(5)  // 120\n// pilha: 5*4*3*2*1 = 120\n\nfib(50)      // 12586269025  (com memo, instantâneo)\n\nmergeSort([5,2,8,1,9,3])\n// [1, 2, 3, 5, 8, 9]",
+            "python": "print(fatorial(5))  # 120\nprint(fib(100))     # 354224848179261915075\n\nbusca_binaria([1,3,5,7,9,11,13], 7)\n# índice: 3\n\nflatten([1,[2,[3,4]],[5,6]])\n# [1, 2, 3, 4, 5, 6]",
+            "c": "5! = 120\nfib(10) = 55\n2^10 = 1024",
+            "java": "// hanoi(3, 'A', 'C', 'B'):\nMover disco 1: A → C\nMover disco 2: A → B\nMover disco 1: C → B\nMover disco 3: A → C\nMover disco 1: B → A\nMover disco 2: B → C\nMover disco 1: A → C\n\n// mergeSort([5,2,8,1,9,3]):\n// [1, 2, 3, 5, 8, 9]"
           }
         }
       ]

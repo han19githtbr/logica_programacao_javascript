@@ -419,6 +419,46 @@ pre .cmt { color: #6e7681; font-style: italic; }
 pre .fn { color: #d2a8ff; }
 pre .cls { color: #ffa657; }
 
+/* ===== OUTPUT BLOCK ===== */
+.output-wrap {
+  margin-top: 6px;
+  border: 1px solid #2ea04333;
+  border-radius: var(--r);
+  overflow: hidden;
+  background: #0d1f0f;
+}
+.output-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  background: #122016;
+  border-bottom: 1px solid #2ea04333;
+}
+.output-icon {
+  color: #3fb950;
+  font-size: 0.55rem;
+}
+.output-label {
+  font-size: 0.6rem;
+  font-family: var(--font-mono);
+  color: #3fb950;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+.output-pre {
+  padding: 12px 14px;
+  overflow-x: auto;
+  font-size: 0.7rem;
+  line-height: 1.6;
+  font-family: var(--font-mono);
+  color: #8ddb8d;
+  background: transparent;
+  border: none;
+  white-space: pre;
+}
+
 /* ===== COMPLEXITY TABLE ===== */
 .complexity-section {
   margin-top: 32px;
@@ -878,7 +918,7 @@ const I18N = {
     tabVision: 'ℹ Visão Geral', tabCode: '💻 Código',
     pros: '✅ Vantagens', cons: '❌ Desvantagens', when: '🎯 Quando Usar',
     noExample: 'Nenhum exemplo disponível.',
-    copiar: 'Copiar', copiado: '✓ Copiado!',
+    copiar: 'Copiar', copiado: '✓ Copiado!', saida: 'Saída',
     stackTitle: '🚀 Stacks de Alto Desempenho',
     stacks: [
       { name: '🇧🇷 Stack Mercado BR (Fintechs & Startups)', color: '#2ea043', techs: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS', 'Zustand/React Query', 'Jest + RTL', 'Vercel', 'GitHub Actions'], why: 'Dominante em Nubank, iFood, Hotmart. Next.js entrega SEO + performance com SSR/SSG. TypeScript reduz bugs em produção. Tailwind agiliza UI consistente.' },
@@ -897,7 +937,7 @@ const I18N = {
     tabVision: 'ℹ Overview', tabCode: '💻 Code',
     pros: '✅ Advantages', cons: '❌ Disadvantages', when: '🎯 When to Use',
     noExample: 'No examples available.',
-    copiar: 'Copy', copiado: '✓ Copied!',
+    copiar: 'Copy', copiado: '✓ Copied!', saida: 'Output',
     stackTitle: '🚀 High-Performance Stacks',
     stacks: [
       { name: '🇧🇷 BR Market Stack (Fintechs & Startups)', color: '#2ea043', techs: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS', 'Zustand/React Query', 'Jest + RTL', 'Vercel', 'GitHub Actions'], why: 'Dominant at Nubank, iFood, Hotmart. Next.js delivers SEO + performance with SSR/SSG. TypeScript reduces production bugs. Tailwind accelerates consistent UI.' },
@@ -916,7 +956,7 @@ const I18N = {
     tabVision: 'ℹ Vue d\'ensemble', tabCode: '💻 Code',
     pros: '✅ Avantages', cons: '❌ Inconvénients', when: '🎯 Quand Utiliser',
     noExample: 'Aucun exemple disponible.',
-    copiar: 'Copier', copiado: '✓ Copié !',
+    copiar: 'Copier', copiado: '✓ Copié !', saida: 'Résultat',
     stackTitle: '🚀 Stacks Haute Performance',
     stacks: [
       { name: '🇧🇷 Stack Marché BR (Fintechs & Startups)', color: '#2ea043', techs: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS', 'Zustand/React Query', 'Jest + RTL', 'Vercel', 'GitHub Actions'], why: 'Dominante chez Nubank, iFood, Hotmart. Next.js offre SEO + performance avec SSR/SSG. TypeScript réduit les bugs en production. Tailwind accélère une UI cohérente.' },
@@ -1066,7 +1106,7 @@ function buildCard(sub, topic, idx) {
             ${langs.map(l => `<button class="lang-btn ${l===defaultLang?'active':''}" onclick="selectLang('${sub.id}', '${l}', this)">${langLabel(l)}</button>`).join('')}
           </div>
           <div id="code-block-${sub.id}">
-            ${buildCodeBlock(sub.examples[defaultLang], defaultLang, sub.id)}
+            ${buildCodeBlock(sub.examples[defaultLang], defaultLang, sub.id, sub.output?.[defaultLang])}
           </div>
         ` : `<p style="color:var(--text3);font-size:.78rem">${t('noExample')}</p>`}
       </div>
@@ -1107,8 +1147,17 @@ function langLabel(lang) {
   return map[lang] || lang;
 }
 
-function buildCodeBlock(code, lang, id) {
+function buildCodeBlock(code, lang, id, output) {
   const highlighted = syntaxHighlight(code, lang);
+  const outputHtml = output ? `
+    <div class="output-wrap">
+      <div class="output-header">
+        <span class="output-icon">&#9658;</span>
+        <span class="output-label">${t('saida')}</span>
+      </div>
+      <pre class="output-pre">${escapeHtml(output)}</pre>
+    </div>
+  ` : '';
   return `
     <div class="code-wrap">
       <div class="code-header">
@@ -1118,22 +1167,39 @@ function buildCodeBlock(code, lang, id) {
       </div>
       <pre>${highlighted}</pre>
     </div>
+    ${outputHtml}
   `;
 }
 
 function syntaxHighlight(code, lang) {
-  const placeholders = [];
+  // Use a Map with unique keys that contain NO digits and NO chars
+  // affected by keyword/number/PascalCase regexes.
+  // Key format: \x00<letters>\x00 — \x00 is never in source code or HTML spans.
+  const phMap = new Map();
+  let phCounter = 0;
+
   function save(html) {
-    const id = '\x00' + placeholders.length + '\x00';
-    placeholders.push(html);
-    return id;
+    // Convert counter to a letters-only key (a, b, ..., z, aa, ab, ...)
+    let n = phCounter++;
+    let key = '';
+    do {
+      key = String.fromCharCode(97 + (n % 26)) + key;
+      n = Math.floor(n / 26);
+      if (n > 0) n -= 1; else break;
+    } while (true);
+    const marker = '\x00' + key + '\x00';
+    phMap.set(marker, html);
+    return marker;
   }
 
   let r = code;
 
-  // 1. Salvar comentários (antes de escapar)
-  r = r.replace(/(\/\/[^\n]*)|((?:^|(?<=[\s,;({[]))#[^\n]*)/gm, m =>
+  // 1. Salvar comentários
+  r = r.replace(/(\/\/[^\n]*)/g, m =>
     save('<span class="cmt">' + escapeHtml(m) + '</span>')
+  );
+  r = r.replace(/(^|\s)(#[^\n]*)/gm, (_, pre, comment) =>
+    pre + save('<span class="cmt">' + escapeHtml(comment) + '</span>')
   );
 
   // 2. Salvar strings
@@ -1142,26 +1208,29 @@ function syntaxHighlight(code, lang) {
   );
 
   // 3. Escapar o restante do código
-  r = escapeHtml(r);
+  r = r.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
   // 4. Keywords
   r = r.replace(/\b(const|let|var|function|class|return|if|else|for|while|new|this|import|export|from|async|await|try|catch|typeof|instanceof|void|null|undefined|true|false|public|private|static|final|int|float|double|char|struct|def|self|None|True|False|echo|fn|use|impl|mut|elif|in|and|or|not|pass|raise|with|as|lambda|yield|break|continue|switch|case|default|do|typedef|unsigned|include|define|printf|malloc|free|sizeof|enum)\b/g,
     '<span class="kw">$1</span>');
 
   // 5. Números
-  r = r.replace(/\b(\d+\.?\d*)\b/g, '<span class="num">$1</span>');
+  r = r.replace(/(?<![a-zA-Z_])\b(\d+\.?\d*)\b/g, '<span class="num">$1</span>');
 
   // 6. Classes PascalCase
   r = r.replace(/\b([A-Z][a-zA-Z0-9]+)\b/g, '<span class="cls">$1</span>');
 
-  // 7. Restaurar placeholders
-  r = r.replace(/\x00(\d+)\x00/g, (_, i) => placeholders[+i]);
+  // 7. Restaurar placeholders — replace each marker with its saved HTML
+  phMap.forEach((html, marker) => {
+    // Escape the marker for use in regex (only \x00 and letters — letters don't need escaping)
+    r = r.split(marker).join(html);
+  });
 
   return r;
 }
 
 function escapeHtml(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
 function buildComplexityTable() {
@@ -1320,7 +1389,7 @@ function selectLang(cardId, lang, btn) {
   if (!sub || !sub.examples[lang]) return;
 
   document.getElementById(`code-block-${cardId}`).innerHTML =
-    buildCodeBlock(sub.examples[lang], lang, cardId);
+    buildCodeBlock(sub.examples[lang], lang, cardId, sub.output?.[lang]);
 }
 
 function copyCode(cardId) {
@@ -1438,4 +1507,3 @@ loadData().catch(() => {
 </script>
 </body>
 </html>
-
