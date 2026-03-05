@@ -1108,7 +1108,7 @@ function langLabel(lang) {
 }
 
 function buildCodeBlock(code, lang, id) {
-  const highlighted = syntaxHighlight(escapeHtml(code), lang);
+  const highlighted = syntaxHighlight(code, lang);
   return `
     <div class="code-wrap">
       <div class="code-header">
@@ -1122,17 +1122,46 @@ function buildCodeBlock(code, lang, id) {
 }
 
 function syntaxHighlight(code, lang) {
-  return code
-    .replace(/(\/\/.*)/g, '<span class="cmt">$1</span>')
-    .replace(/(#.*)/g, '<span class="cmt">$1</span>')
-    .replace(/\b(const|let|var|function|class|return|if|else|for|while|new|this|import|export|from|async|await|try|catch|typeof|instanceof|void|null|undefined|true|false|public|private|static|final|void|int|string|float|double|char|struct|def|self|None|True|False|echo|fn|use|impl|mut)\b/g, '<span class="kw">$1</span>')
-    .replace(/('([^'\\]|\\.)*'|"([^"\\]|\\.)*"|`([^`\\]|\\.)*`)/g, '<span class="str">$1</span>')
-    .replace(/\b(\d+\.?\d*)\b/g, '<span class="num">$1</span>')
-    .replace(/\b([A-Z][a-zA-Z]+)\b/g, '<span class="cls">$1</span>');
+  const placeholders = [];
+  function save(html) {
+    const id = '\x00' + placeholders.length + '\x00';
+    placeholders.push(html);
+    return id;
+  }
+
+  let r = code;
+
+  // 1. Salvar comentários (antes de escapar)
+  r = r.replace(/(\/\/[^\n]*)|((?:^|(?<=[\s,;({[]))#[^\n]*)/gm, m =>
+    save('<span class="cmt">' + escapeHtml(m) + '</span>')
+  );
+
+  // 2. Salvar strings
+  r = r.replace(/(`[^`]*`|'(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*")/g, m =>
+    save('<span class="str">' + escapeHtml(m) + '</span>')
+  );
+
+  // 3. Escapar o restante do código
+  r = escapeHtml(r);
+
+  // 4. Keywords
+  r = r.replace(/\b(const|let|var|function|class|return|if|else|for|while|new|this|import|export|from|async|await|try|catch|typeof|instanceof|void|null|undefined|true|false|public|private|static|final|int|float|double|char|struct|def|self|None|True|False|echo|fn|use|impl|mut|elif|in|and|or|not|pass|raise|with|as|lambda|yield|break|continue|switch|case|default|do|typedef|unsigned|include|define|printf|malloc|free|sizeof|enum)\b/g,
+    '<span class="kw">$1</span>');
+
+  // 5. Números
+  r = r.replace(/\b(\d+\.?\d*)\b/g, '<span class="num">$1</span>');
+
+  // 6. Classes PascalCase
+  r = r.replace(/\b([A-Z][a-zA-Z0-9]+)\b/g, '<span class="cls">$1</span>');
+
+  // 7. Restaurar placeholders
+  r = r.replace(/\x00(\d+)\x00/g, (_, i) => placeholders[+i]);
+
+  return r;
 }
 
 function escapeHtml(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 function buildComplexityTable() {

@@ -211,52 +211,57 @@
         },
         {
           "id": "listas",
-          "title": "Listas Encadeadas",
-          "title_en": "Linked Lists",
-          "title_fr": "Listes Chaînées",
+          "title": "Listas Encadeadas (Simples e Dupla)",
+          "title_en": "Linked Lists (Singly and Doubly)",
+          "title_fr": "Listes Chaînées (Simple et Double)",
           "icon": "🔗",
-          "desc": "Estrutura onde cada elemento (nó) contém um valor e um ponteiro para o próximo nó. Não usa memória contígua — cresce/encolhe dinamicamente.",
-          "desc_en": "Structure where each element (node) contains a value and a pointer to the next node. Does not use contiguous memory — grows/shrinks dynamically.",
-          "desc_fr": "Structure où chaque élément (nœud) contient une valeur et un pointeur vers le nœud suivant. N'utilise pas de mémoire contiguë — grandit/rétrécit dynamiquement.",
+          "desc": "Estrutura onde cada nó contém um valor e ponteiro(s) para nós adjacentes. Na lista simples, aponta apenas para o próximo. Na lista dupla, aponta para o próximo E o anterior, permitindo navegação bidirecional.",
+          "desc_en": "Structure where each node contains a value and pointer(s) to adjacent nodes. In a singly linked list, points only to the next. In a doubly linked list, points to both next AND previous, enabling bidirectional traversal.",
+          "desc_fr": "Structure où chaque nœud contient une valeur et des pointeurs vers les nœuds adjacents. La liste simple pointe uniquement vers le suivant. La liste double pointe vers le suivant ET le précédent, permettant la navigation bidirectionnelle.",
           "pros": [
-            "Inserção/remoção O(1) no início ou com ponteiro",
+            "Inserção/remoção O(1) no início (simples) ou em qualquer extremidade (dupla)",
             "Crescimento dinâmico sem realocação de memória",
-            "Base para pilhas, filas e outras estruturas"
+            "Lista dupla permite remoção O(1) sem percorrer desde a cabeça",
+            "Base para pilhas, filas, deques e outras estruturas"
           ],
           "pros_en": [
-            "O(1) insertion/removal at start or with pointer",
+            "O(1) insertion/removal at head (singly) or both ends (doubly)",
             "Dynamic growth without memory reallocation",
-            "Foundation for stacks, queues and other structures"
+            "Doubly linked list allows O(1) removal without traversal from head",
+            "Foundation for stacks, queues, deques and other structures"
           ],
           "pros_fr": [
-            "Insertion/suppression O(1) au début ou avec pointeur",
+            "Insertion/suppression O(1) en tête (simple) ou aux deux extrémités (double)",
             "Croissance dynamique sans réallocation mémoire",
-            "Base des piles, files et autres structures"
+            "La liste double permet la suppression O(1) sans parcours depuis la tête",
+            "Base des piles, files, deques et autres structures"
           ],
           "cons": [
             "Acesso por índice é O(n) — sem acesso direto",
-            "Maior uso de memória (ponteiros extras)",
-            "Cache-unfriendly — nós espalhados na memória"
+            "Lista dupla usa mais memória (dois ponteiros por nó)",
+            "Cache-unfriendly — nós espalhados na memória",
+            "Maior complexidade de implementação vs arrays"
           ],
           "cons_en": [
             "Index access is O(n) — no direct access",
-            "Higher memory usage (extra pointers)",
-            "Cache-unfriendly — nodes scattered in memory"
+            "Doubly linked list uses more memory (two pointers per node)",
+            "Cache-unfriendly — nodes scattered in memory",
+            "More complex to implement than arrays"
           ],
           "cons_fr": [
             "L'accès par index est O(n) — pas d'accès direct",
-            "Utilisation mémoire plus élevée (pointeurs supplémentaires)",
-            "Cache-unfriendly — nœuds dispersés en mémoire"
+            "La liste double utilise plus de mémoire (deux pointeurs par nœud)",
+            "Cache-unfriendly — nœuds dispersés en mémoire",
+            "Plus complexe à implémenter que les tableaux"
           ],
-          "when": "Use quando há muitas inserções/remoções no início ou meio; quando o tamanho é imprevisível; para implementar filas ou pilhas.",
-          "when_en": "Use when there are many insertions/removals at the start or middle; when size is unpredictable; to implement queues or stacks.",
-          "when_fr": "Utilisez quand il y a de nombreuses insertions/suppressions au début ou au milieu ; quand la taille est imprévisible ; pour implémenter des files ou piles.",
+          "when": "Lista simples: pilhas e filas com inserção/remoção no início. Lista dupla: histórico de navegação (voltar/avançar), editores de texto, players de música (próximo/anterior).",
+          "when_en": "Singly: stacks and queues with head insertions/removals. Doubly: browser history (back/forward), text editors, music players (next/previous).",
+          "when_fr": "Simple : piles et files avec insertions/suppressions en tête. Double : historique de navigation (retour/avance), éditeurs de texte, lecteurs de musique (suivant/précédent).",
           "examples": {
-            "javascript": "class No {\n  constructor(valor) {\n    this.valor = valor;\n    this.proximo = null;\n  }\n}\n\nclass ListaEncadeada {\n  constructor() { this.cabeca = null; }\n\n  inserirInicio(valor) {\n    const no = new No(valor);\n    no.proximo = this.cabeca;\n    this.cabeca = no;\n  }\n\n  imprimir() {\n    let atual = this.cabeca;\n    const resultado = [];\n    while (atual) {\n      resultado.push(atual.valor);\n      atual = atual.proximo;\n    }\n    console.log(resultado.join(' → '));\n  }\n}\n\nconst lista = new ListaEncadeada();\nlista.inserirInicio(3);\nlista.inserirInicio(2);\nlista.inserirInicio(1);\nlista.imprimir(); // 1 → 2 → 3",
-            "python": "class No:\n    def __init__(self, valor):\n        self.valor = valor\n        self.proximo = None\n\nclass ListaEncadeada:\n    def __init__(self):\n        self.cabeca = None\n\n    def inserir_inicio(self, valor):\n        no = No(valor)\n        no.proximo = self.cabeca\n        self.cabeca = no\n\n    def imprimir(self):\n        atual = self.cabeca\n        while atual:\n            print(atual.valor, end=' → ')\n            atual = atual.proximo\n\nlista = ListaEncadeada()\nlista.inserir_inicio(3)\nlista.inserir_inicio(1)\nlista.imprimir() # 1 → 3",
-            "java": "class No<T> {\n    T valor;\n    No<T> proximo;\n    No(T valor) { this.valor = valor; }\n}\n\nclass Lista<T> {\n    No<T> cabeca;\n\n    void inserirInicio(T valor) {\n        No<T> no = new No<>(valor);\n        no.proximo = cabeca;\n        cabeca = no;\n    }\n}",
-            "php": "class No {\n    public mixed $valor;\n    public ?No $proximo = null;\n    public function __construct(mixed $v) { $this->valor = $v; }\n}\n\nclass Lista {\n    private ?No $cabeca = null;\n\n    public function inserirInicio(mixed $v): void {\n        $no = new No($v);\n        $no->proximo = $this->cabeca;\n        $this->cabeca = $no;\n    }\n}",
-            "c": "struct No {\n    int valor;\n    struct No* proximo;\n};\n\nvoid inserirInicio(struct No** cabeca, int valor) {\n    struct No* novo = malloc(sizeof(struct No));\n    novo->valor = valor;\n    novo->proximo = *cabeca;\n    *cabeca = novo;\n}"
+            "javascript": "// ===== LISTA SIMPLES =====\nclass No {\n  constructor(valor) {\n    this.valor = valor;\n    this.proximo = null;\n  }\n}\n\nclass ListaSimples {\n  constructor() { this.cabeca = null; this.tamanho = 0; }\n\n  inserirInicio(valor) {\n    const no = new No(valor);\n    no.proximo = this.cabeca;\n    this.cabeca = no;\n    this.tamanho++;\n  }\n\n  removerInicio() {\n    if (!this.cabeca) return null;\n    const val = this.cabeca.valor;\n    this.cabeca = this.cabeca.proximo;\n    this.tamanho--;\n    return val;\n  }\n\n  imprimir() {\n    const res = [];\n    let atual = this.cabeca;\n    while (atual) { res.push(atual.valor); atual = atual.proximo; }\n    console.log(res.join(' → '));\n  }\n}\n\n// ===== LISTA DUPLAMENTE ENCADEADA =====\nclass NoDuplo {\n  constructor(valor) {\n    this.valor = valor;\n    this.proximo = null;\n    this.anterior = null; // ponteiro extra!\n  }\n}\n\nclass ListaDupla {\n  constructor() { this.cabeca = null; this.cauda = null; this.tamanho = 0; }\n\n  inserirFim(valor) {\n    const no = new NoDuplo(valor);\n    if (!this.cauda) { this.cabeca = this.cauda = no; }\n    else {\n      no.anterior = this.cauda;\n      this.cauda.proximo = no;\n      this.cauda = no;\n    }\n    this.tamanho++;\n  }\n\n  removerFim() {\n    if (!this.cauda) return null;\n    const val = this.cauda.valor;\n    this.cauda = this.cauda.anterior;\n    if (this.cauda) this.cauda.proximo = null;\n    else this.cabeca = null;\n    this.tamanho--;\n    return val;\n  }\n\n  imprimirInverso() {\n    const res = [];\n    let atual = this.cauda;\n    while (atual) { res.push(atual.valor); atual = atual.anterior; }\n    console.log(res.join(' ← '));\n  }\n}\n\nconst dupla = new ListaDupla();\ndupla.inserirFim(1); dupla.inserirFim(2); dupla.inserirFim(3);\ndupla.imprimirInverso(); // 3 ← 2 ← 1",
+            "python": "# ===== LISTA SIMPLES =====\nclass No:\n    def __init__(self, valor):\n        self.valor = valor\n        self.proximo = None\n\nclass ListaSimples:\n    def __init__(self):\n        self.cabeca = None\n\n    def inserir_inicio(self, valor):\n        no = No(valor)\n        no.proximo = self.cabeca\n        self.cabeca = no\n\n    def imprimir(self):\n        atual = self.cabeca\n        while atual:\n            print(atual.valor, end=' → ')\n            atual = atual.proximo\n        print('None')\n\n# ===== LISTA DUPLAMENTE ENCADEADA =====\nclass NoDuplo:\n    def __init__(self, valor):\n        self.valor = valor\n        self.proximo = None\n        self.anterior = None  # ponteiro extra!\n\nclass ListaDupla:\n    def __init__(self):\n        self.cabeca = None\n        self.cauda = None\n\n    def inserir_fim(self, valor):\n        no = NoDuplo(valor)\n        if not self.cauda:\n            self.cabeca = self.cauda = no\n        else:\n            no.anterior = self.cauda\n            self.cauda.proximo = no\n            self.cauda = no\n\n    def remover_fim(self):\n        if not self.cauda: return None\n        val = self.cauda.valor\n        self.cauda = self.cauda.anterior\n        if self.cauda: self.cauda.proximo = None\n        else: self.cabeca = None\n        return val\n\n    def imprimir_inverso(self):\n        atual = self.cauda\n        while atual:\n            print(atual.valor, end=' ← ')\n            atual = atual.anterior\n\ndupla = ListaDupla()\nfor v in [1, 2, 3]: dupla.inserir_fim(v)\ndupla.imprimir_inverso()  # 3 ← 2 ← 1",
+            "c": "/* LISTA SIMPLES */\nstruct No {\n    int valor;\n    struct No* proximo;\n};\n\nvoid inserirInicio(struct No** cabeca, int valor) {\n    struct No* novo = malloc(sizeof(struct No));\n    novo->valor = valor;\n    novo->proximo = *cabeca;\n    *cabeca = novo;\n}\n\n/* LISTA DUPLAMENTE ENCADEADA */\nstruct NoDuplo {\n    int valor;\n    struct NoDuplo* proximo;\n    struct NoDuplo* anterior; /* ponteiro extra! */\n};\n\nvoid inserirFim(struct NoDuplo** cauda, int valor) {\n    struct NoDuplo* novo = malloc(sizeof(struct NoDuplo));\n    novo->valor = valor;\n    novo->proximo = NULL;\n    novo->anterior = *cauda;\n    if (*cauda) (*cauda)->proximo = novo;\n    *cauda = novo;\n}",
+            "java": "// Lista Simples\nclass No<T> {\n    T valor;\n    No<T> proximo;\n    No(T v) { valor = v; }\n}\n\n// Lista Duplamente Encadeada\nclass NoDuplo<T> {\n    T valor;\n    NoDuplo<T> proximo, anterior; // dois ponteiros!\n    NoDuplo(T v) { valor = v; }\n}\n\nclass ListaDupla<T> {\n    NoDuplo<T> cabeca, cauda;\n\n    void inserirFim(T valor) {\n        NoDuplo<T> no = new NoDuplo<>(valor);\n        if (cauda == null) { cabeca = cauda = no; return; }\n        no.anterior = cauda;\n        cauda.proximo = no;\n        cauda = no;\n    }\n\n    void imprimirInverso() {\n        NoDuplo<T> atual = cauda;\n        while (atual != null) {\n            System.out.print(atual.valor + \" ← \");\n            atual = atual.anterior;\n        }\n    }\n}"
           }
         },
         {
@@ -357,6 +362,214 @@
             "java": "import java.util.HashMap;\nimport java.util.Map;\n\nMap<String, Integer> freq = new HashMap<>();\nString texto = \"banana\";\nfor (char c : texto.toCharArray()) {\n    freq.merge(String.valueOf(c), 1, Integer::sum);\n}\nSystem.out.println(freq); // {b=1, a=3, n=2}\n\n// LinkedHashMap mantém ordem de inserção\nMap<String, String> cache = new LinkedHashMap<>();",
             "php": "$mapa = [];\n$mapa['usuario'] = ['nome' => 'Alice', 'id' => 1];\necho $mapa['usuario']['nome']; // Alice\n\n// Contagem de frequência\n$texto = 'banana';\n$freq = array_count_values(str_split($texto));\nprint_r($freq); // Array ( [b]=>1 [a]=>3 [n]=>2 )\n\n// isset para verificar existência\nif (isset($mapa['usuario'])) { /* existe */ }",
             "c": "#include <stdlib.h>\n// C não tem hash map nativo.\n// Implementação simples com array de listas:\n#define TAMANHO 100\n\ntypedef struct Par { char* chave; int valor; struct Par* prox; } Par;\nPar* tabela[TAMANHO] = {NULL};\n\nunsigned int hash(const char* chave) {\n    unsigned int h = 0;\n    while (*chave) h = h * 31 + *chave++;\n    return h % TAMANHO;\n}"
+          }
+        },
+        {
+          "id": "pilhas",
+          "title": "Pilhas (Stack)",
+          "title_en": "Stacks",
+          "title_fr": "Piles",
+          "icon": "📚",
+          "desc": "Estrutura LIFO (Last In, First Out): o último elemento inserido é o primeiro a ser removido. Operações principais: push (inserir no topo) e pop (remover do topo). Implementável com array ou lista encadeada.",
+          "desc_en": "LIFO (Last In, First Out) structure: the last element inserted is the first to be removed. Main operations: push (insert on top) and pop (remove from top). Implementable with array or linked list.",
+          "desc_fr": "Structure LIFO (Last In, First Out) : le dernier élément inséré est le premier retiré. Opérations principales : push (insérer en haut) et pop (retirer du haut). Implémentable avec un tableau ou une liste chaînée.",
+          "pros": [
+            "Push e pop em O(1) — operações extremamente rápidas",
+            "Simples de implementar com array ou lista encadeada",
+            "Modelo natural para problemas de recursão, desfazer (undo) e parsing"
+          ],
+          "pros_en": [
+            "Push and pop in O(1) — extremely fast operations",
+            "Simple to implement with array or linked list",
+            "Natural model for recursion, undo and parsing problems"
+          ],
+          "pros_fr": [
+            "Push et pop en O(1) — opérations extrêmement rapides",
+            "Simple à implémenter avec un tableau ou une liste chaînée",
+            "Modèle naturel pour la récursion, l'annulation et le parsing"
+          ],
+          "cons": [
+            "Acesso restrito: só o topo é acessível diretamente",
+            "Sem acesso por índice (para isso, use array)",
+            "Pode causar stack overflow se crescer ilimitadamente"
+          ],
+          "cons_en": [
+            "Restricted access: only the top is directly accessible",
+            "No index access (use array for that)",
+            "Can cause stack overflow if it grows unboundedly"
+          ],
+          "cons_fr": [
+            "Accès restreint : seul le sommet est directement accessible",
+            "Pas d'accès par index (utilisez un tableau pour cela)",
+            "Peut provoquer un stack overflow s'il croît sans limite"
+          ],
+          "when": "Verificação de parênteses/brackets, histórico de undo/redo, avaliação de expressões matemáticas, execução de chamadas de função (call stack), algoritmos DFS (busca em profundidade).",
+          "when_en": "Bracket/parenthesis matching, undo/redo history, math expression evaluation, function call execution (call stack), DFS (depth-first search) algorithms.",
+          "when_fr": "Vérification de parenthèses/crochets, historique undo/redo, évaluation d'expressions mathématiques, exécution d'appels de fonction (call stack), algorithmes DFS (recherche en profondeur).",
+          "examples": {
+            "javascript": "// ===== PILHA COM ARRAY (mais comum em JS) =====\nclass Pilha {\n  constructor() { this._dados = []; }\n\n  push(valor) { this._dados.push(valor); }\n\n  pop() {\n    if (this.vazia()) throw new Error('Pilha vazia');\n    return this._dados.pop();\n  }\n\n  topo() { return this._dados[this._dados.length - 1]; }\n\n  vazia() { return this._dados.length === 0; }\n\n  tamanho() { return this._dados.length; }\n}\n\n// ===== CASO DE USO: verificar parênteses balanceados =====\nfunction parentesesBalanceados(str) {\n  const pilha = new Pilha();\n  const pares = { ')': '(', ']': '[', '}': '{' };\n\n  for (const char of str) {\n    if ('([{'.includes(char)) pilha.push(char);\n    else if (')]}'.includes(char)) {\n      if (pilha.vazia() || pilha.pop() !== pares[char]) return false;\n    }\n  }\n  return pilha.vazia();\n}\n\nconsole.log(parentesesBalanceados('({[]})')); // true\nconsole.log(parentesesBalanceados('({[})'));  // false",
+            "python": "# ===== PILHA COM LISTA =====\nclass Pilha:\n    def __init__(self):\n        self._dados = []\n\n    def push(self, valor):\n        self._dados.append(valor)\n\n    def pop(self):\n        if self.vazia():\n            raise IndexError('Pilha vazia')\n        return self._dados.pop()\n\n    def topo(self):\n        return self._dados[-1]\n\n    def vazia(self):\n        return len(self._dados) == 0\n\n# ===== CASO DE USO: Undo/Redo =====\nclass Editor:\n    def __init__(self):\n        self.texto = ''\n        self._historico = Pilha()\n\n    def digitar(self, texto):\n        self._historico.push(self.texto)  # salva estado anterior\n        self.texto += texto\n\n    def desfazer(self):\n        if not self._historico.vazia():\n            self.texto = self._historico.pop()\n\neditor = Editor()\neditor.digitar('Olá')\neditor.digitar(' Mundo')\nprint(editor.texto)   # 'Olá Mundo'\neditor.desfazer()\nprint(editor.texto)   # 'Olá'",
+            "c": "#include <stdio.h>\n#include <stdlib.h>\n#define MAX 100\n\n/* PILHA COM ARRAY */\ntypedef struct {\n    int dados[MAX];\n    int topo;\n} Pilha;\n\nvoid inicializar(Pilha* p) { p->topo = -1; }\n\nvoid push(Pilha* p, int valor) {\n    if (p->topo >= MAX - 1) { printf(\"Pilha cheia!\\n\"); return; }\n    p->dados[++p->topo] = valor;\n}\n\nint pop(Pilha* p) {\n    if (p->topo == -1) { printf(\"Pilha vazia!\\n\"); return -1; }\n    return p->dados[p->topo--];\n}\n\nint topo(Pilha* p) { return p->dados[p->topo]; }\n\nint main() {\n    Pilha p;\n    inicializar(&p);\n    push(&p, 10);\n    push(&p, 20);\n    push(&p, 30);\n    printf(\"Topo: %d\\n\", topo(&p)); // 30\n    printf(\"Pop: %d\\n\", pop(&p));   // 30\n    printf(\"Pop: %d\\n\", pop(&p));   // 20\n    return 0;\n}",
+            "java": "import java.util.ArrayDeque;\nimport java.util.Deque;\n\n// ===== PILHA MANUAL =====\nclass Pilha<T> {\n    private Object[] dados;\n    private int topo = -1;\n\n    Pilha(int capacidade) { dados = new Object[capacidade]; }\n\n    void push(T valor) { dados[++topo] = valor; }\n\n    @SuppressWarnings(\"unchecked\")\n    T pop() { return (T) dados[topo--]; }\n\n    @SuppressWarnings(\"unchecked\")\n    T topo() { return (T) dados[topo]; }\n\n    boolean vazia() { return topo == -1; }\n}\n\n// ===== JAVA NATIVO: Deque como pilha =====\nDeque<Integer> pilha = new ArrayDeque<>();\npilha.push(10);\npilha.push(20);\nSystem.out.println(pilha.peek()); // 20 (topo)\nSystem.out.println(pilha.pop());  // 20"
+          }
+        },
+        {
+          "id": "filas",
+          "title": "Filas (Queue)",
+          "title_en": "Queues",
+          "title_fr": "Files d'attente",
+          "icon": "🚶",
+          "desc": "Estrutura FIFO (First In, First Out): o primeiro elemento inserido é o primeiro a ser removido. Operações: enqueue (inserir no final) e dequeue (remover do início). Implementável com array circular ou lista encadeada.",
+          "desc_en": "FIFO (First In, First Out) structure: the first element inserted is the first to be removed. Operations: enqueue (insert at end) and dequeue (remove from front). Implementable with circular array or linked list.",
+          "desc_fr": "Structure FIFO (First In, First Out) : le premier élément inséré est le premier retiré. Opérations : enqueue (insérer à la fin) et dequeue (retirer du début). Implémentable avec un tableau circulaire ou une liste chaînée.",
+          "pros": [
+            "Enqueue e dequeue em O(1) com implementação adequada",
+            "Modelo natural para processamento em ordem de chegada",
+            "Base para BFS (busca em largura) e sistemas de mensagens"
+          ],
+          "pros_en": [
+            "Enqueue and dequeue in O(1) with proper implementation",
+            "Natural model for processing in arrival order",
+            "Foundation for BFS (breadth-first search) and messaging systems"
+          ],
+          "pros_fr": [
+            "Enqueue et dequeue en O(1) avec une implémentation adaptée",
+            "Modèle naturel pour le traitement dans l'ordre d'arrivée",
+            "Base de BFS (recherche en largeur) et des systèmes de messagerie"
+          ],
+          "cons": [
+            "Acesso restrito: só o início pode ser removido",
+            "Array simples para fila é O(n) no dequeue — use array circular",
+            "Fila de prioridade (heap) tem complexidade maior de implementação"
+          ],
+          "cons_en": [
+            "Restricted access: only the front can be removed",
+            "Simple array queue is O(n) on dequeue — use circular array",
+            "Priority queue (heap) has greater implementation complexity"
+          ],
+          "cons_fr": [
+            "Accès restreint : seul le début peut être retiré",
+            "File avec tableau simple est O(n) au dequeue — utilisez tableau circulaire",
+            "La file de priorité (heap) a une complexité d'implémentation plus élevée"
+          ],
+          "when": "Filas de impressão, processamento de tarefas (job queue), algoritmos BFS, buffers de dados, sistemas de mensagens (Kafka, RabbitMQ), rate limiting.",
+          "when_en": "Print queues, task processing (job queue), BFS algorithms, data buffers, messaging systems (Kafka, RabbitMQ), rate limiting.",
+          "when_fr": "Files d'impression, traitement de tâches (job queue), algorithmes BFS, buffers de données, systèmes de messagerie (Kafka, RabbitMQ), rate limiting.",
+          "examples": {
+            "javascript": "// ===== FILA COM LISTA ENCADEADA (O(1) em ambas operações) =====\nclass No {\n  constructor(valor) { this.valor = valor; this.proximo = null; }\n}\n\nclass Fila {\n  constructor() { this.inicio = null; this.fim = null; this.tamanho = 0; }\n\n  enqueue(valor) {\n    const no = new No(valor);\n    if (!this.fim) { this.inicio = this.fim = no; }\n    else { this.fim.proximo = no; this.fim = no; }\n    this.tamanho++;\n  }\n\n  dequeue() {\n    if (!this.inicio) throw new Error('Fila vazia');\n    const val = this.inicio.valor;\n    this.inicio = this.inicio.proximo;\n    if (!this.inicio) this.fim = null;\n    this.tamanho--;\n    return val;\n  }\n\n  frente() { return this.inicio?.valor; }\n  vazia() { return this.tamanho === 0; }\n}\n\n// ===== CASO DE USO: BFS em grafo =====\nfunction bfs(grafo, inicio) {\n  const visitado = new Set([inicio]);\n  const fila = new Fila();\n  fila.enqueue(inicio);\n\n  while (!fila.vazia()) {\n    const no = fila.dequeue();\n    console.log('Visitando:', no);\n\n    for (const vizinho of grafo[no] || []) {\n      if (!visitado.has(vizinho)) {\n        visitado.add(vizinho);\n        fila.enqueue(vizinho);\n      }\n    }\n  }\n}\n\nconst grafo = { A: ['B','C'], B: ['D'], C: ['D','E'], D: [], E: [] };\nbfs(grafo, 'A'); // A B C D E",
+            "python": "from collections import deque  # implementação eficiente nativa\n\n# ===== FILA NATIVA COM DEQUE =====\nfila = deque()\nfila.append('cliente1')    # enqueue\nfila.append('cliente2')\nfila.append('cliente3')\n\nprint(fila.popleft())  # dequeue → 'cliente1' (FIFO!)\nprint(fila.popleft())  # → 'cliente2'\n\n# ===== FILA MANUAL (para entender o conceito) =====\nclass Fila:\n    def __init__(self):\n        self._dados = deque()\n\n    def enqueue(self, valor):\n        self._dados.append(valor)\n\n    def dequeue(self):\n        if self.vazia():\n            raise IndexError('Fila vazia')\n        return self._dados.popleft()\n\n    def frente(self):\n        return self._dados[0]\n\n    def vazia(self):\n        return len(self._dados) == 0\n\n# ===== BFS com fila =====\nfrom collections import deque\n\ndef bfs(grafo, inicio):\n    visitado = {inicio}\n    fila = deque([inicio])\n    while fila:\n        no = fila.popleft()\n        print('Visitando:', no)\n        for vizinho in grafo.get(no, []):\n            if vizinho not in visitado:\n                visitado.add(vizinho)\n                fila.append(vizinho)",
+            "c": "#include <stdio.h>\n#include <stdlib.h>\n#define MAX 100\n\n/* FILA COM ARRAY CIRCULAR */\ntypedef struct {\n    int dados[MAX];\n    int inicio, fim, tamanho;\n} Fila;\n\nvoid inicializar(Fila* f) { f->inicio = f->fim = f->tamanho = 0; }\n\nvoid enqueue(Fila* f, int valor) {\n    if (f->tamanho == MAX) { printf(\"Fila cheia!\\n\"); return; }\n    f->dados[f->fim] = valor;\n    f->fim = (f->fim + 1) % MAX;  /* circular! */\n    f->tamanho++;\n}\n\nint dequeue(Fila* f) {\n    if (f->tamanho == 0) { printf(\"Fila vazia!\\n\"); return -1; }\n    int val = f->dados[f->inicio];\n    f->inicio = (f->inicio + 1) % MAX; /* circular! */\n    f->tamanho--;\n    return val;\n}\n\nint main() {\n    Fila f;\n    inicializar(&f);\n    enqueue(&f, 10);\n    enqueue(&f, 20);\n    enqueue(&f, 30);\n    printf(\"%d\\n\", dequeue(&f)); // 10 (FIFO)\n    printf(\"%d\\n\", dequeue(&f)); // 20\n    return 0;\n}",
+            "java": "import java.util.LinkedList;\nimport java.util.Queue;\n\n// ===== JAVA NATIVO =====\nQueue<String> fila = new LinkedList<>();\nfila.offer(\"cliente1\");  // enqueue\nfila.offer(\"cliente2\");\nfila.offer(\"cliente3\");\n\nSystem.out.println(fila.poll());  // dequeue → \"cliente1\"\nSystem.out.println(fila.peek());  // apenas olha → \"cliente2\"\n\n// ===== FILA MANUAL COM LISTA ENCADEADA =====\nclass Fila<T> {\n    private static class No<T> {\n        T valor; No<T> proximo;\n        No(T v) { valor = v; }\n    }\n\n    private No<T> inicio, fim;\n    private int tamanho;\n\n    void enqueue(T valor) {\n        No<T> no = new No<>(valor);\n        if (fim == null) { inicio = fim = no; }\n        else { fim.proximo = no; fim = no; }\n        tamanho++;\n    }\n\n    T dequeue() {\n        T val = inicio.valor;\n        inicio = inicio.proximo;\n        if (inicio == null) fim = null;\n        tamanho--;\n        return val;\n    }\n}"
+          }
+        },
+        {
+          "id": "ponteiros",
+          "title": "Ponteiros",
+          "title_en": "Pointers",
+          "title_fr": "Pointeurs",
+          "icon": "👉",
+          "desc": "Variável que armazena o ENDEREÇO de memória de outra variável. Em vez de guardar um valor diretamente, guarda onde esse valor está na memória RAM. Fundamental em C/C++; em linguagens modernas existem como referências.",
+          "desc_en": "Variable that stores the MEMORY ADDRESS of another variable. Instead of storing a value directly, it stores where that value is in RAM. Fundamental in C/C++; in modern languages they exist as references.",
+          "desc_fr": "Variable qui stocke l'ADRESSE MÉMOIRE d'une autre variable. Au lieu de stocker une valeur directement, elle stocke où cette valeur se trouve en RAM. Fondamental en C/C++ ; dans les langages modernes, ils existent en tant que références.",
+          "pros": [
+            "Permite modificar variáveis fora do escopo atual (pass by reference)",
+            "Base para estruturas dinâmicas: listas, árvores, grafos",
+            "Acesso direto à memória = máxima performance",
+            "Compartilhamento eficiente de dados grandes sem cópias"
+          ],
+          "pros_en": [
+            "Allows modifying variables outside current scope (pass by reference)",
+            "Foundation for dynamic structures: lists, trees, graphs",
+            "Direct memory access = maximum performance",
+            "Efficient sharing of large data without copies"
+          ],
+          "pros_fr": [
+            "Permet de modifier des variables hors de la portée courante (passage par référence)",
+            "Base des structures dynamiques : listes, arbres, graphes",
+            "Accès direct à la mémoire = performance maximale",
+            "Partage efficace de grandes données sans copies"
+          ],
+          "cons": [
+            "Ponteiro nulo (NULL) desreferenciado causa crash (segfault)",
+            "Vazamento de memória se malloc() sem free()",
+            "Ponteiro dangling: aponta para memória já liberada",
+            "Difíceis de debugar — erros silenciosos e intermitentes"
+          ],
+          "cons_en": [
+            "Null pointer dereference causes crash (segfault)",
+            "Memory leak if malloc() without free()",
+            "Dangling pointer: points to already-freed memory",
+            "Hard to debug — silent and intermittent errors"
+          ],
+          "cons_fr": [
+            "La déréférence d'un pointeur null provoque un crash (segfault)",
+            "Fuite mémoire si malloc() sans free()",
+            "Pointeur dangling : pointe vers une mémoire déjà libérée",
+            "Difficiles à déboguer — erreurs silencieuses et intermittentes"
+          ],
+          "when": "C/C++: alocação dinâmica, estruturas de dados, sistemas operacionais. Em JS/Python/Java: entender que objetos são passados por referência evita bugs sutis.",
+          "when_en": "C/C++: dynamic allocation, data structures, operating systems. In JS/Python/Java: understanding that objects are passed by reference prevents subtle bugs.",
+          "when_fr": "C/C++ : allocation dynamique, structures de données, systèmes d'exploitation. En JS/Python/Java : comprendre que les objets sont passés par référence évite des bugs subtils.",
+          "examples": {
+            "c": "#include <stdio.h>\n#include <stdlib.h>\n\n/* ===== CONCEITO BÁSICO ===== */\nint main() {\n    int x = 42;\n    int* ptr = &x;   /* ptr armazena o ENDEREÇO de x */\n\n    printf(\"Valor de x: %d\\n\", x);       /* 42 */\n    printf(\"Endereço de x: %p\\n\", &x);   /* ex: 0x7ffd1234 */\n    printf(\"ptr aponta para: %p\\n\", ptr); /* mesmo endereço */\n    printf(\"*ptr (desreferência): %d\\n\", *ptr); /* 42 */\n\n    *ptr = 100;  /* modifica x INDIRETAMENTE via ponteiro */\n    printf(\"x agora: %d\\n\", x); /* 100 */\n    return 0;\n}\n\n/* ===== PASSAR POR REFERÊNCIA ===== */\nvoid dobrar(int* n) {\n    *n = *n * 2;  /* modifica a variável ORIGINAL */\n}\n\nint main2() {\n    int num = 5;\n    dobrar(&num);  /* passa o endereço de num */\n    printf(\"%d\\n\", num); /* 10 — modificado! */\n    return 0;\n}\n\n/* ===== ALOCAÇÃO DINÂMICA ===== */\nint* criarArray(int tamanho) {\n    int* arr = malloc(tamanho * sizeof(int)); /* aloca na heap */\n    if (!arr) return NULL;  /* verificar sempre! */\n    for (int i = 0; i < tamanho; i++) arr[i] = i * 10;\n    return arr;\n}\n\nint main3() {\n    int* numeros = criarArray(5);\n    for (int i = 0; i < 5; i++)\n        printf(\"%d \", numeros[i]); /* 0 10 20 30 40 */\n    free(numeros); /* OBRIGATÓRIO — evitar memory leak! */\n    numeros = NULL; /* boa prática: evitar ponteiro dangling */\n    return 0;\n}\n\n/* ===== PONTEIRO PARA PONTEIRO ===== */\nvoid alocarMemoria(int** ptr, int valor) {\n    *ptr = malloc(sizeof(int));\n    **ptr = valor;\n}",
+            "javascript": "// Em JavaScript NÃO existem ponteiros explícitos,\n// mas objetos e arrays são passados por REFERÊNCIA!\n\n// ===== TIPOS PRIMITIVOS: passados por VALOR (cópia) =====\nlet a = 10;\nlet b = a;  // b é uma CÓPIA de a\nb = 20;\nconsole.log(a); // 10 — não foi afetado\n\n// ===== OBJETOS: passados por REFERÊNCIA =====\nconst obj1 = { nome: 'Alice' };\nconst obj2 = obj1;  // obj2 aponta para o MESMO objeto!\nobj2.nome = 'Bob';\nconsole.log(obj1.nome); // 'Bob' — foi afetado!\n\n// ===== COMO FAZER CÓPIA REAL =====\nconst original = { a: 1, b: { c: 2 } };\nconst rasa = { ...original };        // cópia rasa\nconst profunda = structuredClone(original); // cópia profunda (ES2022)\n\nrasa.b.c = 99;       // afeta original! (b ainda é referência)\nprofunda.b.c = 99;   // NÃO afeta original\n\n// ===== FUNÇÕES E REFERÊNCIAS =====\nfunction modificar(arr) {\n  arr.push(4);  // modifica o array ORIGINAL\n}\n\nconst lista = [1, 2, 3];\nmodificar(lista);\nconsole.log(lista); // [1, 2, 3, 4]",
+            "python": "# Python: tudo é referência, mas imutáveis se comportam como valores\n\n# ===== IMUTÁVEIS (int, str, tuple): passados por valor efetivamente =====\nx = 10\ny = x\ny = 20\nprint(x)  # 10 — não afetado\n\n# ===== MUTÁVEIS (list, dict): passados por referência =====\nlista1 = [1, 2, 3]\nlista2 = lista1  # mesma referência!\nlista2.append(4)\nprint(lista1)    # [1, 2, 3, 4] — afetado!\n\n# ===== CÓPIA REAL =====\nimport copy\noriginal = [[1, 2], [3, 4]]\nrasa = original.copy()         # cópia rasa\nprofunda = copy.deepcopy(original)  # cópia profunda\n\n# ===== ID: ver o endereço de memória em Python =====\na = [1, 2, 3]\nb = a\nc = a.copy()\nprint(id(a) == id(b))  # True  — mesma referência\nprint(id(a) == id(c))  # False — objetos diferentes",
+            "java": "// Java: primitivos por valor, objetos por referência\n\npublic class Ponteiros {\n\n    // Primitivo: passado por VALOR (cópia)\n    static void tentarModificar(int n) {\n        n = 100; // não afeta o original\n    }\n\n    // Objeto: passado por REFERÊNCIA\n    static void modificarObjeto(int[] arr) {\n        arr[0] = 99; // afeta o original!\n    }\n\n    public static void main(String[] args) {\n        int x = 42;\n        tentarModificar(x);\n        System.out.println(x); // 42 — não mudou\n\n        int[] nums = {1, 2, 3};\n        modificarObjeto(nums);\n        System.out.println(nums[0]); // 99 — mudou!\n\n        // Referências nulas\n        String s = null;\n        // s.length(); // NullPointerException! — equivalente ao segfault do C\n        if (s != null) s.length(); // verificação segura\n    }\n}"
+          }
+        },
+        {
+          "id": "recursividade",
+          "title": "Recursividade",
+          "title_en": "Recursion",
+          "title_fr": "Récursivité",
+          "icon": "🔁",
+          "desc": "Técnica onde uma função chama a si mesma para resolver subproblemas menores. Toda solução recursiva precisa de: (1) caso base — condição de parada, e (2) caso recursivo — reduz o problema em direção ao caso base.",
+          "desc_en": "Technique where a function calls itself to solve smaller subproblems. Every recursive solution needs: (1) base case — stopping condition, and (2) recursive case — reduces the problem toward the base case.",
+          "desc_fr": "Technique où une fonction s'appelle elle-même pour résoudre de plus petits sous-problèmes. Toute solution récursive nécessite : (1) le cas de base — condition d'arrêt, et (2) le cas récursif — réduit le problème vers le cas de base.",
+          "pros": [
+            "Código elegante e próximo da definição matemática do problema",
+            "Natural para problemas com estrutura recursiva (árvores, grafos, fractais)",
+            "Divide e conquista: facilita raciocínio sobre subproblemas",
+            "Elimina necessidade de pilha manual em DFS"
+          ],
+          "pros_en": [
+            "Elegant code close to the mathematical definition of the problem",
+            "Natural for problems with recursive structure (trees, graphs, fractals)",
+            "Divide and conquer: facilitates reasoning about subproblems",
+            "Eliminates need for manual stack in DFS"
+          ],
+          "pros_fr": [
+            "Code élégant proche de la définition mathématique du problème",
+            "Naturel pour les problèmes à structure récursive (arbres, graphes, fractales)",
+            "Diviser pour régner : facilite le raisonnement sur les sous-problèmes",
+            "Élimine le besoin de pile manuelle en DFS"
+          ],
+          "cons": [
+            "Stack overflow se não houver caso base correto ou profundidade muito grande",
+            "Mais lenta que iteração (overhead de chamada de função)",
+            "Difícil de debugar — rastrear chamadas aninhadas é complexo",
+            "Recursão ingênua tem complexidade exponencial (ex: Fibonacci sem memoization)"
+          ],
+          "cons_en": [
+            "Stack overflow if base case is incorrect or depth is too large",
+            "Slower than iteration (function call overhead)",
+            "Hard to debug — tracing nested calls is complex",
+            "Naive recursion has exponential complexity (e.g. Fibonacci without memoization)"
+          ],
+          "cons_fr": [
+            "Stack overflow si le cas de base est incorrect ou si la profondeur est trop grande",
+            "Plus lente que l'itération (overhead d'appel de fonction)",
+            "Difficile à déboguer — tracer les appels imbriqués est complexe",
+            "La récursion naïve a une complexité exponentielle (ex : Fibonacci sans mémoïsation)"
+          ],
+          "when": "Percorrer árvores/grafos, algoritmos de divisão e conquista (merge sort, quick sort), problemas que se dividem naturalmente em subproblemas idênticos (permutações, labirintos, torres de Hanói).",
+          "when_en": "Traversing trees/graphs, divide and conquer algorithms (merge sort, quick sort), problems that naturally split into identical subproblems (permutations, mazes, towers of Hanoi).",
+          "when_fr": "Parcourir des arbres/graphes, algorithmes diviser pour régner (tri fusion, tri rapide), problèmes qui se divisent naturellement en sous-problèmes identiques (permutations, labyrinthes, tours de Hanoï).",
+          "examples": {
+            "javascript": "// ===== ANATOMIA DA RECURSÃO =====\nfunction fatorial(n) {\n  // 1. CASO BASE: condição de parada\n  if (n <= 1) return 1;\n  // 2. CASO RECURSIVO: reduz o problema\n  return n * fatorial(n - 1);\n}\n// fatorial(5) = 5 * fatorial(4)\n//             = 5 * 4 * fatorial(3)\n//             = 5 * 4 * 3 * fatorial(2)\n//             = 5 * 4 * 3 * 2 * fatorial(1)\n//             = 5 * 4 * 3 * 2 * 1 = 120\n\n// ===== FIBONACCI (ingênuo vs memoization) =====\n// Ingênuo: O(2^n) — MUITO LENTO\nfunction fibLento(n) {\n  if (n <= 1) return n;\n  return fibLento(n - 1) + fibLento(n - 2);\n}\n\n// Com memoization: O(n) — eficiente!\nfunction fib(n, memo = new Map()) {\n  if (n <= 1) return n;\n  if (memo.has(n)) return memo.get(n); // cache!\n  const resultado = fib(n - 1, memo) + fib(n - 2, memo);\n  memo.set(n, resultado);\n  return resultado;\n}\nconsole.log(fib(50)); // 12586269025 — instantâneo!\n\n// ===== PERCORRER ÁRVORE (DFS recursivo) =====\nfunction somarArvore(no) {\n  if (!no) return 0; // caso base: nó nulo\n  return no.valor + somarArvore(no.esq) + somarArvore(no.dir);\n}\n\n// ===== MERGE SORT: divide e conquista =====\nfunction mergeSort(arr) {\n  if (arr.length <= 1) return arr; // caso base\n  const meio = Math.floor(arr.length / 2);\n  const esq = mergeSort(arr.slice(0, meio));  // recursão\n  const dir = mergeSort(arr.slice(meio));      // recursão\n  return merge(esq, dir);                      // combina\n}\n\nfunction merge(esq, dir) {\n  const resultado = [];\n  let i = 0, j = 0;\n  while (i < esq.length && j < dir.length) {\n    resultado.push(esq[i] <= dir[j] ? esq[i++] : dir[j++]);\n  }\n  return [...resultado, ...esq.slice(i), ...dir.slice(j)];\n}\nconsole.log(mergeSort([5,2,8,1,9,3])); // [1,2,3,5,8,9]",
+            "python": "# ===== FATORIAL =====\ndef fatorial(n):\n    if n <= 1: return 1          # caso base\n    return n * fatorial(n - 1)   # caso recursivo\n\n# ===== FIBONACCI COM MEMOIZATION =====\nfrom functools import lru_cache\n\n@lru_cache(maxsize=None)  # decorator de memoization automática!\ndef fib(n):\n    if n <= 1: return n\n    return fib(n-1) + fib(n-2)\n\nprint(fib(100))  # 354224848179261915075 — instantâneo!\n\n# ===== BUSCA BINÁRIA RECURSIVA =====\ndef busca_binaria(arr, alvo, inicio=0, fim=None):\n    if fim is None: fim = len(arr) - 1\n    if inicio > fim: return -1         # caso base: não encontrou\n\n    meio = (inicio + fim) // 2\n    if arr[meio] == alvo: return meio  # caso base: encontrou!\n    elif arr[meio] < alvo:\n        return busca_binaria(arr, alvo, meio + 1, fim)  # direita\n    else:\n        return busca_binaria(arr, alvo, inicio, meio - 1)  # esquerda\n\nnums = [1, 3, 5, 7, 9, 11, 13]\nprint(busca_binaria(nums, 7))  # 3 (índice)\n\n# ===== FLATTEN DE LISTA ANINHADA =====\ndef flatten(lista):\n    resultado = []\n    for item in lista:\n        if isinstance(item, list):\n            resultado.extend(flatten(item))  # recursão!\n        else:\n            resultado.append(item)\n    return resultado\n\nprint(flatten([1, [2, [3, 4]], [5, 6]]))  # [1, 2, 3, 4, 5, 6]",
+            "c": "#include <stdio.h>\n\n/* FATORIAL */\nlong long fatorial(int n) {\n    if (n <= 1) return 1;           /* caso base */\n    return n * fatorial(n - 1);     /* caso recursivo */\n}\n\n/* FIBONACCI COM MEMOIZATION */\n#define MAX 100\nlong long memo[MAX];\n\nlong long fib(int n) {\n    if (n <= 1) return n;\n    if (memo[n] != -1) return memo[n];  /* cache */\n    memo[n] = fib(n-1) + fib(n-2);\n    return memo[n];\n}\n\n/* POTÊNCIA RECURSIVA (divide e conquista) */\nlong long potencia(long long base, int exp) {\n    if (exp == 0) return 1;           /* caso base */\n    if (exp % 2 == 0) {\n        long long metade = potencia(base, exp / 2);\n        return metade * metade;        /* O(log n)! */\n    }\n    return base * potencia(base, exp - 1);\n}\n\nint main() {\n    /* inicializa memo */\n    for (int i = 0; i < MAX; i++) memo[i] = -1;\n\n    printf(\"5! = %lld\\n\", fatorial(5));     /* 120 */\n    printf(\"fib(10) = %lld\\n\", fib(10));    /* 55 */\n    printf(\"2^10 = %lld\\n\", potencia(2, 10)); /* 1024 */\n    return 0;\n}",
+            "java": "// ===== TORRES DE HANÓI =====\npublic class Recursao {\n\n    // Mover n discos da haste origem para destino usando auxiliar\n    static void hanoi(int n, char origem, char destino, char auxiliar) {\n        if (n == 1) {  // caso base\n            System.out.printf(\"Mover disco 1: %c → %c%n\", origem, destino);\n            return;\n        }\n        hanoi(n - 1, origem, auxiliar, destino);  // move n-1 para auxiliar\n        System.out.printf(\"Mover disco %d: %c → %c%n\", n, origem, destino);\n        hanoi(n - 1, auxiliar, destino, origem);  // move n-1 para destino\n    }\n\n    // ===== MERGE SORT =====\n    static int[] mergeSort(int[] arr) {\n        if (arr.length <= 1) return arr;\n        int meio = arr.length / 2;\n        int[] esq = mergeSort(java.util.Arrays.copyOfRange(arr, 0, meio));\n        int[] dir = mergeSort(java.util.Arrays.copyOfRange(arr, meio, arr.length));\n        return merge(esq, dir);\n    }\n\n    static int[] merge(int[] a, int[] b) {\n        int[] res = new int[a.length + b.length];\n        int i = 0, j = 0, k = 0;\n        while (i < a.length && j < b.length)\n            res[k++] = a[i] <= b[j] ? a[i++] : b[j++];\n        while (i < a.length) res[k++] = a[i++];\n        while (j < b.length) res[k++] = b[j++];\n        return res;\n    }\n\n    public static void main(String[] args) {\n        hanoi(3, 'A', 'C', 'B');  // Torres de Hanói com 3 discos\n    }\n}"
           }
         }
       ]
