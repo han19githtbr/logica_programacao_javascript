@@ -568,7 +568,12 @@ tr:hover td { background: var(--bg3); }
 }
 .search-input:focus { border-color: var(--accent); }
 .search-input::placeholder { color: var(--text3); }
-.search-wrap-inner { position: relative; display: inline-block; width: 100%; max-width: 500px; }
+.search-wrap-inner { 
+  position: relative;
+  display: inline-block; 
+  width: 100%; 
+  max-width: 500px; 
+}
 .search-icon {
   position: absolute;
   left: 12px;
@@ -679,7 +684,11 @@ tr:hover td { background: var(--bg3); }
   .content { width: 100%; }
 
   /* Search */
-  .search-wrap { padding: 10px 12px; top: 56px; }
+  .search-wrap { 
+    padding: 10px 12px; 
+    top: 56px;
+    margin-bottom: 60px; 
+  }
   .search-input { max-width: 100%; font-size: 0.8rem; }
 
   /* Breadcrumb */
