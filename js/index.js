@@ -69,7 +69,7 @@ function t(key) { return I18N[currentLang][key]; }
 function tSub(sub, key) { return sub[key + '_' + currentLang] || sub[key] || ''; }
 
 async function loadData() {
-  const res = await fetch('data.json');
+  const res = await fetch('database/data.json');
   DATA = await res.json();
   buildUI();
 }

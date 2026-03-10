@@ -643,6 +643,253 @@
             "c": "5! = 120\nfib(10) = 55\n2^10 = 1024",
             "java": "// hanoi(3, 'A', 'C', 'B'):\nMover disco 1: A → C\nMover disco 2: A → B\nMover disco 1: C → B\nMover disco 3: A → C\nMover disco 1: B → A\nMover disco 2: B → C\nMover disco 1: A → C\n\n// mergeSort([5,2,8,1,9,3]):\n// [1, 2, 3, 5, 8, 9]"
           }
+        },
+        {
+          "id": "funcoes",
+          "title": "Funções",
+          "title_en": "Functions",
+          "title_fr": "Fonctions",
+          "icon": "⚙️",
+          "desc": "Bloco de código reutilizável que executa uma tarefa específica. Pode ser síncrona (executa e retorna imediatamente) ou assíncrona (aguarda operações externas sem bloquear o fluxo).",
+          "desc_en": "Reusable code block that performs a specific task. Can be synchronous (executes and returns immediately) or asynchronous (awaits external operations without blocking flow).",
+          "desc_fr": "Bloc de code réutilisable qui effectue une tâche spécifique. Peut être synchrone ou asynchrone.",
+          "pros": [
+            "Reutilização de código — evita repetição (DRY)",
+            "Abstração — esconde complexidade interna",
+            "Funções assíncronas não bloqueiam a UI/thread principal",
+            "Escopo próprio protege variáveis internas"
+          ],
+          "pros_en": [
+            "Code reuse — avoids repetition (DRY)",
+            "Abstraction — hides internal complexity",
+            "Async functions don't block UI/main thread",
+            "Own scope protects internal variables"
+          ],
+          "pros_fr": [
+            "Réutilisation du code — évite la répétition (DRY)",
+            "Abstraction — cache la complexité interne",
+            "Les fonctions asynchrones ne bloquent pas le thread principal",
+            "Portée propre protège les variables internes"
+          ],
+          "cons": [
+            "Funções assíncronas mal tratadas causam erros silenciosos",
+            "Callback hell dificulta leitura",
+            "Escopo de closures pode gerar vazamentos de memória se mal usadas"
+          ],
+          "cons_en": [
+            "Poorly handled async functions cause silent errors",
+            "Callback hell hinders readability",
+            "Closure scope can cause memory leaks if misused"
+          ],
+          "cons_fr": [
+            "Les fonctions asynchrones mal gérées causent des erreurs silencieuses",
+            "Le callback hell nuit à la lisibilité",
+            "La portée des closures peut provoquer des fuites mémoire"
+          ],
+          "when": "Use funções síncronas para lógica pura e transformações de dados. Use assíncronas para I/O: requisições HTTP, leitura de arquivos, banco de dados.",
+          "when_en": "Use sync functions for pure logic and data transformations. Use async for I/O: HTTP requests, file reading, database.",
+          "when_fr": "Utilisez les fonctions synchrones pour la logique pure. Utilisez les asynchrones pour les E/S : requêtes HTTP, lecture de fichiers, base de données.",
+          "examples": {
+            "javascript": "// ── SÍNCRONA ──────────────────────────────────\nfunction soma(a, b) { return a + b; }      // declaração\nconst dobro = (n) => n * 2;                // arrow function\n\n// Escopo: variável local não vaza\nfunction escopo() {\n  let local = 'só existe aqui';\n  return local;\n}\n// console.log(local); // ❌ ReferenceError\n\n// ── ASSÍNCRONA com Promise ─────────────────────\nfunction buscarUsuario(id) {\n  return new Promise((resolve, reject) => {\n    setTimeout(() => {\n      if (id > 0) resolve({ id, nome: 'Alice' });\n      else reject(new Error('ID inválido'));\n    }, 500);\n  });\n}\n\n// ── ASYNC / AWAIT ──────────────────────────────\nasync function carregarPerfil(id) {\n  try {\n    const usuario = await buscarUsuario(id);\n    const posts   = await buscarPosts(usuario.id); // sequencial\n    return { usuario, posts };\n  } catch (err) {\n    console.error('Erro:', err.message);\n  }\n}\n\n// Paralelo (mais rápido)\nasync function carregarTudo(id) {\n  const [usuario, config] = await Promise.all([\n    buscarUsuario(id),\n    buscarConfig()\n  ]);\n  return { usuario, config };\n}\n\n// Retorno explícito vs implícito\nconst quadrado = n => n * n;               // retorno implícito\nconst cubo = n => { return n * n * n; };   // retorno explícito\n\n// Bloco de escopo (let/const respeitam {})\n{\n  let bloco = 10;\n  console.log(bloco); // ✅ 10\n}\n// console.log(bloco); // ❌ ReferenceError",
+            "python": "# ── SÍNCRONA ──────────────────────────────────\ndef soma(a, b):\n    return a + b\n\n# Lambda (equivalente a arrow function)\ndobro = lambda n: n * 2\n\n# Escopo\ndef escopo():\n    local = 'só existe aqui'\n    return local\n\n# ── ASSÍNCRONA (asyncio) ───────────────────────\nimport asyncio\n\nasync def buscar_usuario(id):\n    await asyncio.sleep(0.5)  # simula I/O\n    if id > 0:\n        return {'id': id, 'nome': 'Alice'}\n    raise ValueError('ID inválido')\n\nasync def carregar_perfil(id):\n    try:\n        usuario = await buscar_usuario(id)\n        return usuario\n    except ValueError as e:\n        print(f'Erro: {e}')\n\n# Paralelo\nasync def carregar_tudo(id):\n    usuario, config = await asyncio.gather(\n        buscar_usuario(id),\n        buscar_config()\n    )\n    return {'usuario': usuario, 'config': config}",
+            "java": "// ── SÍNCRONA ──────────────────────────────────\npublic static int soma(int a, int b) {\n    return a + b;\n}\n\n// ── ASSÍNCRONA com CompletableFuture ──────────\nimport java.util.concurrent.CompletableFuture;\n\npublic CompletableFuture<Usuario> buscarUsuario(int id) {\n    return CompletableFuture.supplyAsync(() -> {\n        // simula I/O\n        return new Usuario(id, \"Alice\");\n    });\n}\n\n// Encadeando\npublic void carregarPerfil(int id) {\n    buscarUsuario(id)\n        .thenApply(u -> u.getNome().toUpperCase())\n        .thenAccept(nome -> System.out.println(\"Olá, \" + nome))\n        .exceptionally(err -> { System.err.println(err); return null; });\n}",
+            "php": "<?php\n// ── SÍNCRONA ──────────────────────────────────\nfunction soma(int $a, int $b): int {\n    return $a + $b;\n}\n\n// Arrow function (PHP 7.4+)\n$dobro = fn($n) => $n * 2;\n\n// ── ASSÍNCRONA (ReactPHP / Fiber PHP 8.1) ─────\n// Fiber — suspensão sem bloquear\n$fiber = new Fiber(function(): void {\n    $valor = Fiber::suspend('primeiro');\n    echo 'Recebeu: ' . $valor . PHP_EOL;\n});\n\n$primeiro = $fiber->start();\necho $primeiro . PHP_EOL;  // primeiro\n$fiber->resume('segundo'); // Recebeu: segundo",
+            "c": "/* ── SÍNCRONA ──────────────────────────────────*/\n#include <stdio.h>\n\nint soma(int a, int b) { return a + b; }\n\n/* Ponteiro para função */\ntypedef int (*Operacao)(int, int);\n\nvoid aplicar(Operacao op, int x, int y) {\n    printf(\"Resultado: %d\\n\", op(x, y));\n}\n\n/* Escopo de bloco */\nvoid demonstrarEscopo() {\n    int externo = 10;\n    {\n        int interno = 20;  /* existe só neste bloco */\n        printf(\"%d %d\\n\", externo, interno); /* OK */\n    }\n    /* printf(\"%d\\n\", interno); // ERRO de compilação */\n}"
+          },
+          "output": {
+            "javascript": "soma(3, 4)         // 7\ndobro(5)          // 10\nascopo()          // 'só existe aqui'\nquadrado(4)       // 16\nawait carregarPerfil(1)\n// { usuario: { id:1, nome:'Alice' }, posts: [...] }",
+            "python": "soma(3, 4)         # 7\ndobro(5)          # 10\nascopo()          # 'só existe aqui'\nasyncio.run(carregar_perfil(1))  # {'id':1,'nome':'Alice'}",
+            "java": "soma(3, 4)         // 7\ncarregarPerfil(1) // Olá, ALICE",
+            "php": "soma(3, 4);        // 7\n$dobro(5);        // 10",
+            "c": "aplicar(soma, 3, 4); // Resultado: 7\ndemonstrarescopo(); // 10 20"
+          }
+        },
+        {
+          "id": "memoria",
+          "title": "Alocação & Consumo de Memória",
+          "title_en": "Memory Allocation & Consumption",
+          "title_fr": "Allocation & Consommation de Mémoire",
+          "icon": "🧮",
+          "desc": "A memória de um programa é dividida em Stack (pilha — rápida, tamanho fixo, gerenciada automaticamente) e Heap (dinâmica — tamanho variável, requer alocação/desalocação). Entender isso é chave para evitar vazamentos e otimizar performance.",
+          "desc_en": "A program's memory is divided into Stack (fast, fixed size, auto-managed) and Heap (dynamic, variable size, requires allocation/deallocation). Understanding this is key to avoiding leaks and optimizing performance.",
+          "desc_fr": "La mémoire d'un programme est divisée en Stack (rapide, taille fixe, gérée automatiquement) et Heap (dynamique, taille variable, nécessite allocation/désallocation).",
+          "pros": [
+            "Stack: alocação/desalocação automática e ultra-rápida (O(1))",
+            "Heap: permite estruturas de tamanho dinâmico em runtime",
+            "GC (Garbage Collector) em JS/Java/Python libera memória automaticamente",
+            "Pooling de objetos reduz pressão no GC"
+          ],
+          "pros_en": [
+            "Stack: automatic and ultra-fast allocation/deallocation O(1)",
+            "Heap: allows dynamic-size structures at runtime",
+            "GC in JS/Java/Python frees memory automatically",
+            "Object pooling reduces GC pressure"
+          ],
+          "pros_fr": [
+            "Stack: allocation/désallocation automatique et ultra-rapide O(1)",
+            "Heap: permet des structures de taille dynamique à l'exécution",
+            "GC en JS/Java/Python libère la mémoire automatiquement",
+            "Le pooling d'objets réduit la pression sur le GC"
+          ],
+          "cons": [
+            "Stack overflow se funções recursivas não tiverem caso base",
+            "Heap: fragmentação e pausas do GC degradam performance",
+            "Em C/C++: sem GC — memory leak se não liberar com free()/delete",
+            "Closures e event listeners sem remoção seguram referências no Heap"
+          ],
+          "cons_en": [
+            "Stack overflow if recursive functions have no base case",
+            "Heap: fragmentation and GC pauses degrade performance",
+            "In C/C++: no GC — memory leak if not freed with free()/delete",
+            "Closures and listeners without removal hold Heap references"
+          ],
+          "cons_fr": [
+            "Stack overflow si fonctions récursives sans cas de base",
+            "Heap: fragmentation et pauses GC dégradent les performances",
+            "En C/C++ : pas de GC — fuite mémoire si non libérée",
+            "Closures et listeners sans suppression retiennent des références"
+          ],
+          "when": "Pense em memória ao trabalhar com grandes volumes de dados, listas longas no DOM, WebSockets de longa duração ou algoritmos recursivos.",
+          "when_en": "Think about memory when working with large data volumes, long DOM lists, long-running WebSockets, or recursive algorithms.",
+          "when_fr": "Pensez à la mémoire pour les grands volumes de données, les longues listes DOM, les WebSockets durables ou les algorithmes récursifs.",
+          "examples": {
+            "javascript": "// ── STACK vs HEAP ─────────────────────────────\n// Primitivos → Stack (cópia por valor)\nlet a = 10;\nlet b = a;   // copia o valor\nb = 20;\nconsole.log(a); // 10 (não afetado)\n\n// Objetos → Heap (referência)\nlet obj1 = { nome: 'Alice' };\nlet obj2 = obj1;  // copia a REFERÊNCIA\nobj2.nome = 'Bob';\nconsole.log(obj1.nome); // 'Bob' ← mesmo objeto!\n\n// ── VAZAMENTO de MEMÓRIA ──────────────────────\n// ❌ Event listener nunca removido\nfunction componenteRuim() {\n  const dados = new Array(1_000_000).fill('x'); // 1M itens no Heap\n  document.addEventListener('click', () => {\n    console.log(dados.length); // closure segura 'dados' para sempre\n  });\n}\n\n// ✅ Corrigido — remover listener\nfunction componenteBom() {\n  const handler = () => console.log('clicou');\n  document.addEventListener('click', handler);\n  return () => document.removeEventListener('click', handler); // cleanup\n}\n\n// ── MEDINDO MEMÓRIA ───────────────────────────\nif (performance.memory) {\n  const { usedJSHeapSize, totalJSHeapSize } = performance.memory;\n  console.log(`Heap usado: ${(usedJSHeapSize / 1024 / 1024).toFixed(2)} MB`);\n}\n\n// ── WeakMap — não impede GC ───────────────────\nconst cache = new WeakMap();\nfunction processar(elemento) {\n  if (cache.has(elemento)) return cache.get(elemento);\n  const resultado = calcularPesado(elemento);\n  cache.set(elemento, resultado); // GC pode coletar quando elemento sumir\n  return resultado;\n}",
+            "python": "import sys, gc, tracemalloc\n\n# ── Tamanho de objetos ─────────────────────────\nprint(sys.getsizeof(42))        # 28 bytes (int)\nprint(sys.getsizeof('hello'))   # 54 bytes (str)\nprint(sys.getsizeof([1,2,3]))   # 88 bytes (lista)\n\n# ── Rastrear alocações ────────────────────────\ntracemalloc.start()\n\ndef alocar_grande():\n    return [i**2 for i in range(100_000)]  # aloca no Heap\n\nresultado = alocar_grande()\ncurrent, peak = tracemalloc.get_traced_memory()\nprint(f'Pico: {peak / 1024:.1f} KB')\ntracemalloc.stop()\n\n# ── Garbage Collector manual ──────────────────\nclass Circular:\n    def __init__(self): self.ref = None\n\na = Circular(); b = Circular()\na.ref = b; b.ref = a  # referência circular\ndel a, b              # CPython não coleta automaticamente\ngc.collect()          # força coleta\nprint('Objetos coletados:', gc.collect())",
+            "java": "// ── Stack vs Heap em Java ─────────────────────\npublic class MemoriaDemo {\n    // Stack: int primitivo\n    static int dobrar(int n) {  // 'n' vai para Stack\n        return n * 2;\n    }  // 'n' desalocado automaticamente ao sair\n\n    public static void main(String[] args) {\n        // Primitivo → Stack\n        int x = 5;\n\n        // Objeto → Heap (referência na Stack)\n        String s = new String(\"hello\");\n\n        // ── Monitorar JVM Heap ─────────────────\n        Runtime rt = Runtime.getRuntime();\n        long usado = rt.totalMemory() - rt.freeMemory();\n        System.out.printf(\"Heap usado: %.2f MB%n\", usado / 1e6);\n\n        // ── try-with-resources libera memória ──\n        try (var stream = Files.lines(Path.of(\"arquivo.txt\"))) {\n            stream.forEach(System.out::println);\n        } // stream fechado e memória liberada automaticamente\n    }\n}",
+            "c": "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\n/* Stack — automático */\nvoid stack_demo() {\n    int arr[100];  /* 400 bytes na Stack */\n    arr[0] = 42;\n}  /* liberado automaticamente */\n\n/* Heap — manual */\nvoid heap_demo() {\n    int *arr = malloc(100 * sizeof(int));  /* aloca no Heap */\n    if (!arr) { perror(\"malloc\"); return; }\n\n    arr[0] = 42;\n    printf(\"%d\\n\", arr[0]);\n\n    free(arr);  /* ✅ OBRIGATÓRIO — evita memory leak */\n    arr = NULL; /* boa prática: invalida ponteiro */\n}\n\n/* Realloc — redimensionar */\nvoid crescer_array() {\n    int *v = malloc(5 * sizeof(int));\n    v = realloc(v, 10 * sizeof(int));  /* expande */\n    free(v);\n}\n\nint main() {\n    stack_demo();\n    heap_demo();\n    crescer_array();\n    return 0;\n}"
+          },
+          "output": {
+            "javascript": "console.log(a);          // 10\nconsole.log(obj1.nome);  // 'Bob'\n// Heap usado: ~45.32 MB",
+            "python": "sys.getsizeof(42)   # 28\nPico: 3200.4 KB",
+            "java": "Heap usado: 8.45 MB",
+            "c": "42\n// Sem leaks (Valgrind: 0 errors)"
+          }
+        },
+        {
+          "id": "condicionais",
+          "title": "Estruturas de Condição",
+          "title_en": "Conditional Structures",
+          "title_fr": "Structures Conditionnelles",
+          "icon": "🔀",
+          "desc": "Estruturas que direcionam o fluxo de execução baseadas em condições booleanas. Principais: if/else, else if, switch/case, operador ternário e optional chaining. Cada uma tem contexto ideal de uso.",
+          "desc_en": "Structures that direct execution flow based on boolean conditions. Main ones: if/else, else if, switch/case, ternary operator, and optional chaining. Each has an ideal context.",
+          "desc_fr": "Structures qui dirigent le flux d'exécution selon des conditions booléennes. Principales : if/else, else if, switch/case, opérateur ternaire et optional chaining.",
+          "pros": [
+            "if/else: máxima flexibilidade para condições complexas",
+            "switch: mais legível que múltiplos if/else para comparar um único valor",
+            "Ternário: expressão de uma linha para atribuições condicionais",
+            "Pattern matching (Python 3.10+, Java 21): mais poderoso que switch clássico"
+          ],
+          "pros_en": [
+            "if/else: maximum flexibility for complex conditions",
+            "switch: more readable than multiple if/else for comparing a single value",
+            "Ternary: one-line expression for conditional assignments",
+            "Pattern matching (Python 3.10+, Java 21): more powerful than classic switch"
+          ],
+          "pros_fr": [
+            "if/else : flexibilité maximale pour conditions complexes",
+            "switch : plus lisible que plusieurs if/else pour comparer une valeur",
+            "Ternaire : expression d'une ligne pour assignations conditionnelles",
+            "Pattern matching (Python 3.10+, Java 21) : plus puissant que le switch classique"
+          ],
+          "cons": [
+            "Nested if/else profundos tornam código ilegível (arrow anti-pattern)",
+            "switch sem break/return em JS executa cases subsequentes (fall-through)",
+            "Ternário aninhado é difícil de ler — prefira if/else",
+            "Muitos condicionais podem indicar necessidade de polimorfismo"
+          ],
+          "cons_en": [
+            "Deep nested if/else makes code unreadable (arrow anti-pattern)",
+            "switch without break/return in JS runs subsequent cases (fall-through)",
+            "Nested ternary is hard to read — prefer if/else",
+            "Many conditionals may indicate need for polymorphism"
+          ],
+          "cons_fr": [
+            "Les if/else imbriqués profonds rendent le code illisible",
+            "switch sans break en JS exécute les cases suivants (fall-through)",
+            "Ternaire imbriqué est difficile à lire",
+            "Trop de conditionnels peut indiquer un besoin de polymorphisme"
+          ],
+          "when": "if/else: lógica complexa com múltiplas variáveis. switch: despachar ações por tipo/código. Ternário: atribuição simples. Early return: simplificar funções com guards.",
+          "when_en": "if/else: complex logic with multiple variables. switch: dispatch actions by type/code. Ternary: simple assignment. Early return: simplify functions with guards.",
+          "when_fr": "if/else : logique complexe. switch : dispatcher des actions par type. Ternaire : assignation simple. Retour anticipé : simplifier les fonctions avec des gardes.",
+          "examples": {
+            "javascript": "// ── IF / ELSE IF / ELSE ───────────────────────\nfunction classificarNota(nota) {\n  if (nota >= 90)       return 'A';\n  else if (nota >= 80)  return 'B';\n  else if (nota >= 70)  return 'C';\n  else                  return 'F';\n}\n\n// ── EARLY RETURN (guard clauses) ──────────────\n// ❌ Seta (nested)\nfunction processar(usuario) {\n  if (usuario) {\n    if (usuario.ativo) {\n      if (usuario.saldo > 0) { /* lógica */ }\n    }\n  }\n}\n// ✅ Early return (mais limpo)\nfunction processarLimpo(usuario) {\n  if (!usuario)          return { erro: 'sem usuário' };\n  if (!usuario.ativo)    return { erro: 'inativo' };\n  if (usuario.saldo <= 0) return { erro: 'sem saldo' };\n  return { sucesso: true }; // caminho feliz\n}\n\n// ── SWITCH / CASE ─────────────────────────────\nfunction acaoPorStatus(status) {\n  switch (status) {\n    case 'PENDENTE':   return enviarNotificacao();\n    case 'APROVADO':   return liberarPedido();\n    case 'REJEITADO':  return notificarRejeicao();\n    default:           return console.warn('status desconhecido');\n  }\n}\n\n// ── TERNÁRIO ──────────────────────────────────\nconst label = usuario.admin ? 'Administrador' : 'Usuário';\n\n// ── NULLISH COALESCING + OPTIONAL CHAINING ────\nconst cidade = usuario?.endereco?.cidade ?? 'Não informado';\n\n// ── OBJECT MAP (substitui switch) ─────────────\nconst acoes = {\n  incrementar: (s) => ({ ...s, count: s.count + 1 }),\n  decrementar: (s) => ({ ...s, count: s.count - 1 }),\n  resetar:     (s) => ({ ...s, count: 0 })\n};\nconst novoEstado = (acoes[tipo] ?? acoes.resetar)(estado);",
+            "python": "# ── IF / ELIF / ELSE ──────────────────────────\ndef classificar_nota(nota: int) -> str:\n    if nota >= 90:    return 'A'\n    elif nota >= 80:  return 'B'\n    elif nota >= 70:  return 'C'\n    else:             return 'F'\n\n# ── MATCH/CASE (Python 3.10+) — pattern matching\nfrom dataclasses import dataclass\n\n@dataclass\nclass Ponto: x: int; y: int\n\ndef descrever(forma):\n    match forma:\n        case Ponto(x=0, y=0):\n            return 'Origem'\n        case Ponto(x=0, y=y):\n            return f'Eixo Y em {y}'\n        case Ponto(x=x, y=0):\n            return f'Eixo X em {x}'\n        case Ponto(x=x, y=y):\n            return f'Ponto em ({x},{y})'\n        case _:\n            return 'Forma desconhecida'\n\n# ── EXPRESSÃO CONDICIONAL (ternário) ──────────\nlabel = 'Admin' if usuario.admin else 'Usuário'\n\n# ── WALRUS OPERATOR (Python 3.8+) ─────────────\nif n := len(dados):\n    print(f'{n} itens encontrados')",
+            "java": "// ── IF / ELSE IF / ELSE ───────────────────────\nString classificar(int nota) {\n    if (nota >= 90)       return \"A\";\n    else if (nota >= 80)  return \"B\";\n    else if (nota >= 70)  return \"C\";\n    else                  return \"F\";\n}\n\n// ── SWITCH EXPRESSION (Java 14+) ──────────────\nString labelStatus(String status) {\n    return switch (status) {\n        case \"PENDENTE\"  -> \"Aguardando\";\n        case \"APROVADO\"  -> \"Aprovado ✓\";\n        case \"REJEITADO\" -> \"Rejeitado ✗\";\n        default          -> \"Desconhecido\";\n    };\n}\n\n// ── PATTERN MATCHING (Java 21) ────────────────\nObject obj = 42;\nif (obj instanceof Integer i && i > 0) {\n    System.out.println(\"Positivo: \" + i);\n}",
+            "php": "<?php\n// ── IF / ELSEIF / ELSE ────────────────────────\nfunction classificarNota(int $nota): string {\n    if ($nota >= 90)      return 'A';\n    elseif ($nota >= 80)  return 'B';\n    elseif ($nota >= 70)  return 'C';\n    else                  return 'F';\n}\n\n// ── MATCH (PHP 8.0+) ──────────────────────────\n$status = 'APROVADO';\n$msg = match($status) {\n    'PENDENTE'  => 'Aguardando',\n    'APROVADO'  => 'Aprovado ✓',\n    'REJEITADO' => 'Rejeitado ✗',\n    default     => 'Desconhecido'\n};\n// Diferente do switch: sem fall-through, usa comparação estrita\n\n// ── TERNÁRIO ──────────────────────────────────\n$label = $usuario->admin ? 'Admin' : 'Usuário';\n\n// ── NULLSAFE (PHP 8.0+) ───────────────────────\n$cidade = $usuario?->endereco?->cidade ?? 'Não informado';",
+            "c": "#include <stdio.h>\n\n/* ── IF / ELSE IF / ELSE ─────────────────────*/\nchar classificar(int nota) {\n    if (nota >= 90)      return 'A';\n    else if (nota >= 80) return 'B';\n    else if (nota >= 70) return 'C';\n    else                 return 'F';\n}\n\n/* ── SWITCH / CASE ───────────────────────────*/\nvoid acaoPorDia(int dia) {\n    switch (dia) {\n        case 1: printf(\"Segunda\\n\"); break;\n        case 2: printf(\"Terça\\n\");   break;\n        case 6:\n        case 7: printf(\"Fim de semana\\n\"); break; /* fall-through intencional */\n        default: printf(\"Dia inválido\\n\");\n    }\n}\n\n/* ── TERNÁRIO ────────────────────────────────*/\nint max(int a, int b) { return (a > b) ? a : b; }"
+          },
+          "output": {
+            "javascript": "classificarNota(85)     // 'B'\nprocessarLimpo(null)    // { erro: 'sem usuário' }\nprocessarLimpo({ativo:true,saldo:100}) // { sucesso:true }\ncidade                  // 'Não informado' (se endereco=null)",
+            "python": "classificar_nota(75)    # 'C'\ndescrever(Ponto(0,5))   # 'Eixo Y em 5'\ndescrever(Ponto(3,4))   # 'Ponto em (3,4)'",
+            "java": "classificar(92)         // \"A\"\nlabelStatus(\"APROVADO\") // \"Aprovado ✓\"",
+            "php": "classificarNota(78)     // 'C'\n$msg                    // 'Aprovado ✓'",
+            "c": "classificar(88)  // 'B'\nacaoPorDia(6)   // Fim de semana"
+          }
+        },
+        {
+          "id": "repeticao",
+          "title": "Estruturas de Repetição",
+          "title_en": "Loop Structures",
+          "title_fr": "Structures de Répétition",
+          "icon": "🔁",
+          "desc": "Estruturas que executam um bloco de código repetidamente enquanto uma condição é verdadeira. Tipos: for (iterações contadas), while (condição de entrada), do-while (condição de saída), for...of/in (iteráveis), forEach/map/filter (funcionais).",
+          "desc_en": "Structures that execute a code block repeatedly while a condition is true. Types: for (counted iterations), while (entry condition), do-while (exit condition), for...of/in (iterables), forEach/map/filter (functional).",
+          "desc_fr": "Structures qui exécutent un bloc de code de façon répétée. Types : for, while, do-while, for...of/in, forEach/map/filter.",
+          "pros": [
+            "for: controle total sobre índice, início, fim e passo",
+            "while: ideal quando o número de iterações é desconhecido",
+            "do-while: garante ao menos uma execução",
+            "forEach/map/filter: declarativos e mais legíveis para arrays"
+          ],
+          "pros_en": [
+            "for: full control over index, start, end and step",
+            "while: ideal when number of iterations is unknown",
+            "do-while: guarantees at least one execution",
+            "forEach/map/filter: declarative and more readable for arrays"
+          ],
+          "pros_fr": [
+            "for : contrôle total sur l'index, le début, la fin et le pas",
+            "while : idéal quand le nombre d'itérations est inconnu",
+            "do-while : garantit au moins une exécution",
+            "forEach/map/filter : déclaratifs et plus lisibles pour les tableaux"
+          ],
+          "cons": [
+            "Loop infinito (while sem condição de saída) trava o programa",
+            "for tradicional com índices é verboso e propenso a off-by-one errors",
+            "forEach não suporta break/continue — use for...of para isso",
+            "Loops aninhados têm complexidade O(n²) ou pior — cuidado com performance"
+          ],
+          "cons_en": [
+            "Infinite loop (while without exit condition) freezes the program",
+            "Traditional for with indices is verbose and prone to off-by-one errors",
+            "forEach doesn't support break/continue — use for...of for that",
+            "Nested loops have O(n²) complexity or worse — beware performance"
+          ],
+          "cons_fr": [
+            "Boucle infinie (while sans condition de sortie) bloque le programme",
+            "Le for traditionnel avec indices est verbeux et sujet aux erreurs off-by-one",
+            "forEach ne supporte pas break/continue",
+            "Les boucles imbriquées ont une complexité O(n²) ou pire"
+          ],
+          "when": "for: índices ou range conhecido. while: polling/aguardar condição. do-while: menu que executa ao menos uma vez. map/filter/reduce: transformações funcionais em arrays.",
+          "when_en": "for: known index or range. while: polling/waiting for condition. do-while: menu that runs at least once. map/filter/reduce: functional array transformations.",
+          "when_fr": "for : index ou plage connue. while : attendre une condition. do-while : menu exécuté au moins une fois. map/filter/reduce : transformations fonctionnelles.",
+          "examples": {
+            "javascript": "// ── FOR clássico ──────────────────────────────\nfor (let i = 0; i < 5; i++) {\n  console.log(i); // 0 1 2 3 4\n}\n\n// ── FOR com break/continue ────────────────────\nfor (let i = 0; i < 10; i++) {\n  if (i === 3) continue; // pula i=3\n  if (i === 7) break;    // para em i=7\n  console.log(i);        // 0 1 2 4 5 6\n}\n\n// ── FOR...OF (iterável) ───────────────────────\nconst frutas = ['maçã', 'banana', 'uva'];\nfor (const fruta of frutas) {\n  console.log(fruta);\n}\n\n// ── FOR...IN (chaves de objeto) ───────────────\nconst pessoa = { nome: 'Alice', idade: 30 };\nfor (const chave in pessoa) {\n  console.log(`${chave}: ${pessoa[chave]}`);\n}\n\n// ── WHILE ─────────────────────────────────────\nlet tentativas = 0;\nwhile (tentativas < 3) {\n  const ok = tentarConectar();\n  if (ok) break;\n  tentativas++;\n}\n\n// ── DO...WHILE ────────────────────────────────\nlet opcao;\ndo {\n  opcao = mostrarMenu(); // executa ANTES de checar\n} while (opcao !== 'sair');\n\n// ── FUNCIONAIS (preferidos em React/FP) ───────\nconst nums = [1, 2, 3, 4, 5];\nconst dobros   = nums.map(n => n * 2);          // [2,4,6,8,10]\nconst pares    = nums.filter(n => n % 2 === 0); // [2,4]\nconst soma     = nums.reduce((acc, n) => acc + n, 0); // 15\nconst algumPar = nums.some(n => n % 2 === 0);   // true\nconst todosPos = nums.every(n => n > 0);        // true\n\n// ── LOOP ASSÍNCRONO ───────────────────────────\nasync function processarLista(ids) {\n  // ✅ Sequencial\n  for (const id of ids) {\n    await processarItem(id);\n  }\n  // ✅ Paralelo\n  await Promise.all(ids.map(id => processarItem(id)));\n}",
+            "python": "# ── FOR ───────────────────────────────────────\nfor i in range(5):\n    print(i)  # 0 1 2 3 4\n\n# Com enumerate\nfrutas = ['maçã', 'banana', 'uva']\nfor i, fruta in enumerate(frutas):\n    print(f'{i}: {fruta}')\n\n# ── WHILE ─────────────────────────────────────\ntentativas = 0\nwhile tentativas < 3:\n    if tentar_conectar(): break\n    tentativas += 1\n\n# ── LIST COMPREHENSION (conciso) ──────────────\ndobros = [n * 2 for n in range(5)]\npares  = [n for n in range(10) if n % 2 == 0]\n\n# ── GENERATOR (memory-efficient) ──────────────\ndef infinito():\n    n = 0\n    while True:\n        yield n   # suspende e retorna n\n        n += 1\n\ngen = infinito()\nprint(next(gen))  # 0\nprint(next(gen))  # 1 (estado preservado!)",
+            "java": "// ── FOR clássico ──────────────────────────────\nfor (int i = 0; i < 5; i++) {\n    System.out.println(i);\n}\n\n// ── ENHANCED FOR (for-each) ───────────────────\nString[] frutas = {\"maçã\", \"banana\", \"uva\"};\nfor (String fruta : frutas) {\n    System.out.println(fruta);\n}\n\n// ── WHILE ─────────────────────────────────────\nint n = 1;\nwhile (n < 100) { n *= 2; }\nSystem.out.println(n); // 128\n\n// ── STREAMS (Java 8+) — equivalente funcional ─\nimport java.util.List;\nimport java.util.stream.*;\n\nList<Integer> nums = List.of(1,2,3,4,5);\nint soma = nums.stream()\n               .filter(n -> n % 2 == 0)\n               .mapToInt(Integer::intValue)\n               .sum(); // 6",
+            "php": "<?php\n// ── FOR ───────────────────────────────────────\nfor ($i = 0; $i < 5; $i++) {\n    echo $i . '\\n';\n}\n\n// ── FOREACH ───────────────────────────────────\n$frutas = ['maçã', 'banana', 'uva'];\nforeach ($frutas as $i => $fruta) {\n    echo \"$i: $fruta\\n\";\n}\n\n// ── WHILE ─────────────────────────────────────\n$tentativas = 0;\nwhile ($tentativas < 3) {\n    if (tentarConectar()) break;\n    $tentativas++;\n}\n\n// ── DO...WHILE ────────────────────────────────\ndo {\n    $opcao = mostrarMenu();\n} while ($opcao !== 'sair');\n\n// ── ARRAY FUNCTIONS (funcionais) ──────────────\n$dobros = array_map(fn($n) => $n * 2, [1,2,3]);\n$pares  = array_filter([1,2,3,4], fn($n) => $n % 2 === 0);\n$soma   = array_reduce([1,2,3], fn($acc, $n) => $acc + $n, 0);",
+            "c": "#include <stdio.h>\n\nvoid loops_demo() {\n    /* ── FOR ────────────────────────────────*/\n    for (int i = 0; i < 5; i++) {\n        printf(\"%d \", i); /* 0 1 2 3 4 */\n    }\n\n    /* ── WHILE ──────────────────────────────*/\n    int n = 1;\n    while (n < 100) n *= 2;\n    printf(\"\\n%d\\n\", n); /* 128 */\n\n    /* ── DO WHILE ───────────────────────────*/\n    int op;\n    do {\n        printf(\"Menu> \");\n        scanf(\"%d\", &op);\n    } while (op != 0);\n\n    /* ── FOR com array ──────────────────────*/\n    int arr[] = {10, 20, 30, 40, 50};\n    int tam = sizeof(arr) / sizeof(arr[0]);\n    for (int i = 0; i < tam; i++) {\n        printf(\"%d \", arr[i]);\n    }\n}"
+          },
+          "output": {
+            "javascript": "// for: 0 1 2 3 4\n// dobros: [2,4,6,8,10]\n// pares:  [2,4]\n// soma:   15",
+            "python": "# for: 0 1 2 3 4\n# dobros: [0,2,4,6,8]\n# pares:  [0,2,4,6,8]\n# next(gen): 0 → 1 → 2 ...",
+            "java": "// for: 0 1 2 3 4\n// soma: 6",
+            "php": "// for: 0 1 2 3 4\n// dobros: [2,4,6]\n// soma: 6",
+            "c": "// for: 0 1 2 3 4\n// while: 128\n// array: 10 20 30 40 50"
+          }
         }
       ]
     },
@@ -1982,6 +2229,421 @@
           "when": "Todo projeto profissional. GitHub Actions é gratuito para repositórios públicos.",
           "examples": {
             "javascript": "# .github/workflows/ci.yml\nname: CI\n\non:\n  push:\n    branches: [main, develop]\n  pull_request:\n    branches: [main]\n\njobs:\n  lint-test-build:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n\n      - uses: actions/setup-node@v4\n        with:\n          node-version: '20'\n          cache: 'npm'\n\n      - run: npm ci          # instala dependências (mais rápido que npm i)\n      - run: npm run lint    # ESLint\n      - run: npm test        # Jest\n      - run: npm run build   # verifica se o build não quebra\n\n      # Upload de coverage para Codecov\n      - uses: codecov/codecov-action@v3\n        with:\n          files: ./coverage/lcov.info\n\n# vercel.json (configurações do deploy)\n{\n  \"framework\": \"nextjs\",\n  \"buildCommand\": \"npm run build\",\n  \"devCommand\": \"npm run dev\",\n  \"installCommand\": \"npm ci\",\n  \"env\": {\n    \"NEXT_PUBLIC_API_URL\": \"@api_url_production\"\n  }\n}"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ia_engineering",
+      "label": "Engenharia de IA",
+      "label_en": "AI Engineering",
+      "label_fr": "Ingénierie de l'IA",
+      "icon": "🤖",
+      "color": "#a78bfa",
+      "accent": "#7c3aed",
+      "subtopics": [
+        {
+          "id": "ia_conceitos",
+          "title": "Conceitos Fundamentais",
+          "title_en": "Fundamental Concepts",
+          "title_fr": "Concepts Fondamentaux",
+          "icon": "🧠",
+          "desc": "Inteligência Artificial é a área da ciência da computação que desenvolve sistemas capazes de realizar tarefas que normalmente requerem inteligência humana. Machine Learning é o subconjunto que aprende padrões a partir de dados sem ser explicitamente programado.",
+          "desc_en": "Artificial Intelligence is the computer science field developing systems capable of tasks normally requiring human intelligence. Machine Learning is the subset that learns patterns from data without being explicitly programmed.",
+          "desc_fr": "L'IA est le domaine de l'informatique développant des systèmes capables de tâches normalement réservées à l'intelligence humaine.",
+          "pros": [
+            "Automatiza tarefas repetitivas com precisão sobre-humana em domínios específicos",
+            "Generaliza padrões de grandes volumes de dados impossíveis de analisar manualmente",
+            "LLMs e modelos generativos aceleram drasticamente desenvolvimento de software",
+            "Transfer Learning: reutilizar modelos pré-treinados reduz custo e tempo"
+          ],
+          "pros_en": [
+            "Automates repetitive tasks with superhuman accuracy in specific domains",
+            "Generalizes patterns from huge data volumes impossible to analyze manually",
+            "LLMs and generative models drastically accelerate software development",
+            "Transfer Learning: reusing pre-trained models reduces cost and time"
+          ],
+          "pros_fr": [
+            "Automatise les tâches répétitives avec une précision surhumaine dans des domaines spécifiques",
+            "Généralise les patterns de grands volumes de données",
+            "LLMs et modèles génératifs accélèrent le développement logiciel",
+            "Transfer Learning : réutiliser des modèles pré-entraînés réduit coût et temps"
+          ],
+          "cons": [
+            "Modelos são caixas-pretas — difícil explicar decisões (XAI ainda em evolução)",
+            "Exigem grandes volumes de dados rotulados e qualidade de dados é crítica",
+            "Custo computacional elevado para treinar modelos grandes",
+            "Viés nos dados de treinamento = viés nas previsões (problema ético sério)"
+          ],
+          "cons_en": [
+            "Models are black boxes — hard to explain decisions (XAI still evolving)",
+            "Require large volumes of labeled data and data quality is critical",
+            "High computational cost to train large models",
+            "Bias in training data = bias in predictions (serious ethical issue)"
+          ],
+          "cons_fr": [
+            "Les modèles sont des boîtes noires",
+            "Nécessitent de grands volumes de données étiquetées",
+            "Coût computationnel élevé pour entraîner de grands modèles",
+            "Biais dans les données = biais dans les prédictions"
+          ],
+          "when": "Use IA quando há padrões em dados que regras manuais não conseguem capturar, ou quando a tarefa envolve linguagem natural, visão computacional ou séries temporais.",
+          "when_en": "Use AI when there are patterns in data that manual rules can't capture, or when the task involves natural language, computer vision, or time series.",
+          "when_fr": "Utilisez l'IA quand il y a des patterns dans les données que les règles manuelles ne peuvent pas capturer.",
+          "examples": {
+            "javascript": "// ── TAXONOMIA DA IA ───────────────────────────\n/*\nInteligência Artificial (IA)\n├── Machine Learning (ML)\n│   ├── Supervisionado\n│   │   ├── Classificação  (spam/não-spam, diagnóstico)\n│   │   └── Regressão      (preço de imóvel, temperatura)\n│   ├── Não-Supervisionado\n│   │   ├── Clustering     (segmentar clientes)\n│   │   └── Redução dim.   (PCA, t-SNE)\n│   └── Aprendizado por Reforço (jogos, robótica)\n├── Deep Learning (DL) — ML com redes neurais profundas\n│   ├── CNN   → visão computacional\n│   ├── RNN   → séries temporais\n│   ├── LSTM  → texto, áudio\n│   └── Transformer → LLMs (GPT, Claude, Gemini)\n└── IA Generativa\n    ├── LLM   → texto  (ChatGPT, Claude, Llama)\n    ├── Difusão → imagem (DALL-E, Stable Diffusion)\n    └── TTS/STT → voz  (Whisper, ElevenLabs)\n*/\n\n// ── CONCEITOS-CHAVE ───────────────────────────\n// Época: uma passagem completa pelo dataset\n// Batch: subconjunto do dataset em cada step\n// Loss: métrica de erro (menor = melhor)\n// Gradiente: direção para minimizar o loss\n// Backpropagation: calcular gradientes\n// Overfitting: memoriza dados, não generaliza\n// Dropout: desativa neurônios aleatoriamente (regularização)\n\n// ── USANDO IA VIA API (Anthropic / OpenAI) ────\nasync function perguntarIA(prompt) {\n  const res = await fetch('https://api.anthropic.com/v1/messages', {\n    method: 'POST',\n    headers: {\n      'Content-Type': 'application/json',\n      'x-api-key': process.env.ANTHROPIC_KEY,\n      'anthropic-version': '2023-06-01'\n    },\n    body: JSON.stringify({\n      model: 'claude-opus-4-5',\n      max_tokens: 1024,\n      messages: [{ role: 'user', content: prompt }]\n    })\n  });\n  const data = await res.json();\n  return data.content[0].text;\n}\n\n// Uso\nconst resposta = await perguntarIA('Explique Big O em 3 linhas');\nconsole.log(resposta);",
+            "python": "# ── SKLEARN — ML Clássico ─────────────────────\nfrom sklearn.datasets import load_iris\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.metrics import accuracy_score\n\n# 1. Dados\niris = load_iris()\nX, y = iris.data, iris.target\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)\n\n# 2. Modelo\nmodel = RandomForestClassifier(n_estimators=100)\nmodel.fit(X_train, y_train)  # treina\n\n# 3. Avaliação\npreds = model.predict(X_test)\nprint(f'Acurácia: {accuracy_score(y_test, preds):.2%}')\n\n# ── USANDO LLM (OpenAI SDK) ───────────────────\nfrom openai import OpenAI\nclient = OpenAI(api_key='SUA_KEY')\n\nresponse = client.chat.completions.create(\n    model='gpt-4o-mini',\n    messages=[\n        {'role': 'system', 'content': 'Você é um tutor de programação.'},\n        {'role': 'user',   'content': 'O que é recursão?'}\n    ]\n)\nprint(response.choices[0].message.content)"
+          },
+          "output": {
+            "javascript": "// perguntarIA('Explique Big O em 3 linhas')\n// → 'Big O descreve como o tempo de execução...'",
+            "python": "# Acurácia: 96.67%\n# 'Recursão é uma técnica onde uma função chama a si mesma...'"
+          }
+        },
+        {
+          "id": "ia_modelos",
+          "title": "Modelos & Arquiteturas",
+          "title_en": "Models & Architectures",
+          "title_fr": "Modèles & Architectures",
+          "icon": "🏗️",
+          "desc": "Os modelos de IA variam em arquitetura conforme o tipo de dado e tarefa. Transformers dominam NLP/texto, CNNs dominam visão, e modelos de difusão lideram geração de imagens. Conhecer cada arquitetura é essencial para escolher a ferramenta certa.",
+          "desc_en": "AI models vary in architecture by data type and task. Transformers dominate NLP/text, CNNs dominate vision, and diffusion models lead image generation. Knowing each architecture is essential for choosing the right tool.",
+          "desc_fr": "Les modèles d'IA varient en architecture selon le type de données et la tâche.",
+          "pros": [
+            "Transformers: atenção multi-cabeça captura dependências de longo alcance",
+            "CNN: invariante à translação — detecta padrões independente de posição na imagem",
+            "Modelos pré-treinados (HuggingFace): fine-tuning barato em domínio específico",
+            "RAG: injeta conhecimento externo em LLMs sem re-treinar"
+          ],
+          "pros_en": [
+            "Transformers: multi-head attention captures long-range dependencies",
+            "CNN: translation invariant — detects patterns regardless of position",
+            "Pre-trained models (HuggingFace): cheap fine-tuning for specific domains",
+            "RAG: injects external knowledge into LLMs without retraining"
+          ],
+          "pros_fr": [
+            "Transformers : l'attention multi-têtes capture les dépendances à longue portée",
+            "CNN : invariant à la translation",
+            "Modèles pré-entraînés : fine-tuning bon marché",
+            "RAG : injecte des connaissances externes dans les LLMs"
+          ],
+          "cons": [
+            "Transformers: complexidade O(n²) em comprimento de sequência — contexto longo é caro",
+            "CNN: não captura bem relações espaciais globais sem atenção",
+            "LLMs alucinam — geram texto plausível mas incorreto com confiança",
+            "Modelos grandes (GPT-4, Claude) têm custo por token elevado em produção"
+          ],
+          "cons_en": [
+            "Transformers: O(n²) complexity in sequence length — long context is expensive",
+            "CNN: doesn't capture global spatial relations well without attention",
+            "LLMs hallucinate — generate plausible but incorrect text confidently",
+            "Large models (GPT-4, Claude) have high per-token cost in production"
+          ],
+          "cons_fr": [
+            "Transformers : complexité O(n²) en longueur de séquence",
+            "CNN : ne capture pas bien les relations spatiales globales",
+            "LLMs hallucinent",
+            "Grands modèles coûteux par token en production"
+          ],
+          "when": "Texto/NLP: Transformers/LLMs. Imagem: CNN ou ViT. Série temporal: LSTM ou Transformer. Classificação tabular: Random Forest/XGBoost. Geração de imagem: Diffusion.",
+          "when_en": "Text/NLP: Transformers/LLMs. Image: CNN or ViT. Time series: LSTM or Transformer. Tabular classification: Random Forest/XGBoost. Image generation: Diffusion.",
+          "when_fr": "Texte/NLP : Transformers/LLMs. Image : CNN ou ViT. Séries temporelles : LSTM. Classification tabulaire : Random Forest/XGBoost.",
+          "examples": {
+            "javascript": "// ── MODELOS POPULARES POR CATEGORIA ───────────\n/*\n📝 TEXTO / LLMs\n  Claude (Anthropic) — raciocínio avançado, contexto 200k\n  GPT-4o (OpenAI)    — multimodal texto+imagem\n  Llama 3 (Meta)     — open source, self-hosted\n  Gemini (Google)    — integrado ao ecossistema Google\n  Mistral            — leve, rápido, open source\n\n🖼️ VISÃO COMPUTACIONAL\n  ResNet-50     — classificação de imagens (ImageNet)\n  YOLO v8       — detecção de objetos em tempo real\n  SAM (Meta)    — segmentação universal\n  CLIP (OpenAI) — imagem + texto no mesmo espaço\n\n🎨 GERAÇÃO DE IMAGEM\n  DALL-E 3      — integrado ao ChatGPT\n  Stable Diffusion — open source, controlável\n  Midjourney    — qualidade artística premium\n\n🔊 ÁUDIO\n  Whisper (OpenAI) — speech-to-text multilíngue\n  ElevenLabs       — text-to-speech realista\n\n📊 TABULAR / ML CLÁSSICO\n  XGBoost          — vencedor de competições Kaggle\n  LightGBM         — mais rápido que XGBoost\n  Random Forest    — robusto, interpretável\n*/\n\n// ── RAG (Retrieval-Augmented Generation) ──────\n// Padrão arquitetural: LLM + Base de conhecimento\nasync function rag(pergunta) {\n  // 1. Busca documentos relevantes\n  const docs = await vectorDB.similaritySearch(pergunta, 5);\n  const contexto = docs.map(d => d.pageContent).join('\\n---\\n');\n\n  // 2. Injeta no prompt\n  const prompt = `\n    Contexto: ${contexto}\n    Pergunta: ${pergunta}\n    Responda APENAS com base no contexto acima.\n  `;\n\n  // 3. LLM gera resposta fundamentada\n  return await llm.invoke(prompt);\n}",
+            "python": "# ── TRANSFORMER simples (PyTorch) ─────────────\nimport torch\nimport torch.nn as nn\n\nclass SimpleTransformer(nn.Module):\n    def __init__(self, vocab_size, d_model=128, nhead=4, num_layers=2):\n        super().__init__()\n        self.embed   = nn.Embedding(vocab_size, d_model)\n        encoder_layer = nn.TransformerEncoderLayer(d_model, nhead, batch_first=True)\n        self.transformer = nn.TransformerEncoder(encoder_layer, num_layers)\n        self.fc = nn.Linear(d_model, vocab_size)\n\n    def forward(self, x):\n        x = self.embed(x)          # tokens → vetores\n        x = self.transformer(x)    # atenção multi-cabeça\n        return self.fc(x)          # logits por token\n\n# ── CNN para classificação de imagens ─────────\nclass SimpleCNN(nn.Module):\n    def __init__(self, num_classes=10):\n        super().__init__()\n        self.conv = nn.Sequential(\n            nn.Conv2d(3, 32, 3, padding=1), nn.ReLU(),\n            nn.MaxPool2d(2),\n            nn.Conv2d(32, 64, 3, padding=1), nn.ReLU(),\n            nn.MaxPool2d(2)\n        )\n        self.fc = nn.Sequential(\n            nn.Flatten(),\n            nn.Linear(64 * 8 * 8, 256), nn.ReLU(),\n            nn.Linear(256, num_classes)\n        )\n    def forward(self, x): return self.fc(self.conv(x))\n\n# ── HuggingFace — modelo pré-treinado ─────────\nfrom transformers import pipeline\nsentiment = pipeline('sentiment-analysis',\n                     model='nlptown/bert-base-multilingual-uncased-sentiment')\nresult = sentiment('O produto é excelente!')\nprint(result)  # [{'label': '5 stars', 'score': 0.82}]"
+          },
+          "output": {
+            "javascript": "// RAG: resposta fundamentada nos documentos\n// 'Com base no manual, a função X...'",
+            "python": "# sentiment: [{'label': '5 stars', 'score': 0.82}]\n# SimpleCNN forward: tensor([...]) shape (batch, 10)"
+          }
+        },
+        {
+          "id": "ia_pratica",
+          "title": "Implementação Prática",
+          "title_en": "Practical Implementation",
+          "title_fr": "Mise en Œuvre Pratique",
+          "icon": "🚀",
+          "desc": "Integração de IA em aplicações reais: chatbots com histórico, análise de sentimento, geração de embeddings para busca semântica, moderação de conteúdo e visão computacional no navegador com TensorFlow.js.",
+          "desc_en": "AI integration in real applications: chatbots with history, sentiment analysis, embedding generation for semantic search, content moderation, and computer vision in the browser with TensorFlow.js.",
+          "desc_fr": "Intégration de l'IA dans des applications réelles : chatbots, analyse de sentiments, embeddings pour la recherche sémantique, modération de contenu.",
+          "pros": [
+            "APIs de LLM (Anthropic, OpenAI) permitem integrar IA em horas, sem ML próprio",
+            "TensorFlow.js roda modelos diretamente no browser — zero backend para casos simples",
+            "Embeddings permitem busca semântica muito superior à busca por palavras-chave",
+            "Streaming de tokens (SSE) melhora UX — resposta começa imediatamente"
+          ],
+          "pros_en": [
+            "LLM APIs (Anthropic, OpenAI) allow AI integration in hours, no own ML",
+            "TensorFlow.js runs models directly in browser — zero backend for simple cases",
+            "Embeddings allow semantic search far superior to keyword search",
+            "Token streaming (SSE) improves UX — response starts immediately"
+          ],
+          "pros_fr": [
+            "Les APIs LLM permettent d'intégrer l'IA en quelques heures",
+            "TensorFlow.js s'exécute directement dans le navigateur",
+            "Les embeddings permettent une recherche sémantique bien supérieure",
+            "Le streaming de tokens améliore l'UX"
+          ],
+          "cons": [
+            "Latência de APIs de LLM pode ser 2-10s — sempre use streaming e loading states",
+            "Custo por token escala rapidamente com volume — monitorar usage",
+            "Dados sensíveis não devem ir para APIs externas — considere modelos locais",
+            "Respostas de LLM não são determinísticas — difícil de testar automaticamente"
+          ],
+          "cons_en": [
+            "LLM API latency can be 2-10s — always use streaming and loading states",
+            "Per-token cost scales quickly with volume — monitor usage",
+            "Sensitive data should not go to external APIs — consider local models",
+            "LLM responses are non-deterministic — hard to test automatically"
+          ],
+          "cons_fr": [
+            "La latence des APIs LLM peut être de 2 à 10s",
+            "Le coût par token monte vite avec le volume",
+            "Les données sensibles ne doivent pas aller vers des APIs externes",
+            "Les réponses LLM ne sont pas déterministes"
+          ],
+          "when": "Chatbot: LLM + histórico de mensagens. Busca: embeddings + vector DB. Classificação de texto: fine-tuning ou few-shot prompting. Imagem no browser: TensorFlow.js ou ONNX Runtime Web.",
+          "when_en": "Chatbot: LLM + message history. Search: embeddings + vector DB. Text classification: fine-tuning or few-shot prompting. Browser image: TensorFlow.js or ONNX Runtime Web.",
+          "when_fr": "Chatbot : LLM + historique. Recherche : embeddings + vector DB. Classification de texte : fine-tuning ou few-shot prompting.",
+          "examples": {
+            "javascript": "// ── CHATBOT com histórico (Node.js / Express) ─\nimport Anthropic from '@anthropic-ai/sdk';\nconst client = new Anthropic();\n\nconst historico = [];\n\nasync function chat(mensagem) {\n  historico.push({ role: 'user', content: mensagem });\n\n  const resposta = await client.messages.create({\n    model: 'claude-opus-4-5',\n    max_tokens: 1024,\n    system: 'Você é um assistente especialista em programação.',\n    messages: historico  // envia TODO o histórico\n  });\n\n  const texto = resposta.content[0].text;\n  historico.push({ role: 'assistant', content: texto });\n  return texto;\n}\n\n// ── STREAMING de resposta ─────────────────────\nasync function chatStream(mensagem, onChunk) {\n  const stream = await client.messages.stream({\n    model: 'claude-opus-4-5',\n    max_tokens: 1024,\n    messages: [{ role: 'user', content: mensagem }]\n  });\n\n  for await (const event of stream) {\n    if (event.type === 'content_block_delta') {\n      onChunk(event.delta.text); // callback a cada token\n    }\n  }\n  return stream.finalMessage();\n}\n\n// ── BUSCA SEMÂNTICA com Embeddings ────────────\nasync function gerarEmbedding(texto) {\n  const res = await fetch('https://api.openai.com/v1/embeddings', {\n    method: 'POST',\n    headers: { Authorization: `Bearer ${process.env.OPENAI_KEY}`,\n               'Content-Type': 'application/json' },\n    body: JSON.stringify({ model: 'text-embedding-3-small', input: texto })\n  });\n  const data = await res.json();\n  return data.data[0].embedding; // vetor de 1536 dimensões\n}\n\nfunction similaridadeCosseno(a, b) {\n  const dot = a.reduce((s, v, i) => s + v * b[i], 0);\n  const magA = Math.sqrt(a.reduce((s, v) => s + v*v, 0));\n  const magB = Math.sqrt(b.reduce((s, v) => s + v*v, 0));\n  return dot / (magA * magB); // 1.0 = idêntico, 0 = ortogonal\n}\n\n// ── TensorFlow.js — IA no Browser ─────────────\nimport * as tf from '@tensorflow/tfjs';\nimport * as mobilenet from '@tensorflow-models/mobilenet';\n\nasync function classificarImagem(imgElement) {\n  const model = await mobilenet.load();\n  const predictions = await model.classify(imgElement);\n  return predictions;\n  // [{ className: 'cat', probability: 0.92 }, ...]\n}",
+            "python": "# ── RAG completo com LangChain ────────────────\nfrom langchain_anthropic import ChatAnthropic\nfrom langchain_community.vectorstores import FAISS\nfrom langchain_openai import OpenAIEmbeddings\nfrom langchain.chains import RetrievalQA\nfrom langchain.text_splitter import RecursiveCharacterTextSplitter\n\n# 1. Dividir documentos em chunks\nsplitter = RecursiveCharacterTextSplitter(\n    chunk_size=500, chunk_overlap=50\n)\nchunks = splitter.split_text(documento_longo)\n\n# 2. Criar vector store\nembeddings = OpenAIEmbeddings()\nvectorstore = FAISS.from_texts(chunks, embeddings)\n\n# 3. Chain de QA\nllm = ChatAnthropic(model='claude-opus-4-5')\nqa_chain = RetrievalQA.from_chain_type(\n    llm=llm,\n    retriever=vectorstore.as_retriever(search_kwargs={'k': 4})\n)\n\n# 4. Pergunta!\nresposta = qa_chain.invoke('O que diz o contrato sobre rescisão?')\nprint(resposta['result'])\n\n# ── Fine-tuning (HuggingFace PEFT/LoRA) ───────\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\nfrom peft import LoraConfig, get_peft_model\n\nmodel_name = 'mistralai/Mistral-7B-v0.1'\nmodel = AutoModelForCausalLM.from_pretrained(model_name, load_in_4bit=True)\n\nlora_config = LoraConfig(\n    r=16,             # rank — menor = menos params, mais rápido\n    lora_alpha=32,\n    target_modules=['q_proj', 'v_proj'],\n    lora_dropout=0.05,\n    task_type='CAUSAL_LM'\n)\nmodel = get_peft_model(model, lora_config)\nprint(model.print_trainable_parameters())\n# trainable params: 2.097M (0.03% dos params totais)"
+          },
+          "output": {
+            "javascript": "// chat('Como funciona async/await?')\n// → 'Async/await é açúcar sintático sobre Promises...'\n// classificarImagem(img)\n// → [{ className: 'tabby cat', probability: 0.92 }]",
+            "python": "# qa_chain: 'O contrato prevê 30 dias para rescisão sem ônus...'\n# trainable params: 2.097M || all params: 7.241B"
+          }
+        }
+      ]
+    },
+    {
+      "id": "app_completa_react",
+      "label": "App Completa: React + REST + MySQL",
+      "label_en": "Full App: React + REST + MySQL",
+      "label_fr": "App Complète : React + REST + MySQL",
+      "icon": "⚛️",
+      "color": "#38bdf8",
+      "accent": "#0284c7",
+      "subtopics": [
+        {
+          "id": "react_backend",
+          "title": "Backend: Node.js + Express + MySQL",
+          "title_en": "Backend: Node.js + Express + MySQL",
+          "title_fr": "Backend : Node.js + Express + MySQL",
+          "icon": "🗄️",
+          "desc": "API REST completa com Node.js/Express conectada ao MySQL. Aplica: funções assíncronas, tratamento de erros, estruturas de repetição para processar listas, condicionais para validação, e gerenciamento de memória com pool de conexões.",
+          "desc_en": "Complete REST API with Node.js/Express connected to MySQL. Applies: async functions, error handling, loop structures to process lists, conditionals for validation, and memory management with connection pooling.",
+          "desc_fr": "API REST complète avec Node.js/Express connectée à MySQL.",
+          "pros": [
+            "Express é minimalista — zero boilerplate desnecessário",
+            "mysql2 suporta Promises nativamente — async/await limpo",
+            "Pool de conexões reutiliza conexões abertas — economiza memória e latência",
+            "Middleware centraliza lógica transversal (auth, logging, erros)"
+          ],
+          "pros_en": [
+            "Express is minimalist — zero unnecessary boilerplate",
+            "mysql2 natively supports Promises — clean async/await",
+            "Connection pool reuses open connections — saves memory and latency",
+            "Middleware centralizes cross-cutting logic (auth, logging, errors)"
+          ],
+          "pros_fr": [
+            "Express est minimaliste",
+            "mysql2 supporte les Promises nativement",
+            "Le pool de connexions réutilise les connexions ouvertes",
+            "Le middleware centralise la logique transversale"
+          ],
+          "cons": [
+            "Node.js single-thread — operações CPU-intensivas bloqueiam o event loop",
+            "Sem ORM, SQL manual pode virar injection se não usar prepared statements",
+            "Gerenciar pool de conexões requer atenção ao tamanho máximo"
+          ],
+          "cons_en": [
+            "Node.js single-thread — CPU-intensive operations block the event loop",
+            "Without ORM, manual SQL can become injection if prepared statements aren't used",
+            "Managing connection pool requires attention to max size"
+          ],
+          "cons_fr": [
+            "Node.js single-thread — les opérations CPU-intensives bloquent l'event loop",
+            "Sans ORM, le SQL manuel peut créer des injections",
+            "La gestion du pool de connexions nécessite attention"
+          ],
+          "when": "APIs pequenas a médias com CRUD direto. Para projetos maiores, considere Prisma ORM ou NestJS.",
+          "when_en": "Small to medium APIs with direct CRUD. For larger projects, consider Prisma ORM or NestJS.",
+          "when_fr": "APIs petites à moyennes avec CRUD direct. Pour des projets plus importants, considérez Prisma ORM ou NestJS.",
+          "examples": {
+            "javascript": "// ═══════════════════════════════════════════════\n// BACKEND COMPLETO — Node.js + Express + MySQL\n// Aplica: async/await, loops, condicionais, memória\n// ═══════════════════════════════════════════════\n\n// 📦 package.json (deps)\n// express, mysql2, bcryptjs, jsonwebtoken, joi, dotenv\n\n// ── db.js — Pool de Conexões (gerenciamento de memória) ──\nimport mysql from 'mysql2/promise';\n\nexport const pool = mysql.createPool({\n  host:     process.env.DB_HOST,\n  user:     process.env.DB_USER,\n  password: process.env.DB_PASS,\n  database: process.env.DB_NAME,\n  waitForConnections: true,\n  connectionLimit: 10,  // max 10 conexões simultâneas no Heap\n  queueLimit: 0\n});\n\n// ── schema.sql ────────────────────────────────\n/*\nCREATE TABLE usuarios (\n  id         INT AUTO_INCREMENT PRIMARY KEY,\n  nome       VARCHAR(100) NOT NULL,\n  email      VARCHAR(150) UNIQUE NOT NULL,\n  senha_hash VARCHAR(255) NOT NULL,\n  ativo      BOOLEAN DEFAULT TRUE,\n  criado_em  TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n);\n\nCREATE TABLE tarefas (\n  id         INT AUTO_INCREMENT PRIMARY KEY,\n  titulo     VARCHAR(200) NOT NULL,\n  descricao  TEXT,\n  status     ENUM('pendente','andamento','concluida') DEFAULT 'pendente',\n  usuario_id INT NOT NULL,\n  criado_em  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n  FOREIGN KEY (usuario_id) REFERENCES usuarios(id)\n);\n*/\n\n// ── taskService.js — lógica com todos os conceitos ──\nimport { pool } from './db.js';\n\n// Função assíncrona + loop + condicional\nexport async function listarTarefas(userId, filtros = {}) {\n  // Condicional para montar query dinamicamente\n  let query = 'SELECT * FROM tarefas WHERE usuario_id = ?';\n  const params = [userId];\n\n  if (filtros.status) {         // condicional: filtrar por status\n    query += ' AND status = ?';\n    params.push(filtros.status);\n  }\n  if (filtros.busca) {          // condicional: busca textual\n    query += ' AND titulo LIKE ?';\n    params.push(`%${filtros.busca}%`);\n  }\n\n  query += ' ORDER BY criado_em DESC';\n\n  const [rows] = await pool.execute(query, params); // async/await\n\n  // Loop funcional para transformar dados\n  return rows.map(tarefa => ({\n    ...tarefa,\n    status_label: {\n      pendente: '⏳ Pendente',\n      andamento: '🔄 Em Andamento',\n      concluida: '✅ Concluída'\n    }[tarefa.status] ?? 'Desconhecido'\n  }));\n}\n\nexport async function criarTarefa(userId, dados) {\n  // Condicional: validação (guard clause)\n  if (!dados.titulo?.trim())  throw new Error('Título obrigatório');\n  if (dados.titulo.length > 200) throw new Error('Título muito longo');\n\n  const [result] = await pool.execute(\n    'INSERT INTO tarefas (titulo, descricao, usuario_id) VALUES (?, ?, ?)',\n    [dados.titulo.trim(), dados.descricao ?? null, userId]\n  );\n\n  return { id: result.insertId, ...dados, status: 'pendente' };\n}\n\nexport async function atualizarTarefa(id, userId, dados) {\n  // Loop para montar SET dinamicamente\n  const campos = [];\n  const valores = [];\n\n  for (const [campo, valor] of Object.entries(dados)) {\n    const permitidos = ['titulo', 'descricao', 'status'];\n    if (permitidos.includes(campo)) {  // condicional: whitelist\n      campos.push(`${campo} = ?`);\n      valores.push(valor);\n    }\n  }\n\n  if (campos.length === 0) throw new Error('Nenhum campo para atualizar');\n\n  valores.push(id, userId); // WHERE params\n  const [result] = await pool.execute(\n    `UPDATE tarefas SET ${campos.join(', ')} WHERE id = ? AND usuario_id = ?`,\n    valores\n  );\n\n  if (result.affectedRows === 0) throw new Error('Tarefa não encontrada');\n  return { id, ...dados };\n}\n\n// ── server.js — Express app ───────────────────\nimport express from 'express';\nimport jwt from 'jsonwebtoken';\nimport * as taskService from './taskService.js';\n\nconst app = express();\napp.use(express.json());\n\n// Middleware de autenticação (função síncrona)\nfunction autenticar(req, res, next) {\n  const token = req.headers.authorization?.split(' ')[1];\n  if (!token) return res.status(401).json({ erro: 'Token ausente' });\n  try {\n    req.usuario = jwt.verify(token, process.env.JWT_SECRET);\n    next();\n  } catch {\n    res.status(401).json({ erro: 'Token inválido' });\n  }\n}\n\n// Rotas CRUD\napp.get('/tarefas', autenticar, async (req, res) => {\n  try {\n    const tarefas = await taskService.listarTarefas(\n      req.usuario.id,\n      req.query  // filtros opcionais\n    );\n    res.json({ data: tarefas, total: tarefas.length });\n  } catch (err) {\n    res.status(500).json({ erro: err.message });\n  }\n});\n\napp.post('/tarefas', autenticar, async (req, res) => {\n  try {\n    const nova = await taskService.criarTarefa(req.usuario.id, req.body);\n    res.status(201).json(nova);\n  } catch (err) {\n    res.status(400).json({ erro: err.message });\n  }\n});\n\napp.patch('/tarefas/:id', autenticar, async (req, res) => {\n  try {\n    const atualizada = await taskService.atualizarTarefa(\n      Number(req.params.id), req.usuario.id, req.body\n    );\n    res.json(atualizada);\n  } catch (err) {\n    const status = err.message.includes('não encontrada') ? 404 : 400;\n    res.status(status).json({ erro: err.message });\n  }\n});\n\napp.delete('/tarefas/:id', autenticar, async (req, res) => {\n  try {\n    await pool.execute(\n      'DELETE FROM tarefas WHERE id = ? AND usuario_id = ?',\n      [req.params.id, req.usuario.id]\n    );\n    res.status(204).send();\n  } catch (err) {\n    res.status(500).json({ erro: err.message });\n  }\n});\n\napp.listen(3001, () => console.log('API rodando na porta 3001'));"
+          },
+          "output": {
+            "javascript": "// GET /tarefas?status=pendente\n// → { data: [{id:1,titulo:'...',status_label:'⏳ Pendente'},...], total: 3 }\n// POST /tarefas { titulo: 'Estudar React' }\n// → 201 { id: 4, titulo: 'Estudar React', status: 'pendente' }\n// PATCH /tarefas/4 { status: 'concluida' }\n// → 200 { id: 4, status: 'concluida' }"
+          }
+        },
+        {
+          "id": "react_frontend",
+          "title": "Frontend: React + Hooks + API REST",
+          "title_en": "Frontend: React + Hooks + REST API",
+          "title_fr": "Frontend : React + Hooks + API REST",
+          "icon": "⚛️",
+          "desc": "SPA em React consumindo a API REST do backend. Aplica: useState/useEffect (funções assíncronas), loops para renderizar listas, condicionais para estados de loading/erro/vazio, e otimização de memória com useCallback/useMemo.",
+          "desc_en": "React SPA consuming the backend REST API. Applies: useState/useEffect (async functions), loops to render lists, conditionals for loading/error/empty states, and memory optimization with useCallback/useMemo.",
+          "desc_fr": "SPA React consommant l'API REST backend.",
+          "pros": [
+            "React hooks tornam lógica de estado simples e reutilizável em custom hooks",
+            "Renderização condicional é nativa em JSX — sem diretivas extras",
+            "useCallback/useMemo evitam recriação desnecessária de funções/valores no Heap",
+            "Component-based: cada componente gerencia seu próprio escopo de memória"
+          ],
+          "pros_en": [
+            "React hooks make state logic simple and reusable in custom hooks",
+            "Conditional rendering is native in JSX — no extra directives",
+            "useCallback/useMemo avoid unnecessary recreation of functions/values in Heap",
+            "Component-based: each component manages its own memory scope"
+          ],
+          "pros_fr": [
+            "Les hooks React rendent la logique d'état simple et réutilisable",
+            "Le rendu conditionnel est natif en JSX",
+            "useCallback/useMemo évitent la recréation inutile",
+            "Component-based : chaque composant gère sa propre portée mémoire"
+          ],
+          "cons": [
+            "useEffect com dependências erradas causa loops infinitos ou dados desatualizados",
+            "useState para estado global complexo vira prop drilling — use Context ou Zustand",
+            "Re-renders desnecessários degradam performance — usar React.memo com cuidado"
+          ],
+          "cons_en": [
+            "useEffect with wrong dependencies causes infinite loops or stale data",
+            "useState for complex global state becomes prop drilling — use Context or Zustand",
+            "Unnecessary re-renders degrade performance — use React.memo carefully"
+          ],
+          "cons_fr": [
+            "useEffect avec mauvaises dépendances cause des boucles infinies",
+            "useState pour l'état global complexe devient du prop drilling",
+            "Les re-renders inutiles dégradent les performances"
+          ],
+          "when": "Frontend com dados dinâmicos, autenticação, CRUD em tempo real. Para projetos com SSR/SEO, use Next.js.",
+          "when_en": "Frontend with dynamic data, authentication, real-time CRUD. For SSR/SEO projects, use Next.js.",
+          "when_fr": "Frontend avec données dynamiques, authentification, CRUD en temps réel. Pour SSR/SEO, utilisez Next.js.",
+          "examples": {
+            "javascript": "// ═══════════════════════════════════════════════\n// FRONTEND REACT — Gerenciador de Tarefas\n// Aplica: async/await, hooks, loops, condicionais\n// ═══════════════════════════════════════════════\n\n// ── api.js — camada de comunicação ───────────\nconst BASE = 'http://localhost:3001';\n\nasync function apiFetch(endpoint, options = {}) {\n  const token = localStorage.getItem('token');\n\n  // Condicional: adicionar auth header se logado\n  const headers = {\n    'Content-Type': 'application/json',\n    ...(token ? { Authorization: `Bearer ${token}` } : {})\n  };\n\n  const res = await fetch(`${BASE}${endpoint}`, { ...options, headers });\n\n  if (!res.ok) {\n    const err = await res.json();\n    throw new Error(err.erro ?? 'Erro desconhecido');\n  }\n\n  return res.status === 204 ? null : res.json();\n}\n\nexport const api = {\n  tarefas: {\n    listar:    (params) => apiFetch(`/tarefas?${new URLSearchParams(params)}`),\n    criar:     (body)   => apiFetch('/tarefas', { method: 'POST',  body: JSON.stringify(body) }),\n    atualizar: (id, b)  => apiFetch(`/tarefas/${id}`, { method: 'PATCH', body: JSON.stringify(b) }),\n    deletar:   (id)     => apiFetch(`/tarefas/${id}`, { method: 'DELETE' })\n  }\n};\n\n// ── useTarefas.js — Custom Hook ───────────────\nimport { useState, useEffect, useCallback } from 'react';\nimport { api } from './api';\n\nexport function useTarefas(filtros = {}) {\n  const [tarefas, setTarefas]   = useState([]);    // Heap: array no estado\n  const [loading, setLoading]   = useState(false);\n  const [erro, setErro]         = useState(null);\n\n  // Função assíncrona memoizada — evita recriação no Heap\n  const carregar = useCallback(async () => {\n    setLoading(true);\n    setErro(null);\n    try {\n      const { data } = await api.tarefas.listar(filtros);\n      setTarefas(data);\n    } catch (e) {\n      setErro(e.message);\n    } finally {\n      setLoading(false); // sempre executa\n    }\n  }, [JSON.stringify(filtros)]);\n\n  useEffect(() => { carregar(); }, [carregar]);\n\n  const criar = useCallback(async (dados) => {\n    const nova = await api.tarefas.criar(dados);\n    setTarefas(prev => [nova, ...prev]); // imutável — nova referência no Heap\n    return nova;\n  }, []);\n\n  const atualizar = useCallback(async (id, dados) => {\n    const atualizada = await api.tarefas.atualizar(id, dados);\n    // Loop: map cria novo array com item substituído\n    setTarefas(prev =>\n      prev.map(t => t.id === id ? { ...t, ...atualizada } : t)\n    );\n  }, []);\n\n  const deletar = useCallback(async (id) => {\n    await api.tarefas.deletar(id);\n    // Loop: filter cria novo array sem o item deletado\n    setTarefas(prev => prev.filter(t => t.id !== id));\n  }, []);\n\n  return { tarefas, loading, erro, criar, atualizar, deletar, recarregar: carregar };\n}\n\n// ── TarefaCard.jsx ────────────────────────────\nimport React, { memo, useState } from 'react';\n\nconst COR_STATUS = {\n  pendente:  { bg: '#fff3cd', borda: '#ffc107', emoji: '⏳' },\n  andamento: { bg: '#cce5ff', borda: '#0066cc', emoji: '🔄' },\n  concluida: { bg: '#d4edda', borda: '#28a745', emoji: '✅' }\n};\n\nexport const TarefaCard = memo(function TarefaCard({ tarefa, onAtualizar, onDeletar }) {\n  const [editando, setEditando] = useState(false);\n  const cor = COR_STATUS[tarefa.status] ?? COR_STATUS.pendente; // condicional\n\n  return (\n    <div style={{ border: `2px solid ${cor.borda}`, background: cor.bg,\n                  borderRadius: 8, padding: 16, marginBottom: 8 }}>\n      <div style={{ display: 'flex', justifyContent: 'space-between' }}>\n        <span>{cor.emoji} {tarefa.titulo}</span>\n        <div style={{ display: 'flex', gap: 8 }}>\n          {/* Condicional: mostrar select ou botão */}\n          {editando ? (\n            <select\n              value={tarefa.status}\n              onChange={e => { onAtualizar(tarefa.id, { status: e.target.value }); setEditando(false); }}\n            >\n              {/* Loop: renderizar options */}\n              {Object.entries(COR_STATUS).map(([s, { emoji }]) => (\n                <option key={s} value={s}>{emoji} {s}</option>\n              ))}\n            </select>\n          ) : (\n            <button onClick={() => setEditando(true)}>✏️</button>\n          )}\n          <button onClick={() => onDeletar(tarefa.id)} style={{ color: 'red' }}>🗑️</button>\n        </div>\n      </div>\n      {tarefa.descricao && <p style={{ margin: '8px 0 0', fontSize: 13 }}>{tarefa.descricao}</p>}\n    </div>\n  );\n});\n\n// ── App.jsx — componente raiz ─────────────────\nimport React, { useState } from 'react';\nimport { useTarefas } from './useTarefas';\nimport { TarefaCard } from './TarefaCard';\n\nexport default function App() {\n  const [filtroStatus, setFiltroStatus] = useState('');\n  const [novaTitulo, setNovaTitulo]     = useState('');\n\n  const { tarefas, loading, erro, criar, atualizar, deletar } =\n    useTarefas(filtroStatus ? { status: filtroStatus } : {});\n\n  async function handleCriar(e) {\n    e.preventDefault();\n    if (!novaTitulo.trim()) return; // condicional: guard\n    await criar({ titulo: novaTitulo });\n    setNovaTitulo('');\n  }\n\n  return (\n    <div style={{ maxWidth: 640, margin: '0 auto', padding: 24, fontFamily: 'sans-serif' }}>\n      <h1>📋 Gerenciador de Tarefas</h1>\n\n      {/* Filtros — loop de options */}\n      <select value={filtroStatus} onChange={e => setFiltroStatus(e.target.value)}\n              style={{ marginBottom: 16 }}>\n        <option value=''>Todas</option>\n        <option value='pendente'>⏳ Pendentes</option>\n        <option value='andamento'>🔄 Em Andamento</option>\n        <option value='concluida'>✅ Concluídas</option>\n      </select>\n\n      {/* Form de criação */}\n      <form onSubmit={handleCriar} style={{ display: 'flex', gap: 8, marginBottom: 24 }}>\n        <input\n          value={novaTitulo}\n          onChange={e => setNovaTitulo(e.target.value)}\n          placeholder='Nova tarefa...'\n          style={{ flex: 1, padding: 8, borderRadius: 6, border: '1px solid #ccc' }}\n        />\n        <button type='submit' style={{ padding: '8px 16px' }}>+ Criar</button>\n      </form>\n\n      {/* Renderização condicional dos estados */}\n      {loading && <p>⌛ Carregando...</p>}\n      {erro    && <p style={{ color: 'red' }}>❌ {erro}</p>}\n      {!loading && !erro && tarefas.length === 0 && (\n        <p style={{ color: '#888' }}>Nenhuma tarefa encontrada.</p>\n      )}\n\n      {/* Loop: renderizar cards */}\n      {tarefas.map(tarefa => (\n        <TarefaCard\n          key={tarefa.id}\n          tarefa={tarefa}\n          onAtualizar={atualizar}\n          onDeletar={deletar}\n        />\n      ))}\n    </div>\n  );\n}"
+          },
+          "output": {
+            "javascript": "// App renderiza:\n// 📋 Gerenciador de Tarefas\n// [Filtro dropdown] [Input] [+ Criar]\n// ⏳ Estudar React\n// 🔄 Implementar API\n// ✅ Criar banco de dados"
+          }
+        }
+      ]
+    },
+    {
+      "id": "app_completa_angular",
+      "label": "App Completa: Angular + REST + MySQL",
+      "label_en": "Full App: Angular + REST + MySQL",
+      "label_fr": "App Complète : Angular + REST + MySQL",
+      "icon": "🔺",
+      "color": "#f97316",
+      "accent": "#ea580c",
+      "subtopics": [
+        {
+          "id": "angular_backend",
+          "title": "Backend: NestJS + TypeORM + MySQL",
+          "title_en": "Backend: NestJS + TypeORM + MySQL",
+          "title_fr": "Backend : NestJS + TypeORM + MySQL",
+          "icon": "🗄️",
+          "desc": "API REST com NestJS (framework Angular-like para backend) + TypeORM. Aplica: decorators, injeção de dependência, funções assíncronas, loops para transformação de dados, condicionais para validação.",
+          "desc_en": "REST API with NestJS (Angular-like backend framework) + TypeORM. Applies: decorators, dependency injection, async functions, loops for data transformation, conditionals for validation.",
+          "desc_fr": "API REST avec NestJS + TypeORM. Applique : decorators, injection de dépendances, fonctions asynchrones.",
+          "pros": [
+            "NestJS tem arquitetura Angular-like — fácil transição para quem conhece Angular",
+            "TypeORM + decorators: entidades definem tabelas e validações no mesmo lugar",
+            "Injeção de dependência facilita testes unitários com mocks",
+            "Guards e Interceptors centralizam auth e transformação de resposta"
+          ],
+          "pros_en": [
+            "NestJS has Angular-like architecture — easy transition for Angular devs",
+            "TypeORM + decorators: entities define tables and validations in one place",
+            "Dependency injection facilitates unit tests with mocks",
+            "Guards and Interceptors centralize auth and response transformation"
+          ],
+          "pros_fr": [
+            "NestJS a une architecture similaire à Angular",
+            "TypeORM + decorators : les entités définissent tables et validations au même endroit",
+            "L'injection de dépendances facilite les tests unitaires",
+            "Guards et Interceptors centralisent auth et transformation"
+          ],
+          "cons": [
+            "NestJS tem mais boilerplate que Express puro",
+            "TypeORM pode gerar queries ineficientes em relacionamentos complexos (N+1 problem)",
+            "Decorators aumentam o peso do bundle se não usar tree-shaking"
+          ],
+          "cons_en": [
+            "NestJS has more boilerplate than plain Express",
+            "TypeORM may generate inefficient queries in complex relationships (N+1 problem)",
+            "Decorators increase bundle weight if tree-shaking isn't used"
+          ],
+          "cons_fr": [
+            "NestJS a plus de boilerplate qu'Express",
+            "TypeORM peut générer des requêtes inefficaces (problème N+1)",
+            "Les decorators augmentent le poids du bundle"
+          ],
+          "when": "Projetos Angular full-stack, APIs com lógica de negócio complexa, times que preferem TypeScript strict em todos os layers.",
+          "when_en": "Angular full-stack projects, APIs with complex business logic, teams that prefer strict TypeScript in all layers.",
+          "when_fr": "Projets Angular full-stack, APIs avec logique métier complexe, équipes préférant TypeScript strict.",
+          "examples": {
+            "javascript": "// ═══════════════════════════════════════════════\n// BACKEND NESTJS + TYPEORM + MYSQL\n// Aplica: async/await, loops, condicionais, DI\n// ═══════════════════════════════════════════════\n\n// ── tarefa.entity.ts ─────────────────────────\nimport { Entity, PrimaryGeneratedColumn, Column,\n         ManyToOne, CreateDateColumn } from 'typeorm';\nimport { Usuario } from './usuario.entity';\n\n@Entity('tarefas')\nexport class Tarefa {\n  @PrimaryGeneratedColumn()\n  id: number;\n\n  @Column({ length: 200 })\n  titulo: string;\n\n  @Column({ type: 'text', nullable: true })\n  descricao: string;\n\n  @Column({ type: 'enum', enum: ['pendente','andamento','concluida'], default: 'pendente' })\n  status: string;\n\n  @ManyToOne(() => Usuario, u => u.tarefas)\n  usuario: Usuario;\n\n  @CreateDateColumn()\n  criadoEm: Date;\n}\n\n// ── create-tarefa.dto.ts ──────────────────────\nimport { IsString, IsNotEmpty, MaxLength, IsOptional, IsIn } from 'class-validator';\n\nexport class CreateTarefaDto {\n  @IsString() @IsNotEmpty() @MaxLength(200)\n  titulo: string;\n\n  @IsString() @IsOptional()\n  descricao?: string;\n}\n\nexport class UpdateTarefaDto {\n  @IsString() @IsOptional() @MaxLength(200)\n  titulo?: string;\n\n  @IsString() @IsOptional()\n  descricao?: string;\n\n  @IsIn(['pendente','andamento','concluida']) @IsOptional()\n  status?: string;\n}\n\n// ── tarefas.service.ts ────────────────────────\nimport { Injectable, NotFoundException } from '@nestjs/common';\nimport { InjectRepository } from '@nestjs/typeorm';\nimport { Repository, FindManyOptions, Like } from 'typeorm';\n\n@Injectable()\nexport class TarefasService {\n  constructor(\n    @InjectRepository(Tarefa)\n    private readonly tarefaRepo: Repository<Tarefa> // Injeção de dependência\n  ) {}\n\n  // Função assíncrona com condicionais para filtros\n  async findAll(userId: number, filtros: { status?: string; busca?: string }) {\n    const where: FindManyOptions<Tarefa>['where'] = { usuario: { id: userId } };\n\n    // Condicional: adicionar filtro de status\n    if (filtros.status) where.status = filtros.status;\n    // Condicional: adicionar filtro de busca\n    if (filtros.busca)  where.titulo = Like(`%${filtros.busca}%`);\n\n    const tarefas = await this.tarefaRepo.find({\n      where,\n      order: { criadoEm: 'DESC' }\n    });\n\n    // Loop: transformar dados antes de retornar\n    return tarefas.map(t => ({\n      ...t,\n      status_label: this.getStatusLabel(t.status) // função auxiliar\n    }));\n  }\n\n  async create(userId: number, dto: CreateTarefaDto): Promise<Tarefa> {\n    const tarefa = this.tarefaRepo.create({ ...dto, usuario: { id: userId } });\n    return this.tarefaRepo.save(tarefa);\n  }\n\n  async update(id: number, userId: number, dto: UpdateTarefaDto) {\n    const tarefa = await this.tarefaRepo.findOne({\n      where: { id, usuario: { id: userId } }\n    });\n\n    if (!tarefa) throw new NotFoundException('Tarefa não encontrada');\n\n    // Loop: atualizar apenas campos enviados\n    for (const [campo, valor] of Object.entries(dto)) {\n      if (valor !== undefined) (tarefa as any)[campo] = valor; // condicional\n    }\n\n    return this.tarefaRepo.save(tarefa);\n  }\n\n  async remove(id: number, userId: number): Promise<void> {\n    const result = await this.tarefaRepo.delete({ id, usuario: { id: userId } });\n    if (result.affected === 0) throw new NotFoundException('Tarefa não encontrada');\n  }\n\n  // Função auxiliar síncrona\n  private getStatusLabel(status: string): string {\n    const labels: Record<string, string> = {\n      pendente:  '⏳ Pendente',\n      andamento: '🔄 Em Andamento',\n      concluida: '✅ Concluída'\n    };\n    return labels[status] ?? 'Desconhecido'; // condicional com nullish\n  }\n}\n\n// ── tarefas.controller.ts ─────────────────────\nimport { Controller, Get, Post, Patch, Delete,\n         Param, Body, Query, UseGuards, Request,\n         HttpCode, HttpStatus } from '@nestjs/common';\nimport { JwtAuthGuard } from '../auth/jwt.guard';\n\n@Controller('tarefas')\n@UseGuards(JwtAuthGuard)  // Aplica JWT em todas as rotas\nexport class TarefasController {\n  constructor(private readonly service: TarefasService) {}\n\n  @Get()\n  findAll(@Request() req, @Query() query: { status?: string; busca?: string }) {\n    return this.service.findAll(req.user.id, query);\n  }\n\n  @Post()\n  create(@Request() req, @Body() dto: CreateTarefaDto) {\n    return this.service.create(req.user.id, dto);\n  }\n\n  @Patch(':id')\n  update(@Param('id') id: string, @Request() req, @Body() dto: UpdateTarefaDto) {\n    return this.service.update(+id, req.user.id, dto);\n  }\n\n  @Delete(':id')\n  @HttpCode(HttpStatus.NO_CONTENT)\n  remove(@Param('id') id: string, @Request() req) {\n    return this.service.remove(+id, req.user.id);\n  }\n}"
+          },
+          "output": {
+            "javascript": "// GET /tarefas\n// → [{ id:1, titulo:'...', status:'pendente', status_label:'⏳ Pendente' }]\n// POST /tarefas { titulo: 'Nova tarefa' }\n// → 201 { id: 5, titulo: 'Nova tarefa', status: 'pendente' }"
+          }
+        },
+        {
+          "id": "angular_frontend",
+          "title": "Frontend: Angular + Services + RxJS",
+          "title_en": "Frontend: Angular + Services + RxJS",
+          "title_fr": "Frontend : Angular + Services + RxJS",
+          "icon": "🔺",
+          "desc": "SPA Angular consumindo a API REST NestJS. Aplica: Observables/RxJS (assíncrono), *ngFor (loop), *ngIf (condicional), Services para gerenciar estado, e pipes para transformação de dados.",
+          "desc_en": "Angular SPA consuming the NestJS REST API. Applies: Observables/RxJS (async), *ngFor (loop), *ngIf (conditional), Services for state management, and pipes for data transformation.",
+          "desc_fr": "SPA Angular consommant l'API REST NestJS.",
+          "pros": [
+            "RxJS: composição poderosa de streams assíncronos com operators (map, filter, switchMap)",
+            "Angular CLI gera boilerplate — componentes, services, guards em segundos",
+            "Two-way binding [(ngModel)] simplifica formulários",
+            "Typed HTTP Client com generics garante type safety nas respostas da API"
+          ],
+          "pros_en": [
+            "RxJS: powerful composition of async streams with operators (map, filter, switchMap)",
+            "Angular CLI generates boilerplate — components, services, guards in seconds",
+            "Two-way binding [(ngModel)] simplifies forms",
+            "Typed HTTP Client with generics ensures type safety in API responses"
+          ],
+          "pros_fr": [
+            "RxJS : composition puissante de streams asynchrones",
+            "Angular CLI génère le boilerplate",
+            "Le two-way binding [(ngModel)] simplifie les formulaires",
+            "HTTP Client typé avec generics"
+          ],
+          "cons": [
+            "Curva de aprendizado íngreme — Observables, DI, decorators, módulos",
+            "Bundle inicial maior que React/Vue para SPAs simples",
+            "RxJS: vazar subscriptions sem unsubscribe() causa memory leak",
+            "Change detection pode ser confuso — OnPush vs Default"
+          ],
+          "cons_en": [
+            "Steep learning curve — Observables, DI, decorators, modules",
+            "Larger initial bundle than React/Vue for simple SPAs",
+            "RxJS: leaking subscriptions without unsubscribe() causes memory leak",
+            "Change detection can be confusing — OnPush vs Default"
+          ],
+          "cons_fr": [
+            "Courbe d'apprentissage raide",
+            "Bundle initial plus grand que React/Vue",
+            "RxJS : fuites de subscriptions sans unsubscribe() cause des fuites mémoire",
+            "La détection des changements peut être confuse"
+          ],
+          "when": "Aplicações enterprise de grande escala, times que precisam de estrutura rígida e opinativa, projetos com forms complexos (Angular Reactive Forms).",
+          "when_en": "Large-scale enterprise applications, teams needing rigid and opinionated structure, projects with complex forms (Angular Reactive Forms).",
+          "when_fr": "Applications enterprise à grande échelle, équipes ayant besoin d'une structure rigide, projets avec formulaires complexes.",
+          "examples": {
+            "javascript": "// ═══════════════════════════════════════════════\n// FRONTEND ANGULAR — Gerenciador de Tarefas\n// Aplica: async(Observable), *ngFor, *ngIf, pipes\n// ═══════════════════════════════════════════════\n\n// ── tarefa.model.ts ───────────────────────────\nexport interface Tarefa {\n  id: number;\n  titulo: string;\n  descricao?: string;\n  status: 'pendente' | 'andamento' | 'concluida';\n  status_label?: string;\n  criadoEm: string;\n}\n\nexport type StatusTarefa = Tarefa['status'];\n\n// ── tarefas.service.ts ────────────────────────\nimport { Injectable } from '@angular/core';\nimport { HttpClient, HttpParams } from '@angular/common/http';\nimport { BehaviorSubject, Observable, throwError } from 'rxjs';\nimport { tap, catchError, map } from 'rxjs/operators';\n\n@Injectable({ providedIn: 'root' })\nexport class TarefasService {\n  private readonly API = 'http://localhost:3000/tarefas';\n\n  // BehaviorSubject: stream de estado reativo\n  private tarefasSubject = new BehaviorSubject<Tarefa[]>([]);\n  tarefas$ = this.tarefasSubject.asObservable(); // exposição pública somente leitura\n\n  constructor(private http: HttpClient) {}\n\n  // Função assíncrona via Observable\n  carregar(filtros: { status?: string } = {}): Observable<Tarefa[]> {\n    // Condicional: construir params apenas se houver filtros\n    let params = new HttpParams();\n    if (filtros.status) params = params.set('status', filtros.status);\n\n    return this.http.get<Tarefa[]>(this.API, { params }).pipe(\n      tap(tarefas => this.tarefasSubject.next(tarefas)), // atualiza estado\n      catchError(err => throwError(() => new Error(err.error?.message ?? 'Erro ao carregar')))\n    );\n  }\n\n  criar(dados: Pick<Tarefa, 'titulo' | 'descricao'>): Observable<Tarefa> {\n    return this.http.post<Tarefa>(this.API, dados).pipe(\n      tap(nova => {\n        // Loop funcional: adicionar ao início do array\n        const atual = this.tarefasSubject.getValue();\n        this.tarefasSubject.next([nova, ...atual]);\n      })\n    );\n  }\n\n  atualizar(id: number, dados: Partial<Tarefa>): Observable<Tarefa> {\n    return this.http.patch<Tarefa>(`${this.API}/${id}`, dados).pipe(\n      tap(atualizada => {\n        // Loop: map para substituir item no array\n        const atual = this.tarefasSubject.getValue();\n        this.tarefasSubject.next(\n          atual.map(t => t.id === id ? { ...t, ...atualizada } : t)\n        );\n      })\n    );\n  }\n\n  deletar(id: number): Observable<void> {\n    return this.http.delete<void>(`${this.API}/${id}`).pipe(\n      tap(() => {\n        // Loop: filter para remover item\n        const atual = this.tarefasSubject.getValue();\n        this.tarefasSubject.next(atual.filter(t => t.id !== id));\n      })\n    );\n  }\n}\n\n// ── tarefas.component.ts ──────────────────────\nimport { Component, OnInit, OnDestroy } from '@angular/core';\nimport { Subscription } from 'rxjs';\n\n@Component({\n  selector: 'app-tarefas',\n  template: `\n    <div class=\"container\">\n      <h1>📋 Gerenciador de Tarefas</h1>\n\n      <!-- Filtros: loop com ngFor -->\n      <select [(ngModel)]=\"filtroStatus\" (change)=\"aplicarFiltro()\">\n        <option value=\"\">Todas</option>\n        <!-- Loop: *ngFor nos statuses -->\n        <option *ngFor=\"let s of statuses\" [value]=\"s.value\">{{ s.label }}</option>\n      </select>\n\n      <!-- Form de criação -->\n      <form (ngSubmit)=\"criar()\">\n        <input [(ngModel)]=\"novaTitulo\" name=\"titulo\" placeholder=\"Nova tarefa...\" required>\n        <button type=\"submit\" [disabled]=\"!novaTitulo.trim()\">+ Criar</button>\n      </form>\n\n      <!-- Condicional: loading state -->\n      <p *ngIf=\"loading\">⌛ Carregando...</p>\n      <!-- Condicional: erro -->\n      <p *ngIf=\"erro\" style=\"color:red\">❌ {{ erro }}</p>\n      <!-- Condicional: lista vazia -->\n      <p *ngIf=\"!loading && !erro && tarefas.length === 0\">Nenhuma tarefa.</p>\n\n      <!-- Loop principal: *ngFor -->\n      <div *ngFor=\"let tarefa of tarefas; trackBy: trackById\" class=\"card\"\n           [class.concluida]=\"tarefa.status === 'concluida'\">\n        <span>{{ tarefa.titulo }}</span>\n        <!-- Condicional: badge de status -->\n        <span class=\"badge\" [ngClass]=\"tarefa.status\">\n          {{ tarefa.status | titlecase }}\n        </span>\n        <select\n          [value]=\"tarefa.status\"\n          (change)=\"mudarStatus(tarefa.id, $event)\">\n          <!-- Loop: options de status -->\n          <option *ngFor=\"let s of statuses\" [value]=\"s.value\">{{ s.label }}</option>\n        </select>\n        <button (click)=\"deletar(tarefa.id)\">🗑️</button>\n      </div>\n    </div>\n  `\n})\nexport class TarefasComponent implements OnInit, OnDestroy {\n  tarefas: Tarefa[] = [];\n  loading   = false;\n  erro      = '';\n  novaTitulo = '';\n  filtroStatus = '';\n\n  // Loop de dados para templates\n  statuses = [\n    { value: 'pendente',  label: '⏳ Pendente' },\n    { value: 'andamento', label: '🔄 Em Andamento' },\n    { value: 'concluida', label: '✅ Concluída' }\n  ];\n\n  private sub!: Subscription; // gerenciamento de memória: unsubscribe no destroy\n\n  constructor(private service: TarefasService) {}\n\n  ngOnInit(): void {\n    // Assina o stream de tarefas\n    this.sub = this.service.tarefas$.subscribe(t => this.tarefas = t);\n    this.carregar();\n  }\n\n  // ✅ CRUCIAL: libera memória no destroy do componente\n  ngOnDestroy(): void { this.sub.unsubscribe(); }\n\n  carregar(): void {\n    this.loading = true;\n    this.erro = '';\n    // Condicional: passar ou não o filtro\n    const filtros = this.filtroStatus ? { status: this.filtroStatus } : {};\n    this.service.carregar(filtros).subscribe({\n      next: () => this.loading = false,\n      error: (e: Error) => { this.erro = e.message; this.loading = false; }\n    });\n  }\n\n  aplicarFiltro(): void { this.carregar(); }\n\n  criar(): void {\n    if (!this.novaTitulo.trim()) return; // condicional: guard\n    this.service.criar({ titulo: this.novaTitulo }).subscribe({\n      next: () => this.novaTitulo = '',\n      error: (e: Error) => this.erro = e.message\n    });\n  }\n\n  mudarStatus(id: number, event: Event): void {\n    const status = (event.target as HTMLSelectElement).value as StatusTarefa;\n    this.service.atualizar(id, { status }).subscribe();\n  }\n\n  deletar(id: number): void {\n    this.service.deletar(id).subscribe({\n      error: (e: Error) => this.erro = e.message\n    });\n  }\n\n  // Otimização: trackBy evita re-renderização desnecessária no loop\n  trackById(_: number, tarefa: Tarefa): number { return tarefa.id; }\n}"
+          },
+          "output": {
+            "javascript": "// Angular renderiza:\n// 📋 Gerenciador de Tarefas\n// [select Todas/Pendentes/...] [Input nova tarefa] [+ Criar]\n// Estudar Angular    [Pendente ▼] [🗑️]\n// Criar API REST     [Em Andamento ▼] [🗑️]\n// Configurar MySQL   [Concluída ▼] [🗑️]"
           }
         }
       ]
