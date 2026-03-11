@@ -1,8 +1,9 @@
 /* ═══════════════════════════════════════════════════════════════
-   AI GUIDE WIDGET — cole no final do css/style.css
+   AI GUIDE WIDGET — css/ai-guide.css
+   v3 — Busca local + responsividade mobile corrigida
 ═══════════════════════════════════════════════════════════════ */
 
-/* ── FAB (botão flutuante) ───────────────────────────────────── */
+/* ── FAB (botão flutuante — sempre no canto inferior direito) ── */
 .guide-fab {
   position: fixed;
   bottom: 28px;
@@ -19,7 +20,6 @@
   font-size: 1.5rem;
   box-shadow: 0 4px 20px rgba(0,0,0,.5);
   transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-  /* FAB must always be on top and clickable, independent of widget state */
   z-index: 8100;
   pointer-events: all !important;
   opacity: 1 !important;
@@ -48,18 +48,17 @@
   100% { transform: scale(1.7); opacity: 0; }
 }
 
-/* ── Widget wrapper ──────────────────────────────────────────── */
+/* ── Widget wrapper (desktop: ancorado à direita) ──────────── */
 .guide-widget {
   position: fixed;
   bottom: 96px;
   right: 28px;
   z-index: 8001;
   width: 380px;
-  /* Only block pointer events for the panel area, not the FAB */
   pointer-events: none;
 }
 
-/* ── Panel ───────────────────────────────────────────────────── */
+/* ── Panel ─────────────────────────────────────────────────── */
 .guide-panel {
   background: #161b22;
   border: 1px solid #30363d;
@@ -90,7 +89,7 @@
   overflow: hidden;
 }
 
-/* ── Header ──────────────────────────────────────────────────── */
+/* ── Header ─────────────────────────────────────────────────── */
 .guide-header {
   display: flex;
   align-items: center;
@@ -128,7 +127,7 @@
 }
 .guide-hbtn:hover { color: #e6edf3; background: #21262d; }
 
-/* ── Tabs ────────────────────────────────────────────────────── */
+/* ── Tabs ───────────────────────────────────────────────────── */
 .guide-tabs {
   display: flex;
   border-bottom: 1px solid #30363d;
@@ -153,7 +152,7 @@
   border-bottom-color: #58a6ff;
 }
 
-/* ── Tab panels ──────────────────────────────────────────────── */
+/* ── Tab panels ─────────────────────────────────────────────── */
 .guide-tab-panel {
   display: flex;
   flex-direction: column;
@@ -162,7 +161,7 @@
   min-height: 0;
 }
 
-/* ── Messages ────────────────────────────────────────────────── */
+/* ── Messages ───────────────────────────────────────────────── */
 .guide-messages {
   flex: 1;
   overflow-y: auto;
@@ -248,7 +247,7 @@
   40%           { transform: scale(1);   opacity: 1; }
 }
 
-/* ── Input area ──────────────────────────────────────────────── */
+/* ── Input area ─────────────────────────────────────────────── */
 .guide-input-area {
   padding: 10px 12px;
   border-top: 1px solid #30363d;
@@ -315,7 +314,7 @@
 .guide-send-btn:hover { background: #2ea043; }
 .guide-send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-/* ── Quick Tips list ─────────────────────────────────────────── */
+/* ── Quick Tips list ────────────────────────────────────────── */
 .guide-tips-list {
   flex: 1;
   overflow-y: auto;
@@ -351,7 +350,7 @@
 .guide-tip-arrow { color: #8b949e; font-size: 0.85rem; transition: transform 0.15s; }
 .guide-tip-btn:hover .guide-tip-arrow { transform: translateX(3px); color: #58a6ff; }
 
-/* ── Idle toast ──────────────────────────────────────────────── */
+/* ── Idle toast ─────────────────────────────────────────────── */
 .guide-idle-toast {
   position: fixed;
   bottom: 100px;
@@ -394,189 +393,122 @@
   font-weight: 400 !important;
 }
 
-/* ── Mobile adjustments ──────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVIDADE MOBILE
+═══════════════════════════════════════════════════════════════ */
 
-/* Tablets (481px – 768px) */
+/* ── Tablets (481px – 768px) ─────────────────────────────────── */
 @media (max-width: 768px) and (min-width: 481px) {
+  .guide-fab {
+    right: 16px;
+    bottom: 20px;
+    z-index: 8100;
+  }
   .guide-widget {
+    /* Panel ancorado à direita em tablets */
     right: 16px;
     bottom: 88px;
     width: min(360px, calc(100vw - 32px));
   }
-  .guide-fab {
+  .guide-idle-toast {
     right: 16px;
-    bottom: 20px;
+    bottom: 90px;
   }
 }
 
-/* Phones (≤ 480px) */
+/* ── Phones (≤ 480px) — FAB fixo, painel centralizado ─────────
+   O FAB permanece SEMPRE no canto inferior direito.
+   Quando aberto, o painel flutua centralizado na viewport.
+──────────────────────────────────────────────────────────────── */
 @media (max-width: 480px) {
-  .guide-widget {
-    right: 12px;
-    bottom: 80px;
-    width: calc(100vw - 24px);
-  }
+
+  /* FAB: fixo, pequeno, canto inferior direito */
   .guide-fab {
-    right: 12px;
+    position: fixed;
+    right: 14px;
     bottom: 16px;
-    width: 52px;
-    height: 52px;
-    /* Ensure FAB is always above PWA banner, sidebar overlay, etc. */
+    width: 50px;
+    height: 50px;
+    font-size: 1.3rem;
     z-index: 8100;
     pointer-events: all !important;
     opacity: 1 !important;
     visibility: visible !important;
   }
-  .guide-idle-toast {
-    right: 12px;
-    max-width: calc(100vw - 24px);
-    bottom: 80px;
+
+  /* Widget wrapper: não posiciona o painel — deixamos isso para o panel diretamente */
+  .guide-widget {
+    position: static;          /* remove o fixed do wrapper */
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    bottom: auto;
+    right: auto;
   }
+
+  /* Painel: centralizado na tela quando aberto */
   .guide-panel {
-    max-height: min(480px, calc(100dvh - 140px));
+    position: fixed;
+    /* Centro horizontal e vertical com offset para ficar visível acima do FAB */
+    left: 50%;
+    bottom: 80px;
+    transform: translateX(-50%) translateY(16px) scale(0.96);
+    width: min(92vw, 420px);
+    max-height: min(72dvh, 560px);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 8050;
+    border-radius: 16px;
+  }
+
+  /* Painel aberto: centralizado e visível */
+  .guide-widget.open .guide-panel {
+    transform: translateX(-50%) translateY(0) scale(1);
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* Minimizado no mobile */
+  .guide-widget.minimized .guide-panel {
+    max-height: 52px;
+    overflow: hidden;
+  }
+
+  /* Mensagens: altura adaptada */
+  .guide-messages {
+    min-height: 120px;
+    max-height: min(38dvh, 280px);
+  }
+
+  /* Tips list: altura adaptada */
+  .guide-tips-list {
+    max-height: min(46dvh, 340px);
+  }
+
+  /* Toast: acima do FAB */
+  .guide-idle-toast {
+    right: 14px;
+    bottom: 78px;
+    max-width: calc(100vw - 28px);
+    font-size: 0.75rem;
+  }
+}
+
+/* ── Extra pequeno (≤ 360px) ──────────────────────────────────── */
+@media (max-width: 360px) {
+  .guide-panel {
+    width: 96vw;
+    bottom: 74px;
+  }
+  .guide-fab {
+    right: 10px;
+    bottom: 12px;
+    width: 46px;
+    height: 46px;
+    font-size: 1.2rem;
   }
   .guide-messages {
-    max-height: min(240px, calc(100dvh - 340px));
-    min-height: 120px;
-  }
-  .guide-tips-list {
-    max-height: min(320px, calc(100dvh - 280px));
-  }
-  /* Prevent panel from going off-screen */
-  .guide-widget.open .guide-panel {
-    max-height: min(520px, calc(100dvh - 150px));
+    max-height: min(32dvh, 220px);
+    min-height: 100px;
   }
 }
-
-/* ── API Key Modal ───────────────────────────────────────────── */
-.guide-modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.65);
-  z-index: 9000;
-  backdrop-filter: blur(3px);
-}
-.guide-modal-box {
-  position: fixed;
-  top: 50%; left: 50%;
-  transform: translate(-50%,-50%);
-  z-index: 9001;
-  background: #161b22;
-  border: 1px solid #30363d;
-  border-radius: 16px;
-  padding: 28px 28px 24px;
-  width: 380px;
-  max-width: 90vw;
-  box-shadow: 0 16px 56px rgba(0,0,0,.7);
-  animation: guideModalIn 0.22s cubic-bezier(.34,1.4,.64,1);
-}
-@keyframes guideModalIn {
-  from { transform: translate(-50%,-46%) scale(0.95); opacity: 0; }
-  to   { transform: translate(-50%,-50%) scale(1);    opacity: 1; }
-}
-.guide-modal-icon {
-  font-size: 2.2rem;
-  text-align: center;
-  margin-bottom: 10px;
-}
-.guide-modal-title {
-  color: #e6edf3;
-  font-family: 'Syne', sans-serif;
-  font-size: 1.1rem;
-  font-weight: 800;
-  text-align: center;
-  margin: 0 0 10px;
-}
-.guide-modal-desc {
-  color: #8b949e;
-  font-size: 0.82rem;
-  line-height: 1.55;
-  margin: 0 0 10px;
-  text-align: center;
-}
-.guide-modal-link {
-  color: #58a6ff;
-  text-decoration: none;
-  display: block;
-  margin-top: 4px;
-  font-weight: 600;
-}
-.guide-modal-link:hover { text-decoration: underline; }
-
-.guide-modal-warn {
-  background: rgba(240,136,62,.08);
-  border: 1px solid rgba(240,136,62,.25);
-  border-radius: 8px;
-  padding: 8px 12px;
-  color: #f0883e;
-  font-size: 0.75rem;
-  margin: 0 0 16px;
-  line-height: 1.4;
-}
-.guide-modal-input {
-  width: 100%;
-  background: #0d1117;
-  border: 1px solid #30363d;
-  border-radius: 8px;
-  color: #e6edf3;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.82rem;
-  padding: 10px 12px;
-  outline: none;
-  box-sizing: border-box;
-  margin-bottom: 16px;
-  transition: border-color 0.15s;
-}
-.guide-modal-input:focus { border-color: #58a6ff; }
-.guide-modal-input::placeholder { color: #8b949e; }
-
-.guide-modal-actions {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-}
-.guide-modal-cancel {
-  background: none;
-  border: 1px solid #30363d;
-  border-radius: 8px;
-  color: #8b949e;
-  padding: 8px 18px;
-  font-size: 0.82rem;
-  cursor: pointer;
-  transition: color 0.15s, border-color 0.15s;
-}
-.guide-modal-cancel:hover { color: #e6edf3; border-color: #8b949e; }
-
-.guide-modal-confirm {
-  background: #238636;
-  border: 1px solid #2ea043;
-  border-radius: 8px;
-  color: #fff;
-  padding: 8px 20px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-.guide-modal-confirm:hover { background: #2ea043; }
-
-/* ── Modal steps ─────────────────────────────────────────────── */
-.guide-modal-steps {
-  background: #0d1117;
-  border: 1px solid #30363d;
-  border-radius: 8px;
-  padding: 10px 14px;
-  margin-bottom: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.guide-modal-step {
-  color: #8b949e;
-  font-size: 0.78rem;
-  font-family: 'JetBrains Mono', monospace;
-  line-height: 1.4;
-  padding-left: 4px;
-  border-left: 2px solid #2ea043;
-}
-.guide-modal-step strong { color: #e6edf3; }
