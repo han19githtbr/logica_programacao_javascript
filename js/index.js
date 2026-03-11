@@ -71,6 +71,7 @@ function tSub(sub, key) { return sub[key + '_' + currentLang] || sub[key] || '';
 async function loadData() {
   const res = await fetch('database/data.json');
   DATA = await res.json();
+  window.DATA = DATA; // expose for ai-guide.js local search
   buildUI();
 }
 
