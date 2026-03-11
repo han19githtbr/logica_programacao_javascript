@@ -13,13 +13,17 @@
   border: 2px solid #30363d;
   background: #161b22;
   cursor: pointer;
-  display: flex;
+  display: flex !important;
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
   box-shadow: 0 4px 20px rgba(0,0,0,.5);
   transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-  z-index: 8000;
+  /* FAB must always be on top and clickable, independent of widget state */
+  z-index: 8100;
+  pointer-events: all !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 .guide-fab:hover {
   transform: scale(1.1);
@@ -51,6 +55,7 @@
   right: 28px;
   z-index: 8001;
   width: 380px;
+  /* Only block pointer events for the panel area, not the FAB */
   pointer-events: none;
 }
 
@@ -390,10 +395,57 @@
 }
 
 /* ── Mobile adjustments ──────────────────────────────────────── */
+
+/* Tablets (481px – 768px) */
+@media (max-width: 768px) and (min-width: 481px) {
+  .guide-widget {
+    right: 16px;
+    bottom: 88px;
+    width: min(360px, calc(100vw - 32px));
+  }
+  .guide-fab {
+    right: 16px;
+    bottom: 20px;
+  }
+}
+
+/* Phones (≤ 480px) */
 @media (max-width: 480px) {
-  .guide-widget { right: 12px; bottom: 80px; width: calc(100vw - 24px); }
-  .guide-fab    { right: 12px; bottom: 16px; }
-  .guide-idle-toast { right: 12px; max-width: calc(100vw - 24px); }
+  .guide-widget {
+    right: 12px;
+    bottom: 80px;
+    width: calc(100vw - 24px);
+  }
+  .guide-fab {
+    right: 12px;
+    bottom: 16px;
+    width: 52px;
+    height: 52px;
+    /* Ensure FAB is always above PWA banner, sidebar overlay, etc. */
+    z-index: 8100;
+    pointer-events: all !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  .guide-idle-toast {
+    right: 12px;
+    max-width: calc(100vw - 24px);
+    bottom: 80px;
+  }
+  .guide-panel {
+    max-height: min(480px, calc(100dvh - 140px));
+  }
+  .guide-messages {
+    max-height: min(240px, calc(100dvh - 340px));
+    min-height: 120px;
+  }
+  .guide-tips-list {
+    max-height: min(320px, calc(100dvh - 280px));
+  }
+  /* Prevent panel from going off-screen */
+  .guide-widget.open .guide-panel {
+    max-height: min(520px, calc(100dvh - 150px));
+  }
 }
 
 /* ── API Key Modal ───────────────────────────────────────────── */
